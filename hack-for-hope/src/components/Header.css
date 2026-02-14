@@ -1,0 +1,99 @@
+.main-header {
+  background: var(--sos-white);
+  border-bottom: 4px solid var(--sos-pink);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sos-logo {
+  width: 60px;
+  height: 60px;
+  background: var(--sos-logo-bg);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  letter-spacing: -0.02em;
+}
+
+.sos-slogan {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+}
+
+.we-can, .we-do, .with-text {
+  color: var(--sos-blue);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.love-text {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  color: var(--sos-pink);
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-info h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.logout-btn {
+  background: none;
+  border: 2px solid var(--sos-light-blue);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  border-color: var(--sos-pink);
+  color: var(--sos-pink);
+}

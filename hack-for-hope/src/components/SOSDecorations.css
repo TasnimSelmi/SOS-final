@@ -1,0 +1,197 @@
+/* SOS Decorative Elements - Following Brand Guidelines */
+
+/* ========================================
+   J-SHAPE
+   ======================================== */
+
+.sos-j-shape {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.08;
+  border-radius: 0 0 90px 0;
+}
+
+.sos-j-shape-right {
+  top: 12%;
+  right: 3%;
+  transform: rotate(-5deg);
+}
+
+.sos-j-shape-left {
+  top: 20%;
+  left: 3%;
+  transform: rotate(5deg) scaleX(-1);
+}
+
+/* Pink variant for accent */
+.sos-j-shape-pink {
+  background: #de5a6c !important;
+  opacity: 0.06;
+}
+
+/* ========================================
+   THREE LINES (Vertical)
+   ======================================== */
+
+.sos-three-lines {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sos-three-lines-left {
+  left: 2%;
+  top: 35%;
+}
+
+.sos-three-lines-right {
+  right: 2%;
+  top: 35%;
+  align-items: flex-end;
+}
+
+.sos-line {
+  height: 16px;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
+}
+
+.sos-line-long { width: 160px; }
+.sos-line-medium { width: 100px; }
+.sos-line-short { width: 60px; }
+
+/* Right side variant */
+.sos-three-lines-right .sos-line {
+  border-radius: 8px 0 0 8px;
+}
+
+/* ========================================
+   THREE LINES (Horizontal)
+   ======================================== */
+
+.sos-three-lines-horizontal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sos-three-lines-top {
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sos-three-lines-bottom {
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sos-line-h {
+  height: 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sos-line-h-long { width: 200px; }
+.sos-line-h-medium { width: 140px; }
+.sos-line-h-short { width: 80px; }
+
+/* ========================================
+   SPEECH BUBBLE
+   ======================================== */
+
+.sos-speech-bubble {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+.sos-speech-bubble-top-right {
+  top: -80px;
+  right: -80px;
+  transform: rotate(-15deg);
+}
+
+.sos-speech-bubble-top-left {
+  top: -60px;
+  left: -60px;
+  transform: rotate(15deg);
+}
+
+.sos-speech-bubble-bottom-right {
+  bottom: 10%;
+  right: -60px;
+  transform: rotate(-20deg);
+}
+
+.sos-speech-bubble-bottom-left {
+  bottom: 10%;
+  left: -60px;
+  transform: rotate(20deg);
+}
+
+/* ========================================
+   COMBINED DECORATIONS CONTAINER
+   ======================================== */
+
+.sos-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.12; }
+}
+
+.sos-j-shape-animated {
+  animation: float 6s ease-in-out infinite, pulse 4s ease-in-out infinite;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .sos-j-shape {
+    display: none;
+  }
+  
+  .sos-three-lines {
+    opacity: 0.05;
+  }
+  
+  .sos-speech-bubble {
+    opacity: 0.03;
+  }
+  
+  .sos-line-long { width: 80px; }
+  .sos-line-medium { width: 50px; }
+  .sos-line-short { width: 30px; }
+}

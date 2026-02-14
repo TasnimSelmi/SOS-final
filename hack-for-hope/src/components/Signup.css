@@ -1,0 +1,123 @@
+/* Signup Page Styles */
+
+.signup-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  padding: 2rem;
+  position: relative;
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 600px;
+  background: var(--sos-white);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.signup-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  margin: 1rem 0 0.5rem;
+}
+
+.signup-header p {
+  color: var(--text-secondary);
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select {
+  padding: 1rem;
+  border: 2px solid var(--sos-light-blue);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--sos-white);
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--sos-blue);
+}
+
+.role-info {
+  background: var(--sos-light-blue);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.role-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.signup-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--sos-light-blue);
+}
+
+.signup-footer p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.btn-large {
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .signup-container {
+    padding: 1.5rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .signup-header h1 {
+    font-size: 1.5rem;
+  }
+}

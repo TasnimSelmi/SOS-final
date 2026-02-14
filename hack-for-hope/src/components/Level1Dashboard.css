@@ -1,0 +1,47 @@
+/* Level1Dashboard Styles */
+
+.level1-dashboard {
+  padding: 0;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--sos-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  margin: 0;
+}
+
+.dashboard-header p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin: 1rem 0 0.5rem 0;
+}
+
+.empty-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}

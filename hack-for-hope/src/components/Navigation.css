@@ -1,0 +1,271 @@
+/* Navigation Styles */
+
+.main-navigation {
+  background: var(--sos-white);
+  border-bottom: 4px solid var(--sos-pink);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  background: var(--sos-logo-bg);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+}
+
+.nav-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Desktop Navigation */
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-auth {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.nav-user-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--sos-light-blue);
+}
+
+.nav-auth .btn-secondary {
+  background: transparent;
+  border: 2px solid var(--sos-blue);
+  color: var(--sos-blue);
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+.nav-auth .btn-secondary:hover {
+  background: var(--sos-light-blue);
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: var(--sos-light-blue);
+  color: var(--sos-blue);
+}
+
+.nav-link.active {
+  background: var(--sos-blue);
+  color: var(--sos-white);
+}
+
+/* User Section */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 2px solid var(--sos-light-blue);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-logout:hover {
+  border-color: var(--sos-pink);
+  color: var(--sos-pink);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: var(--sos-dark-blue);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 3px;
+  background: var(--sos-dark-blue);
+  transition: all 0.3s ease;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  top: 8px;
+}
+
+.hamburger.open {
+  background: transparent;
+}
+
+.hamburger.open::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.hamburger.open::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+/* Mobile Navigation */
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--sos-white);
+  border-top: 2px solid var(--sos-light-blue);
+  box-shadow: var(--shadow-lg);
+  padding: 1rem;
+}
+
+.nav-mobile.open {
+  display: block;
+}
+
+.nav-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.nav-mobile-link:hover,
+.nav-mobile-link.active {
+  background: var(--sos-light-blue);
+  color: var(--sos-blue);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .nav-desktop {
+    display: none;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .nav-container {
+    padding: 0.75rem 1rem;
+  }
+  
+  .nav-title {
+    font-size: 1rem;
+  }
+  
+  .nav-subtitle {
+    display: none;
+  }
+}

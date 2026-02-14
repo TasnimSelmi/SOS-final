@@ -1,0 +1,359 @@
+/* About Page Styles */
+
+.about-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  padding-bottom: 4rem;
+}
+
+.page-header {
+  background: linear-gradient(135deg, var(--sos-dark-blue) 0%, var(--sos-blue) 100%);
+  color: white;
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--sos-pink);
+}
+
+.page-header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.about-section {
+  padding: 4rem 0;
+}
+
+.about-values {
+  background: var(--sos-cream);
+}
+
+.about-team {
+  background: var(--sos-cream);
+}
+
+.about-partners {
+  background: var(--sos-dark-blue);
+  color: white;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  margin-top: 1rem;
+}
+
+.about-partners .section-title h2 {
+  color: white;
+}
+
+/* Mission Grid */
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.mission-card .sos-card-content {
+  padding: 1.5rem;
+}
+
+.mission-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.mission-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--sos-light-blue);
+}
+
+.highlight-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--sos-blue);
+}
+
+.highlight-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Values Grid */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.values-grid .sos-card-content {
+  text-align: center;
+}
+
+.values-grid p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: var(--sos-blue);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 50%;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.timeline-item:nth-child(even) {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 50%;
+}
+
+.timeline-year {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--sos-blue);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.timeline-content {
+  background: var(--sos-white);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  max-width: 350px;
+  margin-right: 2rem;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-right: 0;
+  margin-left: 2rem;
+}
+
+.timeline-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sos-dark-blue);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Team Grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Villages Detail */
+.villages-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.village-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background: var(--sos-white);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.village-icon {
+  flex-shrink: 0;
+}
+
+.village-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  margin-bottom: 0.25rem;
+}
+
+.village-year {
+  display: inline-block;
+  background: var(--sos-light-blue);
+  color: var(--sos-blue);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.village-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Partners */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.partner-category h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sos-blue);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--sos-blue);
+}
+
+.partner-category ul {
+  list-style: none;
+}
+
+.partner-category li {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* CTA */
+.about-cta {
+  background: linear-gradient(135deg, var(--sos-blue) 0%, var(--sos-dark-blue) 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.about-cta h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.about-cta p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.about-cta .btn {
+  background: white;
+  color: var(--sos-blue);
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+}
+
+.about-cta .btn:hover {
+  background: var(--sos-light-blue);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline::before {
+    left: 20px;
+  }
+  
+  .timeline-item,
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 60px;
+    padding-right: 0;
+  }
+  
+  .timeline-year {
+    left: 20px;
+    transform: translateX(-50%);
+  }
+  
+  .timeline-content,
+  .timeline-item:nth-child(even) .timeline-content {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+  
+  .village-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .section-title h2 {
+    font-size: 1.8rem;
+  }
+}

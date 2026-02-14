@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack for Hope - SOS Villages d'Enfants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* SOS Brand Colors */
+            --sos-blue: #00abec;
+            --sos-dark-blue: #1c325d;
+            --sos-light-blue: #e8f7fc;
+            --sos-pink: #de5a6c;
+            --sos-white: #FFFFFF;
+            --sos-cream: #F5FAFC;
+            --sos-logo-blue: #4A6FA5;
+            
+            /* Text Colors */
+            --text-primary: #1c325d;
+            --text-secondary: #4A6B82;
+            --text-muted: #7B97AC;
+            
+            /* Functional */
+            --success: #4ECDC4;
+            --warning: #FFB347;
+            --danger: #de5a6c;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 171, 236, 0.08);
+            --shadow-md: 0 4px 20px rgba(0, 171, 236, 0.12);
+            --shadow-lg: 0 8px 40px rgba(0, 171, 236, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: var(--sos-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: var(--sos-dark-blue);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--sos-pink);
+        }
+
+        .login-logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            background: var(--sos-logo-blue);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-logo svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .login-header h1 {
+            color: var(--sos-white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .login-body {
+            padding: 2rem;
+        }
+
+        .role-selection {
+            margin-bottom: 2rem;
+        }
+
+        .role-selection h3 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .role-cards {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .role-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--sos-white);
+        }
+
+        .role-card:hover {
+            border-color: var(--sos-blue);
+            background: var(--sos-light-blue);
+        }
+
+        .role-card.active {
+            border-color: var(--sos-blue);
+            background: var(--sos-light-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .role-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .role-card.level-1 .role-icon { background: rgba(0, 171, 236, 0.15); }
+        .role-card.level-2 .role-icon { background: rgba(255, 179, 71, 0.15); }
+        .role-card.level-3 .role-icon { background: rgba(222, 90, 108, 0.15); }
+
+        .role-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .role-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--sos-blue);
+            box-shadow: 0 0 0 4px rgba(0, 171, 236, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--sos-blue);
+            color: var(--sos-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--sos-dark-blue);
+        }
+
+        /* Main App (hidden by default) */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .app-header {
+            background: var(--sos-white);
+            border-bottom: 4px solid var(--sos-pink);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            width: 45px;
+            height: 45px;
+            background: var(--sos-logo-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .header-title h1 {
+            font-size: 1.3rem;
+            color: var(--sos-dark-blue);
+            font-weight: 700;
+        }
+
+        .header-title p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-info .user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--sos-blue), var(--sos-dark-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 2px solid var(--sos-light-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--sos-pink);
+            color: var(--sos-pink);
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--sos-white);
+            padding: 0.75rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin: 1.5rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tab:hover {
+            background: var(--sos-light-blue);
+            color: var(--sos-blue);
+        }
+
+        .nav-tab.active {
+            background: var(--sos-blue);
+            color: var(--sos-white);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--sos-white);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--sos-dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--sos-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--sos-pink);
+        }
+
+        .stat-card.urgent::before { background: var(--sos-pink); }
+        .stat-card.warning::before { background: var(--warning); }
+        .stat-card.success::before { background: var(--success); }
+        .stat-card.info::before { background: var(--sos-blue); }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--sos-light-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--sos-dark-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tables */
+        .table-container {
+            background: var(--sos-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .table-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--sos-cream);
+            border-bottom: 2px solid var(--sos-light-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-weight: 700;
+            color: var(--sos-dark-blue);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--sos-light-blue);
+        }
+
+        th {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--sos-light-blue);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: rgba(0, 171, 236, 0.03);
+        }
+
+        /* Status badges */
+        .badge {
+            padding: 0.4rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-urgent {
+            background: rgba(222, 90, 108, 0.15);
+            color: var(--sos-pink);
+        }
+
+        .badge-processing {
+            background: rgba(0, 171, 236, 0.15);
+            color: var(--sos-blue);
+        }
+
+        .badge-pending {
+            background: rgba(255, 179, 71, 0.15);
+            color: #c97a1e;
+        }
+
+        .badge-closed {
+            background: rgba(78, 205, 196, 0.15);
+            color: #2a9d8f;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: var(--sos-white);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--sos-blue);
+        }
+
+        .required::after {
+            content: ' *';
+            color: var(--sos-pink);
+        }
+
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed var(--sos-blue);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--sos-light-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--sos-pink);
+        }
+
+        /* Button groups */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            background: var(--sos-white);
+            color: var(--sos-blue);
+            border: 2px solid var(--sos-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--sos-light-blue);
+        }
+
+        .btn-pink {
+            background: var(--sos-pink);
+            color: var(--sos-white);
+        }
+
+        .btn-pink:hover {
+            background: #c94e5f;
+        }
+
+        /* Workflow steps */
+        .workflow-container {
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .workflow-steps {
+            display: flex;
+            gap: 1rem;
+            min-width: max-content;
+        }
+
+        .step-card {
+            background: var(--sos-white);
+            border-radius: 16px;
+            padding: 1.25rem;
+            min-width: 200px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .step-card::after {
+            content: '→';
+            position: absolute;
+            right: -0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            color: var(--sos-blue);
+        }
+
+        .step-card:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--sos-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-screen {
+                padding: 1rem;
+            }
+            
+            .app-header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .nav-tabs {
+                margin: 1rem;
+                flex-direction: column;
+            }
+            
+            .main-content {
+                padding: 0 1rem 1rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+            }
+            
+            .step-card::after {
+                content: '↓';
+                right: 50%;
+                bottom: -1rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="15" width="70" height="70" rx="18" fill="#4A6FA5"/>
+                        <circle cx="33" cy="32" r="6" fill="white"/>
+                        <path d="M28 40 L24 58 L42 58 L38 40 Q38 38 33 38 Q28 38 28 40" fill="white"/>
+                        <line x1="28" y1="44" x2="22" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="38" y1="44" x2="45" y2="48" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="30" y1="58" x2="27" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="36" y1="58" x2="39" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="67" cy="32" r="6" fill="white"/>
+                        <path d="M62 40 L58 58 L76 58 L72 40 Q72 38 67 38 Q62 38 62 40" fill="white"/>
+                        <line x1="62" y1="44" x2="55" y2="48" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="72" y1="44" x2="78" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="64" y1="58" x2="61" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="70" y1="58" x2="73" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <ellipse cx="50" cy="36" rx="3" ry="8" fill="white"/>
+                        <line x1="50" y1="44" x2="50" y2="62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <ellipse cx="45" cy="52" rx="2.5" ry="6" fill="white" transform="rotate(-25 45 52)"/>
+                        <ellipse cx="55" cy="52" rx="2.5" ry="6" fill="white" transform="rotate(25 55 52)"/>
+                        <line x1="22" y1="72" x2="78" y2="72" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1>Hack for Hope</h1>
+                <p>Plateforme de Protection de l'Enfance - SOS Villages d'Enfants Tunisie</p>
+            </div>
+            
+            <div class="login-body">
+                <div class="role-selection">
+                    <h3>Sélectionnez votre rôle</h3>
+                    <div class="role-cards">
+                        <div class="role-card level-1" onclick="selectRole(1)">
+                            <div class="role-icon">📝</div>
+                            <div class="role-info">
+                                <h4>Niveau 1 - Déclarant</h4>
+                                <p>Mères SOS, Tantes SOS, Éducateurs</p>
+                            </div>
+                        </div>
+                        <div class="role-card level-2" onclick="selectRole(2)">
+                            <div class="role-icon">🔍</div>
+                            <div class="role-info">
+                                <h4>Niveau 2 - Analyse & Traitement</h4>
+                                <p>Psychologues, Responsables sociaux</p>
+                            </div>
+                        </div>
+                        <div class="role-card level-3" onclick="selectRole(3)">
+                            <div class="role-icon">⚖️</div>
+                            <div class="role-info">
+                                <h4>Niveau 3 - Gouvernance</h4>
+                                <p>Direction du Village, Bureau National</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Identifiant</label>
+                        <input type="text" class="form-input" placeholder="Votre identifiant" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="appContainer" class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="18" fill="#4A6FA5"/>
+                            <circle cx="33" cy="32" r="6" fill="white"/>
+                            <path d="M28 40 L24 58 L42 58 L38 40 Q38 38 33 38 Q28 38 28 40" fill="white"/>
+                            <line x1="28" y1="44" x2="22" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="38" y1="44" x2="45" y2="48" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="30" y1="58" x2="27" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="36" y1="58" x2="39" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="67" cy="32" r="6" fill="white"/>
+                            <path d="M62 40 L58 58 L76 58 L72 40 Q72 38 67 38 Q62 38 62 40" fill="white"/>
+                            <line x1="62" y1="44" x2="55" y2="48" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="72" y1="44" x2="78" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="64" y1="58" x2="61" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="70" y1="58" x2="73" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <ellipse cx="50" cy="36" rx="3" ry="8" fill="white"/>
+                            <line x1="50" y1="44" x2="50" y2="62" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <ellipse cx="45" cy="52" rx="2.5" ry="6" fill="white" transform="rotate(-25 45 52)"/>
+                            <ellipse cx="55" cy="52" rx="2.5" ry="6" fill="white" transform="rotate(25 55 52)"/>
+                            <line x1="22" y1="72" x2="78" y2="72" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="header-title">
+                        <h1>Hack for Hope</h1>
+                        <p>Protection de l'Enfance | SOS Villages d'Enfants Tunisie</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <h3 id="userName">Dr. Sarah Bennour</h3>
+                        <p id="userRole" class="user-role">Psychologue | Niveau 2</p>
+                    </div>
+                    <div class="user-avatar" id="userAvatar">SB</div>
+                    <button class="logout-btn" onclick="logout()">Déconnexion</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation (dynamique selon le niveau) -->
+        <nav id="navTabs" class="nav-tabs">
+            <!-- Le contenu sera injecté par JavaScript selon le rôle -->
+        </nav>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="main-content">
+            <!-- Le contenu sera injecté par JavaScript -->
+        </main>
+    </div>
+
+    <script>
+        // État de l'application
+        let currentUser = null;
+        let currentRole = null;
+
+        // Données de démonstration
+        const demoData = {
+            signalements: [
+                { id: '#2026-089', date: '14 Fév 2026', village: 'Village Tunis', type: 'Comportement', priorite: 'Élevée', statut: 'Urgent' },
+                { id: '#2026-088', date: '13 Fév 2026', village: 'Village Sousse', type: 'Santé', priorite: 'Moyenne', statut: 'En traitement' },
+                { id: '#2026-087', date: '12 Fév 2026', village: 'Village Sfax', type: 'Conflit', priorite: 'Basse', statut: 'En attente' },
+                { id: '#2026-086', date: '11 Fév 2026', village: 'Village Tunis', type: 'Violence', priorite: 'Élevée', statut: 'Clôturé' }
+            ],
+            villages: [
+                { nom: 'Village Tunis', actifs: 12, traitement: 8, urgents: 3, clotures: 45, taux: '96%' },
+                { nom: 'Village Sousse', actifs: 8, traitement: 5, urgents: 2, clotures: 38, taux: '93%' },
+                { nom: 'Village Sfax', actifs: 6, traitement: 4, urgents: 1, clotures: 32, taux: '95%' },
+                { nom: 'Village Bizerte', actifs: 4, traitement: 3, urgents: 1, clotures: 28, taux: '91%' },
+                { nom: 'Village Kairouan', actifs: 3, traitement: 2, urgents: 1, clotures: 22, taux: '89%' }
+            ]
+        };
+
+        // Configuration des rôles
+        const roleConfig = {
+            1: {
+                name: 'Déclarant',
+                title: 'Niveau 1 - Terrain',
+                tabs: [
+                    { id: 'nouveau', label: 'Nouveau Signalement', icon: '✏️' },
+                    { id: 'mes-signalements', label: 'Mes Signalements', icon: '📋' }
+                ]
+            },
+            2: {
+                name: 'Analyste',
+                title: 'Niveau 2 - Analyse & Traitement',
+                tabs: [
+                    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+                    { id: 'a-traiter', label: 'À Traiter', icon: '🔍' },
+                    { id: 'workflow', label: 'Workflow', icon: '🔄' }
+                ]
+            },
+            3: {
+                name: 'Gouvernance',
+                title: 'Niveau 3 - Direction',
+                tabs: [
+                    { id: 'vue-globale', label: 'Vue Globale', icon: '🏢' },
+                    { id: 'decisions', label: 'Décisions', icon: '⚖️' },
+                    { id: 'archives', label: 'Archives', icon: '📁' }
+                ]
+            }
+        };
+
+        // Sélection du rôle
+        function selectRole(role) {
+            currentRole = role;
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+            document.querySelector(`.role-card.level-${role}`).classList.add('active');
+        }
+
+        // Connexion
+        function handleLogin(e) {
+            e.preventDefault();
+            if (!currentRole) {
+                alert('Veuillez sélectionner un rôle');
+                return;
+            }
+            
+            const config = roleConfig[currentRole];
+            currentUser = {
+                name: 'Dr. Sarah Bennour',
+                role: config.title,
+                level: currentRole,
+                initials: 'SB'
+            };
+            
+            // Mettre à jour l'interface
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = currentUser.role;
+            document.getElementById('userAvatar').textContent = currentUser.initials;
+            
+            // Générer la navigation
+            generateNavigation(config.tabs);
+            
+            // Afficher l'app
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            
+            // Charger le premier onglet
+            switchTab(config.tabs[0].id);
+        }
+
+        // Générer la navigation
+        function generateNavigation(tabs) {
+            const nav = document.getElementById('navTabs');
+            nav.innerHTML = tabs.map((tab, index) => `
+                <button class="nav-tab ${index === 0 ? 'active' : ''}" onclick="switchTab('${tab.id}')">
+                    <span>${tab.icon}</span> ${tab.label}
+                </button>
+            `).join('');
+        }
+
+        // Changer d'onglet
+        function switchTab(tabId) {
+            // Mettre à jour les boutons
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Charger le contenu
+            const content = document.getElementById('mainContent');
+            content.innerHTML = generateTabContent(tabId);
+        }
+
+        // Générer le contenu selon l'onglet
+        function generateTabContent(tabId) {
+            switch(tabId) {
+                case 'dashboard':
+                case 'vue-globale':
+                    return generateDashboardContent();
+                case 'nouveau':
+                    return generateNewReportForm();
+                case 'mes-signalements':
+                case 'a-traiter':
+                    return generateReportsTable();
+                case 'workflow':
+                    return generateWorkflowContent();
+                case 'decisions':
+                    return generateDecisionsContent();
+                default:
+                    return generateDashboardContent();
+            }
+        }
+
+        // Dashboard
+        function generateDashboardContent() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card info">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Signalements en attente</div>
+                    </div>
+                    <div class="stat-card urgent">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number" style="color: var(--sos-pink);">8</div>
+                        <div class="stat-label">Cas urgents</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22,4 12,14.01 9,11.01"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number" style="color: var(--success);">156</div>
+                        <div class="stat-label">Cas traités ce mois</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9,22 9,12 15,12 15,22"/>
+                            </svg>
+                        </div>
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Villages actifs</div>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Vue globale par village</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Village</th>
+                                <th>Actifs</th>
+                                <th>En traitement</th>
+                                <th>Urgents</th>
+                                <th>Clôturés</th>
+                                <th>Taux réussite</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${demoData.villages.map(v => `
+                                <tr>
+                                    <td><strong>${v.nom}</strong></td>
+                                    <td>${v.actifs}</td>
+                                    <td>${v.traitement}</td>
+                                    <td>${v.urgents}</td>
+                                    <td>${v.clotures}</td>
+                                    <td>${v.taux}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Formulaire nouveau signalement
+        function generateNewReportForm() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Nouveau Signalement</h2>
+                        <p class="card-subtitle">Les champs marqués d'un astérisque (*) sont obligatoires</p>
+                    </div>
+                    <form onsubmit="handleSubmitReport(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Type d'incident</label>
+                                <select class="form-select" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="sante">Santé</option>
+                                    <option value="comportement">Comportement</option>
+                                    <option value="violence">Violence</option>
+                                    <option value="conflit">Conflit</option>
+                                    <option value="maltraitance">Maltraitance</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Niveau d'urgence</label>
+                                <select class="form-select" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="urgent">🔴 Urgent</option>
+                                    <option value="moyen">🟡 Moyen</option>
+                                    <option value="bas">🟢 Bas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Village</label>
+                                <select class="form-select" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="tunis">Village Tunis</option>
+                                    <option value="sousse">Village Sousse</option>
+                                    <option value="sfax">Village Sfax</option>
+                                    <option value="bizerte">Village Bizerte</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Signalement anonyme</label>
+                                <select class="form-select">
+                                    <option value="non">Non</option>
+                                    <option value="oui">Oui</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Nom de l'enfant</label>
+                                <input type="text" class="form-input" placeholder="Prénom et nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nom de l'abuseur (si applicable)</label>
+                                <input type="text" class="form-input" placeholder="Prénom et nom">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label required">Description détaillée</label>
+                                <textarea class="form-textarea" placeholder="Décrivez l'incident..." required></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Pièces jointes</label>
+                                <div class="upload-zone">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 0.5rem;">
+                                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                                    </svg>
+                                    <div style="font-weight: 600; color: var(--sos-dark-blue);">Glissez-déposez vos fichiers ici</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Photos, audio, vidéo (Max 10MB)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="reset" class="btn btn-secondary">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Soumettre le signalement</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        // Tableau des signalements
+        function generateReportsTable() {
+            return `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Signalements récents</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Référence</th>
+                                <th>Date</th>
+                                <th>Village</th>
+                                <th>Type</th>
+                                <th>Priorité</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${demoData.signalements.map(s => `
+                                <tr>
+                                    <td><strong>${s.id}</strong></td>
+                                    <td>${s.date}</td>
+                                    <td>${s.village}</td>
+                                    <td>${s.type}</td>
+                                    <td>
+                                        <span class="priority-dot" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${s.priorite === 'Élevée' ? 'var(--sos-pink)' : s.priorite === 'Moyenne' ? 'var(--warning)' : 'var(--success)'}; margin-right: 0.5rem;"></span>
+                                        ${s.priorite}
+                                    </td>
+                                    <td><span class="badge badge-${s.statut.toLowerCase().replace(' ', '-')}">${s.statut}</span></td>
+                                    <td>
+                                        <button class="btn" style="padding: 0.4rem 0.875rem; font-size: 0.8rem; background: var(--sos-light-blue); color: var(--sos-blue); border: none; border-radius: 8px; cursor: pointer;">Voir</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Workflow
+        function generateWorkflowContent() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Processus de Traitement - Workflow SOS</h2>
+                        <p class="card-subtitle">Les 6 étapes obligatoires pour chaque signalement</p>
+                    </div>
+                    <div class="workflow-container">
+                        <div class="workflow-steps">
+                            <div class="step-card">
+                                <div class="step-number">1</div>
+                                <div class="step-title">Fiche Initiale</div>
+                                <div class="step-desc">Signalement reçu + Rapport DPE envoyé au Directeur</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">2</div>
+                                <div class="step-title">Évaluation Complète</div>
+                                <div class="step-desc">Analyse par l'équipe psychosociale</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">3</div>
+                                <div class="step-title">Plan d'Action</div>
+                                <div class="step-desc">Stratégie d'intervention personnalisée</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">4</div>
+                                <div class="step-title">Rapport de Suivi</div>
+                                <div class="step-desc">Suivi documenté de l'évolution</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">5</div>
+                                <div class="step-title">Rapport Final</div>
+                                <div class="step-desc">Synthèse et recommandations</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">6</div>
+                                <div class="step-title">Avis de Clôture</div>
+                                <div class="step-desc">Validation finale et archivage</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Classification du signalement</h2>
+                        <p class="card-subtitle">Évaluation et décision de classement</p>
+                    </div>
+                    <form>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Référence</label>
+                                <input type="text" class="form-input" placeholder="Ex: #2026-089">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Décision</label>
+                                <select class="form-select">
+                                    <option value="">Sélectionner</option>
+                                    <option value="prise-en-charge">✅ Prise en charge immédiate</option>
+                                    <option value="sauvegarde">💾 Sauvegarde pour suivi</option>
+                                    <option value="faux">❌ Faux signalement</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label required">Rapport confidentiel</label>
+                                <textarea class="form-textarea" placeholder="Rédigez votre analyse..."></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary">Sauvegarder brouillon</button>
+                            <button type="button" class="btn btn-pink">Demander avis supérieur</button>
+                            <button type="submit" class="btn btn-primary">Valider et transmettre</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        // Décisions (niveau 3)
+        function generateDecisionsContent() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card info">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Total cas ce trimestre</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">2.3j</div>
+                        <div class="stat-label">Temps moyen traitement</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Taux de résolution</div>
+                    </div>
+                    <div class="stat-card urgent">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Décisions en attente</div>
+                    </div>
+                </div>
+                ${generateReportsTable()}
+            `;
+        }
+
+        // Soumettre un signalement
+        function handleSubmitReport(e) {
+            e.preventDefault();
+            alert('Signalement soumis avec succès !');
+            // Revenir à la liste
+            switchTab('mes-signalements');
+        }
+
+        // Déconnexion
+        function logout() {
+            currentUser = null;
+            currentRole = null;
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>

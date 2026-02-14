@@ -1,0 +1,506 @@
+/* SOS Chart Styles - Following Brand Visual Guidelines */
+
+/* ========================================
+   BAR CHART
+   ======================================== */
+
+.sos-chart-container {
+  background: var(--sos-white);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.sos-chart-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sos-chart-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sos-blue);
+  margin-bottom: 0.5rem;
+}
+
+.sos-chart-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.sos-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 250px;
+  padding: 1rem 0;
+  border-bottom: 2px solid var(--sos-dark-blue);
+  gap: 0.5rem;
+}
+
+.sos-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 120px;
+}
+
+.sos-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 200px;
+  width: 100%;
+  justify-content: center;
+}
+
+.sos-bar {
+  width: 24px;
+  min-height: 4px;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 171, 236, 0.2);
+}
+
+.sos-bar:hover {
+  opacity: 0.85;
+  transform: scaleY(1.02);
+}
+
+.sos-bar-value {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.sos-bar-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.75rem;
+  line-height: 1.3;
+  max-width: 100%;
+}
+
+/* ========================================
+   PROGRESS RING
+   ======================================== */
+
+.sos-progress-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sos-progress-ring-bg {
+  opacity: 0.3;
+}
+
+.sos-progress-ring-fill {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.sos-progress-ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.sos-progress-ring-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--sos-dark-blue);
+}
+
+/* ========================================
+   STAT BAR
+   ======================================== */
+
+.sos-stat-bar {
+  margin-bottom: 1rem;
+}
+
+.sos-stat-bar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.sos-stat-bar-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.sos-stat-bar-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sos-dark-blue);
+}
+
+.sos-stat-bar-track {
+  height: 8px;
+  background: var(--sos-light-blue);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sos-stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* ========================================
+   STAT ROW
+   ======================================== */
+
+.sos-stat-row {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.sos-stat-row-item {
+  text-align: center;
+}
+
+.sos-stat-row-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sos-blue);
+  line-height: 1.2;
+}
+
+.sos-stat-row-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* ========================================
+   ERROR MESSAGE
+   ======================================== */
+
+.error-message {
+  background: rgba(222, 90, 108, 0.1);
+  border: 1px solid var(--sos-pink);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: var(--sos-pink);
+  font-size: 0.9rem;
+}
+
+/* ========================================
+   LOLIPOP CHART
+   ======================================== */
+
+.sos-lollipop-chart {
+  display: flex;
+  height: 280px;
+  padding: 1rem;
+  position: relative;
+}
+
+.sos-lollipop-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 1rem;
+  width: 50px;
+}
+
+.sos-lollipop-tick {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.sos-lollipop-gridline {
+  position: absolute;
+  left: 35px;
+  right: -1000px;
+  height: 1px;
+  background: var(--sos-light-blue);
+  border-top: 1px dashed var(--sos-light-blue);
+}
+
+.sos-lollipop-bars {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding-bottom: 30px;
+  border-bottom: 2px solid var(--sos-dark-blue);
+}
+
+.sos-lollipop-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 80px;
+  height: 100%;
+  position: relative;
+}
+
+.sos-lollipop-line-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.sos-lollipop-line {
+  width: 6px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.5s ease;
+}
+
+.sos-lollipop-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: -8px;
+  transition: bottom 0.5s ease;
+}
+
+.sos-lollipop-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ========================================
+   PICTOGRAM CHART
+   ======================================== */
+
+.sos-pictogram-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sos-pictogram-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sos-pictogram-icons {
+  display: flex;
+  gap: 2px;
+}
+
+.sos-pictogram-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   DOT CHART
+   ======================================== */
+
+.sos-dot-chart {
+  text-align: center;
+}
+
+.sos-dot-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.sos-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.sos-dot-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+}
+
+/* ========================================
+   NUMBERED CARD
+   ======================================== */
+
+.sos-numbered-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sos-numbered-card {
+  display: flex;
+  align-items: flex-start;
+  background: var(--sos-white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid;
+}
+
+.sos-numbered-card-number {
+  min-width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  border-radius: 0 0 12px 0;
+}
+
+.sos-numbered-card-content {
+  padding: 1rem 1.25rem;
+  flex: 1;
+}
+
+.sos-numbered-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.sos-numbered-card-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ========================================
+   PUBLICATION CARD
+   ======================================== */
+
+.sos-publication-card {
+  background: var(--sos-white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 280px;
+}
+
+.sos-publication-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.sos-publication-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.sos-publication-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sos-publication-curve {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  background: var(--sos-blue);
+  border-radius: 80px 0 0 0;
+  opacity: 0.9;
+}
+
+.sos-publication-content {
+  padding: 1.25rem;
+  position: relative;
+  z-index: 1;
+  margin-top: -40px;
+}
+
+.sos-publication-badge {
+  display: inline-block;
+  background: var(--sos-pink);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.sos-publication-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.sos-publication-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .sos-bar-chart {
+    height: 200px;
+    gap: 0.25rem;
+  }
+  
+  .sos-bars {
+    height: 160px;
+  }
+  
+  .sos-bar {
+    width: 16px;
+  }
+  
+  .sos-bar-value {
+    font-size: 0.6rem;
+    top: -16px;
+  }
+  
+  .sos-bar-label {
+    font-size: 0.65rem;
+  }
+  
+  .sos-stat-row {
+    gap: 1rem;
+  }
+  
+  .sos-stat-row-value {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,200 @@
+.login-screen {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.login-container {
+  background: var(--sos-white);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.login-header {
+  background: var(--sos-dark-blue);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border-bottom: 4px solid var(--sos-pink);
+}
+
+.login-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.25rem;
+  background: var(--sos-logo-bg);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-header h1 {
+  color: var(--sos-white);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+}
+
+.sos-slogan-center {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  margin-top: 0.75rem;
+}
+
+.we-can, .we-do, .with-text {
+  color: var(--sos-blue);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.love-text {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  color: var(--sos-pink);
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.login-body {
+  padding: 2rem;
+}
+
+.role-selection {
+  margin-bottom: 2rem;
+}
+
+.role-selection h3 {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.role-cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.role-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 2px solid var(--sos-light-blue);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--sos-white);
+}
+
+.role-card:hover, .role-card.active {
+  border-color: var(--sos-blue);
+  background: var(--sos-light-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.role-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.level-1 .role-icon { background: rgba(0, 171, 236, 0.15); }
+.level-2 .role-icon { background: rgba(255, 179, 71, 0.15); }
+.level-3 .role-icon { background: rgba(222, 90, 108, 0.15); }
+
+.role-info h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.role-info p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--sos-light-blue);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--sos-blue);
+  box-shadow: 0 0 0 4px rgba(0, 171, 236, 0.1);
+}
+
+.btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--sos-blue);
+  color: var(--sos-white);
+}
+
+.btn-primary:hover {
+  background: var(--sos-dark-blue);
+}
+
+.error-message {
+  background: rgba(222, 90, 108, 0.1);
+  border: 1px solid var(--sos-pink);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: var(--sos-pink);
+  font-size: 0.9rem;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

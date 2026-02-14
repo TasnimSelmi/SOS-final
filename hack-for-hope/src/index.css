@@ -1,0 +1,131 @@
+:root {
+  /* SOS Official Brand Colors */
+  --sos-blue: #00abec;
+  --sos-dark-blue: #1c325d;
+  --sos-light-blue: #e8f7fc;
+  --sos-pink: #de5a6c;
+  --sos-white: #FFFFFF;
+  --sos-cream: #F5FAFC;
+  --sos-logo-bg: #4A6FA5;
+  
+  /* Text Colors */
+  --text-primary: #1c325d;
+  --text-secondary: #4A6B82;
+  --text-muted: #7B97AC;
+  
+  /* Functional */
+  --success: #4ECDC4;
+  --warning: #FFB347;
+  --danger: #de5a6c;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 171, 236, 0.08);
+  --shadow-md: 0 4px 20px rgba(0, 171, 236, 0.12);
+  --shadow-lg: 0 8px 40px rgba(0, 171, 236, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE - SOS BRAND
+   ======================================== */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .nav-tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .sos-table {
+    font-size: 0.85rem;
+  }
+  
+  .sos-table th svg {
+    display: none;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+  }
+  
+  .btn-group .btn {
+    width: 100%;
+  }
+  
+  .workflow-steps {
+    flex-direction: column;
+  }
+  
+  .step-card {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .step-card::after {
+    content: '↓';
+    right: 50%;
+    bottom: -1.25rem;
+    top: auto;
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .landing-title {
+    font-size: 1.6rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+}

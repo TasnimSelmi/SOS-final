@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack for Hope - SOS Villages d'Enfants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* SOS Official Brand Colors */
+            --sos-blue: #00abec;
+            --sos-dark-blue: #1c325d;
+            --sos-light-blue: #e8f7fc;
+            --sos-pink: #de5a6c;
+            --sos-white: #FFFFFF;
+            --sos-cream: #F5FAFC;
+            --sos-logo-bg: #4A6FA5;
+            
+            /* Text Colors */
+            --text-primary: #1c325d;
+            --text-secondary: #4A6B82;
+            --text-muted: #7B97AC;
+            
+            /* Functional */
+            --success: #4ECDC4;
+            --warning: #FFB347;
+            --danger: #de5a6c;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 171, 236, 0.08);
+            --shadow-md: 0 4px 20px rgba(0, 171, 236, 0.12);
+            --shadow-lg: 0 8px 40px rgba(0, 171, 236, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           ÉTAPE 1: DESIGN SYSTEM SOS - COMPLETED
+           ======================================== */
+
+        /* SOS Logo - Official SVG */
+        .sos-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--sos-logo-bg);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .sos-logo svg {
+            width: 44px;
+            height: 44px;
+        }
+
+        /* SOS Slogan - "WE CAN, WE DO, WITH love" */
+        .sos-slogan {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            margin-top: 0.15rem;
+        }
+
+        .sos-slogan .we-can,
+        .sos-slogan .we-do,
+        .sos-slogan .with-text {
+            color: var(--sos-blue);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .sos-slogan .love-text {
+            font-family: 'Brush Script MT', 'Segoe Script', cursive;
+            color: var(--sos-pink);
+            font-size: 0.95rem;
+            font-weight: normal;
+        }
+
+        /* Decorative Elements */
+        .deco-bubble {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+
+        .bubble-1 {
+            width: 350px;
+            height: 300px;
+            background: var(--sos-blue);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -80px;
+            right: -80px;
+            transform: rotate(-15deg);
+        }
+
+        .bubble-2 {
+            width: 200px;
+            height: 180px;
+            background: var(--sos-pink);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            bottom: 10%;
+            left: -60px;
+            transform: rotate(20deg);
+            opacity: 0.04;
+        }
+
+        .deco-j {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.08;
+        }
+
+        .j-shape {
+            width: 180px;
+            height: 320px;
+            background: var(--sos-blue);
+            border-radius: 0 0 90px 0;
+            top: 12%;
+            right: 3%;
+            transform: rotate(-5deg);
+        }
+
+        .deco-lines {
+            position: fixed;
+            left: 2%;
+            top: 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .deco-line {
+            height: 16px;
+            background: var(--sos-blue);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .deco-line.long { width: 160px; }
+        .deco-line.medium { width: 100px; }
+        .deco-line.short { width: 60px; }
+
+        /* Header */
+        .main-header {
+            background: var(--sos-white);
+            border-bottom: 4px solid var(--sos-pink);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sos-dark-blue);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-text p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-container {
+            background: var(--sos-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-header {
+            background: var(--sos-dark-blue);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--sos-pink);
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.25rem;
+            background: var(--sos-logo-bg);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-logo svg {
+            width: 56px;
+            height: 56px;
+        }
+
+        .login-header h1 {
+            color: var(--sos-white);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header .subtitle {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+        }
+
+        .login-body {
+            padding: 2rem;
+        }
+
+        /* Role Selection */
+        .role-selection {
+            margin-bottom: 2rem;
+        }
+
+        .role-selection h3 {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .role-cards {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .role-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--sos-white);
+        }
+
+        .role-card:hover, .role-card.active {
+            border-color: var(--sos-blue);
+            background: var(--sos-light-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .role-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .role-card.level-1 .role-icon { background: rgba(0, 171, 236, 0.15); }
+        .role-card.level-2 .role-icon { background: rgba(255, 179, 71, 0.15); }
+        .role-card.level-3 .role-icon { background: rgba(222, 90, 108, 0.15); }
+
+        .role-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .role-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--sos-blue);
+            box-shadow: 0 0 0 4px rgba(0, 171, 236, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--sos-blue);
+            color: var(--sos-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--sos-dark-blue);
+        }
+
+        /* ========================================
+           ÉTAPE 3: NIVEAU 1 - FORMULAIRE STYLES
+           ======================================== */
+        
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--sos-light-blue);
+            background: var(--sos-white);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            border-color: var(--sos-blue);
+            background: var(--sos-blue);
+            color: var(--sos-white);
+        }
+
+        .card {
+            background: var(--sos-white);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--sos-dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--sos-light-blue);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: var(--sos-white);
+            color: var(--text-primary);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--sos-blue);
+        }
+
+        .required::after {
+            content: ' *';
+            color: var(--sos-pink);
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--sos-blue);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--sos-light-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--sos-pink);
+            background: rgba(222, 90, 108, 0.05);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            background: var(--sos-white);
+            color: var(--sos-blue);
+            border: 2px solid var(--sos-blue);
+            width: auto;
+        }
+
+        .btn-secondary:hover {
+            background: var(--sos-light-blue);
+        }
+
+        .table-container {
+            background: var(--sos-white);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .badge {
+            padding: 0.4rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-en-traitement {
+            background: rgba(0, 171, 236, 0.15);
+            color: var(--sos-blue);
+        }
+
+        .badge-clôturé {
+            background: rgba(78, 205, 196, 0.15);
+            color: var(--success);
+        }
+
+        .badge-urgent {
+            background: rgba(222, 90, 108, 0.15);
+            color: var(--sos-pink);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--sos-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--sos-pink);
+        }
+
+        .stat-card.info::before { background: var(--sos-blue); }
+        .stat-card.urgent::before { background: var(--sos-pink); }
+        .stat-card.success::before { background: var(--success); }
+        .stat-card.warning::before { background: var(--warning); }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--sos-dark-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Workflow */
+        .workflow-container {
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .workflow-steps {
+            display: flex;
+            gap: 1rem;
+            min-width: max-content;
+        }
+
+        .step-card {
+            background: var(--sos-white);
+            border-radius: 16px;
+            padding: 1.25rem;
+            min-width: 200px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .step-card::after {
+            content: '→';
+            position: absolute;
+            right: -0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            color: var(--sos-blue);
+        }
+
+        .step-card:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--sos-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Priority indicators */
+        .priority-élevée {
+            color: var(--sos-pink);
+            font-weight: 600;
+        }
+
+        .priority-moyenne {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .priority-basse {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Responsive workflow */
+        @media (max-width: 768px) {
+            .workflow-steps {
+                flex-direction: column;
+            }
+            
+            .step-card::after {
+                content: '↓';
+                right: 50%;
+                bottom: -1rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--sos-light-blue);
+        }
+
+        th {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--sos-light-blue);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: rgba(0, 171, 236, 0.03);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-screen {
+                padding: 1rem;
+            }
+            
+            .main-header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Elements -->
+    <div class="deco-bubble bubble-1"></div>
+    <div class="deco-bubble bubble-2"></div>
+    <div class="deco-j j-shape"></div>
+    <div class="deco-lines">
+        <div class="deco-line long"></div>
+        <div class="deco-line medium"></div>
+        <div class="deco-line short"></div>
+    </div>
+
+    <!-- ========================================
+         ÉTAPE 1: LOGIN SCREEN - COMPLETED
+         ======================================== -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <!-- SOS Official Logo -->
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background -->
+                        <rect x="10" y="10" width="80" height="80" rx="18" fill="#4A6FA5"/>
+                        
+                        <!-- Left Child -->
+                        <circle cx="32" cy="30" r="7" fill="white"/>
+                        <path d="M25 40 L25 60 L30 60 L30 46 L35 46 L35 60 L40 60 L40 40 Q40 38 32.5 38 Q25 38 25 40" fill="white"/>
+                        <line x1="25" y1="44" x2="18" y2="50" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="40" y1="44" x2="47" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="28" y1="60" x2="24" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="37" y1="60" x2="41" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        
+                        <!-- Right Child -->
+                        <circle cx="68" cy="30" r="7" fill="white"/>
+                        <path d="M60 40 L60 60 L65 60 L65 46 L70 46 L70 60 L75 60 L75 40 Q75 38 67.5 38 Q60 38 60 40" fill="white"/>
+                        <line x1="60" y1="44" x2="53" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="75" y1="44" x2="82" y2="50" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="63" y1="60" x2="59" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="72" y1="60" x2="76" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        
+                        <!-- Plant -->
+                        <line x1="50" y1="42" x2="50" y2="65" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        <ellipse cx="50" cy="34" rx="4" ry="9" fill="white"/>
+                        <ellipse cx="43" cy="50" rx="3" ry="7" fill="white" transform="rotate(-30 43 50)"/>
+                        <ellipse cx="57" cy="50" rx="3" ry="7" fill="white" transform="rotate(30 57 50)"/>
+                        
+                        <!-- Ground -->
+                        <line x1="18" y1="76" x2="82" y2="76" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1>Hack for Hope</h1>
+                <p class="subtitle">Plateforme de Protection de l'Enfance<br>SOS Villages d'Enfants Tunisie</p>
+                <div class="sos-slogan" style="justify-content: center; margin-top: 0.75rem;">
+                    <span class="we-can">WE CAN,</span>
+                    <span class="we-do">WE DO,</span>
+                    <span class="with-text">WITH</span>
+                    <span class="love-text">love</span>
+                </div>
+            </div>
+            
+            <div class="login-body">
+                <div class="role-selection">
+                    <h3>Sélectionnez votre rôle</h3>
+                    <div class="role-cards">
+                        <div class="role-card level-1" onclick="selectRole(1)">
+                            <div class="role-icon">📝</div>
+                            <div class="role-info">
+                                <h4>Niveau 1 - Déclarant</h4>
+                                <p>Mères SOS, Tantes SOS, Éducateurs</p>
+                            </div>
+                        </div>
+                        <div class="role-card level-2" onclick="selectRole(2)">
+                            <div class="role-icon">🔍</div>
+                            <div class="role-info">
+                                <h4>Niveau 2 - Analyse & Traitement</h4>
+                                <p>Psychologues, Responsables sociaux</p>
+                            </div>
+                        </div>
+                        <div class="role-card level-3" onclick="selectRole(3)">
+                            <div class="role-icon">⚖️</div>
+                            <div class="role-info">
+                                <h4>Niveau 3 - Gouvernance</h4>
+                                <p>Direction du Village, Bureau National</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Identifiant</label>
+                        <input type="text" class="form-input" placeholder="Votre identifiant" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         ÉTAPE 2+: MAIN APPLICATION
+         ======================================== -->
+    <div id="appContainer" class="app-container">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="sos-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="10" width="80" height="80" rx="18" fill="#4A6FA5"/>
+                            <circle cx="32" cy="30" r="7" fill="white"/>
+                            <path d="M25 40 L25 60 L30 60 L30 46 L35 46 L35 60 L40 60 L40 40 Q40 38 32.5 38 Q25 38 25 40" fill="white"/>
+                            <line x1="25" y1="44" x2="18" y2="50" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="40" y1="44" x2="47" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="28" y1="60" x2="24" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="37" y1="60" x2="41" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="68" cy="30" r="7" fill="white"/>
+                            <path d="M60 40 L60 60 L65 60 L65 46 L70 46 L70 60 L75 60 L75 40 Q75 38 67.5 38 Q60 38 60 40" fill="white"/>
+                            <line x1="60" y1="44" x2="53" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="75" y1="44" x2="82" y2="50" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="63" y1="60" x2="59" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="72" y1="60" x2="76" y2="74" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <ellipse cx="50" cy="34" rx="4" ry="9" fill="white"/>
+                            <line x1="50" y1="42" x2="50" y2="65" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <ellipse cx="43" cy="50" rx="3" ry="7" fill="white" transform="rotate(-30 43 50)"/>
+                            <ellipse cx="57" cy="50" rx="3" ry="7" fill="white" transform="rotate(30 57 50)"/>
+                            <line x1="18" y1="76" x2="82" y2="76" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <h1>Hack for Hope</h1>
+                        <div class="sos-slogan">
+                            <span class="we-can">WE CAN,</span>
+                            <span class="we-do">WE DO,</span>
+                            <span class="with-text">WITH</span>
+                            <span class="love-text">love</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div id="mainContent" style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
+            <div style="background: white; border-radius: 20px; padding: 3rem; text-align: center; box-shadow: var(--shadow-md);">
+                <h2 style="color: var(--sos-dark-blue); margin-bottom: 1rem;">🚧 Application en développement</h2>
+                <p style="color: var(--text-secondary);">Les fonctionnalités seront ajoutées étape par étape selon l'ordre établi.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRole = null;
+        let currentUser = null;
+
+        function selectRole(role) {
+            currentRole = role;
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+            document.querySelector(`.role-card.level-${role}`).classList.add('active');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            if (!currentRole) {
+                alert('Veuillez sélectionner un rôle');
+                return;
+            }
+            
+            currentUser = {
+                role: currentRole,
+                name: getRoleName(currentRole)
+            };
+            
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            
+            // Load interface based on role
+            loadInterface(currentRole);
+        }
+
+        function getRoleName(role) {
+            const names = {
+                1: 'Mère SOS',
+                2: 'Dr. Psychologue',
+                3: 'Directeur Village'
+            };
+            return names[role] || 'Utilisateur';
+        }
+
+        function loadInterface(role) {
+            const content = document.getElementById('mainContent');
+            
+            if (role === 1) {
+                content.innerHTML = generateLevel1Interface();
+            } else if (role === 2) {
+                content.innerHTML = generateLevel2Interface();
+            } else if (role === 3) {
+                content.innerHTML = generateLevel3Interface();
+            }
+        }
+
+        // ========================================
+        // ÉTAPE 3: NIVEAU 1 - DÉCLARANT
+        // ========================================
+        function generateLevel1Interface() {
+            return `
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <button class="nav-btn active" onclick="showDeclarantTab('nouveau')">Nouveau Signalement</button>
+                    <button class="nav-btn" onclick="showDeclarantTab('mes-signalements')">Mes Signalements</button>
+                </div>
+                
+                <div id="declarant-nouveau" class="declarant-tab">
+                    ${generateNewReportForm()}
+                </div>
+                
+                <div id="declarant-mes-signalements" class="declarant-tab" style="display: none;">
+                    ${generateMyReportsTable()}
+                </div>
+            `;
+        }
+
+        function generateNewReportForm() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Nouveau Signalement</h2>
+                        <p class="card-subtitle">Les champs marqués d'un astérisque (*) sont obligatoires</p>
+                    </div>
+                    <form onsubmit="handleSubmitReport(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Type d'incident</label>
+                                <select class="form-select" name="type" required>
+                                    <option value="">Sélectionner le type</option>
+                                    <option value="sante">Santé</option>
+                                    <option value="comportement">Comportement</option>
+                                    <option value="violence">Violence</option>
+                                    <option value="conflit">Conflit</option>
+                                    <option value="maltraitance">Maltraitance</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">Niveau d'urgence</label>
+                                <select class="form-select" name="urgence" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="urgent">🔴 Urgent</option>
+                                    <option value="moyen">🟡 Moyen</option>
+                                    <option value="bas">🟢 Bas</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">Village (Programme)</label>
+                                <select class="form-select" name="village" required>
+                                    <option value="">Sélectionner un village</option>
+                                    <option value="tunis">Village Tunis</option>
+                                    <option value="sousse">Village Sousse</option>
+                                    <option value="sfax">Village Sfax</option>
+                                    <option value="bizerte">Village Bizerte</option>
+                                    <option value="kairouan">Village Kairouan</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Signalement anonyme</label>
+                                <select class="form-select" name="anonyme">
+                                    <option value="non">Non</option>
+                                    <option value="oui">Oui</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">Nom de l'enfant</label>
+                                <input type="text" class="form-input" name="enfant" placeholder="Prénom et nom de l'enfant" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nom de l'abuseur (si applicable)</label>
+                                <input type="text" class="form-input" name="abuseur" placeholder="Prénom et nom">
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label class="form-label required">Description détaillée</label>
+                                <textarea class="form-textarea" name="description" placeholder="Décrivez l'incident de manière détaillée et objective..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label class="form-label">Pièces jointes</label>
+                                <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                                    <input type="file" id="fileInput" style="display: none;" multiple accept="image/*,audio/*,video/*">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--sos-blue)" stroke-width="2" style="margin-bottom: 0.5rem;">
+                                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                                    </svg>
+                                    <div style="font-weight: 600; color: var(--sos-dark-blue);">Glissez-déposez vos fichiers ici</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Photos, audio, vidéo (Max 10MB par fichier)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="reset" class="btn btn-secondary">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Soumettre le signalement</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function generateMyReportsTable() {
+            const reports = [
+                { id: '#2026-089', date: '14 Fév 2026', type: 'Comportement', statut: 'En traitement' },
+                { id: '#2026-072', date: '10 Fév 2026', type: 'Santé', statut: 'Clôturé' }
+            ];
+            
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Mes Signalements</h2>
+                        <p class="card-subtitle">Historique de vos signalements</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Référence</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reports.map(r => `
+                                    <tr>
+                                        <td><strong>${r.id}</strong></td>
+                                        <td>${r.date}</td>
+                                        <td>${r.type}</td>
+                                        <td><span class="badge badge-${r.statut.toLowerCase().replace(' ', '-')}">${r.statut}</span></td>
+                                        <td><button class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Voir</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showDeclarantTab(tab) {
+            document.querySelectorAll('.declarant-tab').forEach(t => t.style.display = 'none');
+            document.getElementById(`declarant-${tab}`).style.display = 'block';
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function handleSubmitReport(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const report = Object.fromEntries(formData);
+            console.log('Signalement soumis:', report);
+            alert('Signalement soumis avec succès ! Référence: #2026-' + Math.floor(Math.random() * 100 + 90));
+            e.target.reset();
+        }
+
+        // ========================================
+        // ÉTAPE 4: NIVEAU 2 - ANALYSE & TRAITEMENT
+        // ========================================
+        function generateLevel2Interface() {
+            return `
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <button class="nav-btn active" onclick="showAnalystTab('dashboard')">Dashboard</button>
+                    <button class="nav-btn" onclick="showAnalystTab('a-traiter')">À Traiter</button>
+                    <button class="nav-btn" onclick="showAnalystTab('workflow')">Workflow</button>
+                </div>
+                
+                <div id="analyst-dashboard" class="analyst-tab">
+                    ${generateAnalystDashboard()}
+                </div>
+                
+                <div id="analyst-a-traiter" class="analyst-tab" style="display: none;">
+                    ${generateReportsToProcessTable()}
+                </div>
+                
+                <div id="analyst-workflow" class="analyst-tab" style="display: none;">
+                    ${generateWorkflowInterface()}
+                </div>
+            `;
+        }
+
+        function generateAnalystDashboard() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card info">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Signalements en attente</div>
+                    </div>
+                    <div class="stat-card urgent">
+                        <div class="stat-number" style="color: var(--sos-pink);">8</div>
+                        <div class="stat-label">Cas urgents</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-number" style="color: var(--success);">156</div>
+                        <div class="stat-label">Cas traités ce mois</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Villages actifs</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Vue globale par village</h2>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Village</th>
+                                    <th>Actifs</th>
+                                    <th>En traitement</th>
+                                    <th>Urgents</th>
+                                    <th>Clôturés</th>
+                                    <th>Taux réussite</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Village Tunis</strong></td>
+                                    <td>12</td>
+                                    <td>8</td>
+                                    <td>3</td>
+                                    <td>45</td>
+                                    <td>96%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Village Sousse</strong></td>
+                                    <td>8</td>
+                                    <td>5</td>
+                                    <td>2</td>
+                                    <td>38</td>
+                                    <td>93%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Village Sfax</strong></td>
+                                    <td>6</td>
+                                    <td>4</td>
+                                    <td>1</td>
+                                    <td>32</td>
+                                    <td>95%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateReportsToProcessTable() {
+            const reports = [
+                { id: '#2026-089', date: '14 Fév 2026', village: 'Village Tunis', type: 'Comportement', priorite: 'Élevée', statut: 'Urgent' },
+                { id: '#2026-088', date: '13 Fév 2026', village: 'Village Sousse', type: 'Santé', priorite: 'Moyenne', statut: 'En traitement' },
+                { id: '#2026-087', date: '12 Fév 2026', village: 'Village Sfax', type: 'Conflit', priorite: 'Basse', statut: 'En attente' },
+                { id: '#2026-086', date: '11 Fév 2026', village: 'Village Tunis', type: 'Violence', priorite: 'Élevée', statut: 'Clôturé' }
+            ];
+            
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Signalements à traiter</h2>
+                        <p class="card-subtitle">Liste des cas nécessitant une analyse</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Référence</th>
+                                    <th>Date</th>
+                                    <th>Village</th>
+                                    <th>Type</th>
+                                    <th>Priorité</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reports.map(r => `
+                                    <tr>
+                                        <td><strong>${r.id}</strong></td>
+                                        <td>${r.date}</td>
+                                        <td>${r.village}</td>
+                                        <td>${r.type}</td>
+                                        <td><span class="priority-${r.priorite.toLowerCase()}">${r.priorite}</span></td>
+                                        <td><span class="badge badge-${r.statut.toLowerCase().replace(' ', '-')}">${r.statut}</span></td>
+                                        <td><button class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Traiter</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateWorkflowInterface() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Processus de Traitement - Workflow SOS</h2>
+                        <p class="card-subtitle">Les 6 étapes obligatoires pour chaque signalement</p>
+                    </div>
+                    <div class="workflow-container">
+                        <div class="workflow-steps">
+                            <div class="step-card">
+                                <div class="step-number">1</div>
+                                <div class="step-title">Fiche Initiale</div>
+                                <div class="step-desc">Signalement reçu + Rapport DPE envoyé au Directeur et Bureau National</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">2</div>
+                                <div class="step-title">Évaluation Complète</div>
+                                <div class="step-desc">Analyse approfondie du cas par l'équipe psychosociale</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">3</div>
+                                <div class="step-title">Plan d'Action</div>
+                                <div class="step-desc">Élaboration de la stratégie d'intervention</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">4</div>
+                                <div class="step-title">Rapport de Suivi</div>
+                                <div class="step-desc">Suivi documenté de l'évolution</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">5</div>
+                                <div class="step-title">Rapport Final</div>
+                                <div class="step-desc">Synthèse et recommandations</div>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-number">6</div>
+                                <div class="step-title">Avis de Clôture</div>
+                                <div class="step-desc">Validation finale et archivage</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Classification du signalement</h2>
+                        <p class="card-subtitle">Évaluation et décision de classement</p>
+                    </div>
+                    <form onsubmit="handleClassification(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Référence</label>
+                                <input type="text" class="form-input" placeholder="Ex: #2026-089" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Décision de classification</label>
+                                <select class="form-select" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="prise-en-charge">✅ Prise en charge immédiate</option>
+                                    <option value="sauvegarde">💾 Sauvegarde pour suivi</option>
+                                    <option value="faux">❌ Faux signalement</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label required">Rapport confidentiel</label>
+                                <textarea class="form-textarea" placeholder="Rédigez votre analyse professionnelle..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary">Sauvegarder brouillon</button>
+                            <button type="button" class="btn btn-pink">Demander avis supérieur</button>
+                            <button type="submit" class="btn btn-primary">Valider et transmettre</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function showAnalystTab(tab) {
+            document.querySelectorAll('.analyst-tab').forEach(t => t.style.display = 'none');
+            document.getElementById(`analyst-${tab}`).style.display = 'block';
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function handleClassification(e) {
+            e.preventDefault();
+            alert('Classification soumise avec succès !');
+        }
+
+        // ========================================
+        // ÉTAPE 5: NIVEAU 3 - GOUVERNANCE (placeholder)
+        // ========================================
+        function generateLevel3Interface() {
+            return `
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <button class="nav-btn active" onclick="showGovernanceTab('vue-globale')">Vue Globale</button>
+                    <button class="nav-btn" onclick="showGovernanceTab('decisions')">Décisions</button>
+                    <button class="nav-btn" onclick="showGovernanceTab('archives')">Archives</button>
+                </div>
+                <div id="governance-vue-globale" class="governance-tab">
+                    ${generateGovernanceDashboard()}
+                </div>
+                <div id="governance-decisions" class="governance-tab" style="display: none;">
+                    <div class="card"><div class="card-title">Prise de décision</div><p>À développer</p></div>
+                </div>
+                <div id="governance-archives" class="governance-tab" style="display: none;">
+                    <div class="card"><div class="card-title">Archives</div><p>À développer</p></div>
+                </div>
+            `;
+        }
+
+        function generateGovernanceDashboard() {
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card info">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Total cas ce trimestre</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number" style="color: var(--warning);">2.3j</div>
+                        <div class="stat-label">Temps moyen traitement</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-number" style="color: var(--success);">94%</div>
+                        <div class="stat-label">Taux de résolution</div>
+                    </div>
+                    <div class="stat-card urgent">
+                        <div class="stat-number" style="color: var(--sos-pink);">15</div>
+                        <div class="stat-label">Décisions en attente</div>
+                    </div>
+                </div>
+                ${generateReportsToProcessTable()}
+            `;
+        }
+
+        function showGovernanceTab(tab) {
+            document.querySelectorAll('.governance-tab').forEach(t => t.style.display = 'none');
+            document.getElementById(`governance-${tab}`).style.display = 'block';
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

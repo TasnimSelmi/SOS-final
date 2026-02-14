@@ -1,0 +1,30 @@
+/* Level2Dashboard Styles */
+
+.level2-dashboard {
+  padding: 0;
+}
+
+/* Dashboard Header */
+.level2-dashboard .dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--sos-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.level2-dashboard .dashboard-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--sos-dark-blue);
+  margin: 0;
+}
+
+.level2-dashboard .dashboard-header p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0 0;
+}
