@@ -7,14 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* SOS Official Brand Colors */
+            /* SOS Official Brand Colors - Enhanced */
             --sos-blue: #00abec;
             --sos-dark-blue: #1c325d;
             --sos-light-blue: #e8f7fc;
             --sos-pink: #de5a6c;
+            --sos-pink-light: #f5a5ae;
             --sos-white: #FFFFFF;
             --sos-cream: #F5FAFC;
             --sos-logo-bg: #4A6FA5;
+            
+            /* Enhanced Gradients */
+            --gradient-primary: linear-gradient(135deg, #00abec 0%, #1c325d 100%);
+            --gradient-pink: linear-gradient(135deg, #de5a6c 0%, #f5a5ae 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(0, 171, 236, 0.1) 0%, rgba(222, 90, 108, 0.05) 100%);
+            --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fdff 100%);
             
             /* Text Colors */
             --text-primary: #1c325d;
@@ -22,14 +29,22 @@
             --text-muted: #7B97AC;
             
             /* Functional */
-            --success: #4ECDC4;
-            --warning: #FFB347;
-            --danger: #de5a6c;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
             
-            /* Shadows */
+            /* Enhanced Shadows */
             --shadow-sm: 0 2px 8px rgba(0, 171, 236, 0.08);
             --shadow-md: 0 4px 20px rgba(0, 171, 236, 0.12);
             --shadow-lg: 0 8px 40px rgba(0, 171, 236, 0.15);
+            --shadow-xl: 0 20px 60px rgba(28, 50, 93, 0.15);
+            --shadow-hover: 0 12px 32px rgba(0, 171, 236, 0.2);
+            
+            /* Animation Timing */
+            --transition-fast: 0.2s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
 
         * {
@@ -47,40 +62,107 @@
         }
 
         /* ========================================
-           ÉTAPE 1: DESIGN SYSTEM SOS - COMPLETED
+           ENHANCED ANIMATIONS & EFFECTS
+           ======================================== */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .animate-slideIn {
+            animation: slideIn 0.4s ease forwards;
+        }
+
+        /* ========================================
+           ENHANCED DESIGN SYSTEM
            ======================================== */
 
-        /* SOS Logo - Official SVG */
+        /* SOS Logo - Enhanced */
         .sos-logo {
             width: 60px;
             height: 60px;
-            background: var(--sos-logo-bg);
+            background: var(--gradient-primary);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 171, 236, 0.3);
+            transition: var(--transition-base);
+        }
+
+        .sos-logo:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 6px 20px rgba(0, 171, 236, 0.4);
         }
 
         .sos-logo svg {
             width: 44px;
             height: 44px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* SOS Slogan - "WE CAN, WE DO, WITH love" */
+        /* Enhanced SOS Slogan */
         .sos-slogan {
             display: flex;
             align-items: baseline;
             gap: 0.3rem;
             font-size: 0.7rem;
             margin-top: 0.15rem;
+            font-weight: 500;
         }
 
         .sos-slogan .we-can,
         .sos-slogan .we-do,
         .sos-slogan .with-text {
             color: var(--sos-blue);
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 0.5px;
         }
 
@@ -89,85 +171,84 @@
             color: var(--sos-pink);
             font-size: 0.95rem;
             font-weight: normal;
+            text-shadow: 0 2px 4px rgba(222, 90, 108, 0.2);
         }
 
-        /* Decorative Elements */
+        /* Enhanced Decorative Elements */
         .deco-bubble {
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.06;
+            opacity: 0.08;
+            animation: float 6s ease-in-out infinite;
         }
 
         .bubble-1 {
-            width: 350px;
-            height: 300px;
-            background: var(--sos-blue);
+            width: 400px;
+            height: 350px;
+            background: var(--gradient-primary);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            top: -80px;
-            right: -80px;
+            top: -100px;
+            right: -100px;
             transform: rotate(-15deg);
+            animation-delay: 0s;
         }
 
         .bubble-2 {
-            width: 200px;
-            height: 180px;
-            background: var(--sos-pink);
+            width: 250px;
+            height: 220px;
+            background: var(--gradient-pink);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            bottom: 10%;
-            left: -60px;
+            bottom: 5%;
+            left: -80px;
             transform: rotate(20deg);
+            opacity: 0.06;
+            animation-delay: 2s;
+        }
+
+        .bubble-3 {
+            width: 180px;
+            height: 180px;
+            background: var(--sos-blue);
+            border-radius: 50%;
+            top: 40%;
+            right: 10%;
             opacity: 0.04;
+            animation-delay: 4s;
         }
 
         .deco-j {
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.08;
+            opacity: 0.06;
         }
 
         .j-shape {
-            width: 180px;
-            height: 320px;
-            background: var(--sos-blue);
-            border-radius: 0 0 90px 0;
-            top: 12%;
-            right: 3%;
+            width: 200px;
+            height: 350px;
+            background: var(--gradient-primary);
+            border-radius: 0 0 100px 0;
+            top: 10%;
+            right: 2%;
             transform: rotate(-5deg);
         }
 
-        .deco-lines {
-            position: fixed;
-            left: 2%;
-            top: 35%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .deco-line {
-            height: 16px;
-            background: var(--sos-blue);
-            border-radius: 0 8px 8px 0;
-        }
-
-        .deco-line.long { width: 160px; }
-        .deco-line.medium { width: 100px; }
-        .deco-line.short { width: 60px; }
-
-        /* Header */
+        /* Enhanced Header */
         .main-header {
-            background: var(--sos-white);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-bottom: 4px solid var(--sos-pink);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: var(--shadow-md);
+            transition: var(--transition-base);
+        }
+
+        .main-header.scrolled {
+            box-shadow: var(--shadow-lg);
         }
 
         .header-content {
@@ -185,20 +266,232 @@
         }
 
         .brand-text h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
             color: var(--sos-dark-blue);
             letter-spacing: -0.02em;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .brand-text p {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
-        /* Login Screen */
+        /* Enhanced Landing Page */
+        .landing-screen {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+            background: var(--gradient-hero);
+        }
+
+        .landing-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 4px solid var(--sos-pink);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .landing-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .landing-hero {
+            text-align: center;
+            max-width: 700px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: var(--shadow-xl);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .landing-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .landing-hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .landing-hero .btn-primary {
+            max-width: 350px;
+            font-size: 1.2rem;
+            padding: 1.25rem 3rem;
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 15px rgba(0, 171, 236, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .landing-hero .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 171, 236, 0.5);
+            animation: none;
+        }
+
+        /* Profile Styles */
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--sos-blue);
+            cursor: pointer;
+        }
+
+        .profile-avatar-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--sos-light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--sos-blue);
+            cursor: pointer;
+        }
+
+        .profile-card .avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--sos-blue);
+            margin-bottom: 1rem;
+        }
+
+        .profile-card .avatar-placeholder-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--sos-light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid var(--sos-blue);
+            margin-bottom: 1rem;
+        }
+
+        .avatar-upload-zone {
+            border: 2px dashed var(--sos-blue);
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--sos-light-blue);
+            margin: 0 auto 1rem;
+        }
+
+        .avatar-upload-zone:hover {
+            border-color: var(--sos-pink);
+            background: rgba(222, 90, 108, 0.05);
+        }
+
+        .avatar-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .avatar-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            width: auto;
+        }
+
+        /* Profile Modal */
+        .profile-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-modal-overlay.active {
+            display: flex;
+        }
+
+        .profile-modal {
+            background: var(--sos-white);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-modal h2 {
+            color: var(--sos-dark-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--sos-light-blue);
+        }
+
+        .profile-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .profile-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Login Screen */
         .login-screen {
             display: flex;
             min-height: 100vh;
@@ -207,130 +500,173 @@
             padding: 2rem;
             position: relative;
             z-index: 1;
+            background: var(--gradient-hero);
         }
 
         .login-container {
             background: var(--sos-white);
             border-radius: 24px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-xl);
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             overflow: hidden;
             position: relative;
             z-index: 2;
+            animation: fadeInUp 0.6s ease forwards;
         }
 
         .login-header {
-            background: var(--sos-dark-blue);
+            background: var(--gradient-primary);
             padding: 2.5rem 2rem;
             text-align: center;
             border-bottom: 4px solid var(--sos-pink);
         }
 
         .login-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.25rem;
-            background: var(--sos-logo-bg);
-            border-radius: 20px;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s infinite;
         }
 
         .login-logo svg {
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
         }
 
         .login-header h1 {
             color: var(--sos-white);
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .login-header .subtitle {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.85rem;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .login-body {
             padding: 2rem;
+            background: var(--sos-white);
         }
 
-        /* Role Selection */
+        /* Enhanced Role Cards */
         .role-selection {
             margin-bottom: 2rem;
         }
 
         .role-selection h3 {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-weight: 600;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            text-align: center;
         }
 
         .role-cards {
             display: grid;
-            gap: 0.75rem;
+            gap: 0.875rem;
         }
 
         .role-card {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1.25rem;
+            padding: 1.25rem 1.5rem;
             border: 2px solid var(--sos-light-blue);
             border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--sos-white);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--gradient-card);
+            position: relative;
+            overflow: hidden;
         }
 
-        .role-card:hover, .role-card.active {
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 171, 236, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .role-card:hover::before {
+            left: 100%;
+        }
+
+        .role-card:hover {
             border-color: var(--sos-blue);
             background: var(--sos-light-blue);
+            transform: translateX(8px);
             box-shadow: var(--shadow-md);
         }
 
+        .role-card.active {
+            border-color: var(--sos-blue);
+            background: var(--sos-light-blue);
+            box-shadow: var(--shadow-md);
+            transform: translateX(8px);
+        }
+
+        .role-card.active .role-icon {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
         .role-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            background: var(--sos-light-blue);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .role-card.level-1 .role-icon { background: rgba(0, 171, 236, 0.15); }
-        .role-card.level-2 .role-icon { background: rgba(255, 179, 71, 0.15); }
-        .role-card.level-3 .role-icon { background: rgba(222, 90, 108, 0.15); }
+        .role-card:hover .role-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
 
         .role-info h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
         .role-info p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
-        /* Forms */
+        /* Enhanced Form Elements */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
         }
 
         .form-label {
             display: block;
             font-weight: 600;
             color: var(--text-primary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.625rem;
         }
 
         .form-input {
@@ -339,16 +675,24 @@
             border: 2px solid var(--sos-light-blue);
             border-radius: 12px;
             font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--sos-white);
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--sos-blue);
-            box-shadow: 0 0 0 4px rgba(0, 171, 236, 0.1);
+            box-shadow: 0 0 0 4px rgba(0, 171, 236, 0.1), 0 4px 12px rgba(0, 171, 236, 0.1);
+            transform: translateY(-1px);
         }
 
+        .form-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Enhanced Buttons */
         .btn {
             width: 100%;
             padding: 1rem 2rem;
@@ -358,46 +702,102 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: var(--sos-blue);
+            background: var(--gradient-primary);
             color: var(--sos-white);
+            box-shadow: 0 4px 15px rgba(0, 171, 236, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--sos-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 171, 236, 0.4);
         }
 
-        /* ========================================
-           ÉTAPE 3: NIVEAU 1 - FORMULAIRE STYLES
-           ======================================== */
-        
+        .btn-secondary {
+            background: var(--sos-white);
+            color: var(--sos-blue);
+            border: 2px solid var(--sos-blue);
+            width: auto;
+        }
+
+        .btn-secondary:hover {
+            background: var(--sos-light-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Enhanced Cards */
+        .card {
+            background: var(--gradient-card);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 171, 236, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Enhanced Navigation Buttons */
         .nav-btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.75rem;
             border: 2px solid var(--sos-light-blue);
             background: var(--sos-white);
             border-radius: 12px;
             font-family: inherit;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
         }
 
         .nav-btn:hover, .nav-btn.active {
             border-color: var(--sos-blue);
             background: var(--sos-blue);
             color: var(--sos-white);
-        }
-
-        .card {
-            background: var(--sos-white);
-            border-radius: 20px;
-            padding: 1.75rem;
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 171, 236, 0.3);
         }
 
         .card-header {
@@ -513,21 +913,21 @@
             color: var(--sos-pink);
         }
 
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
+        /* Enhanced Stats Cards */
         .stat-card {
-            background: var(--sos-white);
-            border-radius: 16px;
-            padding: 1.5rem;
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 1.75rem;
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 171, 236, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
         }
 
         .stat-card::before {
@@ -537,24 +937,28 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--sos-pink);
+            background: var(--gradient-primary);
         }
 
-        .stat-card.info::before { background: var(--sos-blue); }
-        .stat-card.urgent::before { background: var(--sos-pink); }
-        .stat-card.success::before { background: var(--success); }
-        .stat-card.warning::before { background: var(--warning); }
+        .stat-card.info::before { background: var(--gradient-primary); }
+        .stat-card.urgent::before { background: var(--gradient-pink); }
+        .stat-card.success::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .stat-card.warning::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: var(--sos-dark-blue);
-            margin-bottom: 0.25rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
         /* Workflow */
@@ -695,6 +1099,7 @@
     <!-- Decorative Elements -->
     <div class="deco-bubble bubble-1"></div>
     <div class="deco-bubble bubble-2"></div>
+    <div class="deco-bubble bubble-3"></div>
     <div class="deco-j j-shape"></div>
     <div class="deco-lines">
         <div class="deco-line long"></div>
@@ -703,9 +1108,123 @@
     </div>
 
     <!-- ========================================
-         ÉTAPE 1: LOGIN SCREEN - COMPLETED
+         PAGE D'ACCUEIL (LANDING PAGE)
          ======================================== -->
-    <div id="loginScreen" class="login-screen">
+    <div id="landingScreen" class="landing-screen">
+        <header class="landing-header">
+            <div class="header-content" style="max-width: 1400px; margin: 0 auto;">
+                <div class="header-left">
+                    <div class="sos-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="10" width="80" height="80" rx="18" fill="#4A6FA5"/>
+                            <circle cx="32" cy="30" r="7" fill="white"/>
+                            <path d="M25 40 L25 60 L30 60 L30 46 L35 46 L35 60 L40 60 L40 40 Q40 38 32.5 38 Q25 38 25 40" fill="white"/>
+                            <line x1="25" y1="44" x2="18" y2="50" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="40" y1="44" x2="47" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="68" cy="30" r="7" fill="white"/>
+                            <path d="M60 40 L60 60 L65 60 L65 46 L70 46 L70 60 L75 60 L75 40 Q75 38 67.5 38 Q60 38 60 40" fill="white"/>
+                            <ellipse cx="50" cy="34" rx="4" ry="9" fill="white"/>
+                            <line x1="50" y1="42" x2="50" y2="65" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="18" y1="76" x2="82" y2="76" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <h1>Hack for Hope</h1>
+                        <div class="sos-slogan">
+                            <span class="we-can">WE CAN,</span>
+                            <span class="we-do">WE DO,</span>
+                            <span class="with-text">WITH</span>
+                            <span class="love-text">love</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="landing-content">
+            <div class="landing-hero">
+                <h1>Plateforme de Protection de l'Enfance</h1>
+                <p>SOS Villages d'Enfants Tunisie vous présente une solution innovante pour la protection et le bien-être des enfants. Ensemble, nous assurons leur sécurité avec amour et professionnalisme.</p>
+                <button onclick="goToLogin()" class="btn btn-primary">Accéder à la plateforme</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         MODAL PROFIL UTILISATEUR
+         ======================================== -->
+    <div id="profileModal" class="profile-modal-overlay">
+        <div class="profile-modal">
+            <h2>👤 Mon Profil</h2>
+            
+            <div class="profile-section">
+                <h3>Photo de profil</h3>
+                <div style="text-align: center;">
+                    <div id="profileAvatarDisplay" class="avatar-placeholder-large">
+                        👤
+                    </div>
+                    <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;" onchange="handleProfilePhotoUpload(event)">
+                    <div class="avatar-actions">
+                        <button onclick="document.getElementById('profilePhotoInput').click()" class="btn btn-secondary">📷 Ajouter/Modifier</button>
+                        <button onclick="deleteProfilePhoto()" class="btn btn-secondary" style="border-color: var(--sos-pink); color: var(--sos-pink);">🗑️ Supprimer</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Informations personnelles</h3>
+                <div class="form-group">
+                    <label class="form-label">Nom</label>
+                    <input type="text" id="profileNom" class="form-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Prénom</label>
+                    <input type="text" id="profilePrenom" class="form-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="profileEmail" class="form-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rôle</label>
+                    <input type="text" id="profileRole" class="form-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Identifiant</label>
+                    <input type="text" id="profileIdentifiant" class="form-input" readonly>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Changer mon mot de passe</h3>
+                <form onsubmit="handleChangePassword(event)">
+                    <div class="form-group">
+                        <label class="form-label required">Mot de passe actuel</label>
+                        <input type="password" id="currentPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Nouveau mot de passe</label>
+                        <input type="password" id="newPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Confirmer le nouveau mot de passe</label>
+                        <input type="password" id="confirmPassword" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: auto;">Changer le mot de passe</button>
+                </form>
+            </div>
+            
+            <div class="btn-group" style="margin-top: 2rem;">
+                <button onclick="closeProfileModal()" class="btn btn-secondary">Fermer</button>
+                <button onclick="logout()" class="btn btn-primary" style="background: var(--sos-pink);">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         ÉTAPE 1: LOGIN SCREEN
+         ======================================== -->
+    <div id="loginScreen" class="login-screen" style="display: none;">
         <div class="login-container">
             <div class="login-header">
                 <div class="login-logo">
@@ -754,25 +1273,46 @@
                 <div class="role-selection">
                     <h3>Sélectionnez votre rôle</h3>
                     <div class="role-cards">
-                        <div class="role-card level-1" onclick="selectRole(1)">
-                            <div class="role-icon">📝</div>
+                        <div class="role-card" onclick="selectRole('mere')">
+                            <div class="role-icon">�</div>
                             <div class="role-info">
-                                <h4>Niveau 1 - Déclarant</h4>
-                                <p>Mères SOS, Tantes SOS, Éducateurs</p>
+                                <h4>Mère SOS</h4>
+                                <p>Responsable de maison d'enfants</p>
                             </div>
                         </div>
-                        <div class="role-card level-2" onclick="selectRole(2)">
-                            <div class="role-icon">🔍</div>
+                        <div class="role-card" onclick="selectRole('tante')">
+                            <div class="role-icon">�‍🦱</div>
                             <div class="role-info">
-                                <h4>Niveau 2 - Analyse & Traitement</h4>
-                                <p>Psychologues, Responsables sociaux</p>
+                                <h4>Tante SOS</h4>
+                                <p>Assistante maternelle</p>
                             </div>
                         </div>
-                        <div class="role-card level-3" onclick="selectRole(3)">
-                            <div class="role-icon">⚖️</div>
+                        <div class="role-card" onclick="selectRole('psychologue')">
+                            <div class="role-icon">🧠</div>
                             <div class="role-info">
-                                <h4>Niveau 3 - Gouvernance</h4>
-                                <p>Direction du Village, Bureau National</p>
+                                <h4>Psychologue</h4>
+                                <p>Spécialiste en protection de l'enfance</p>
+                            </div>
+                        </div>
+                        <div class="role-card" onclick="selectRole('educateur')">
+                            <div class="role-icon">📚</div>
+                            <div class="role-info">
+                                <h4>Éducateur-Éducatrice</h4>
+                                <p>Accompagnement éducatif</p>
+                            </div>
+                        </div>
+                        <div class="role-card" onclick="selectRole('directeur')">
+                            <div class="role-icon">👔</div>
+                            <div class="role-info">
+                                <h4>Directeur Responsable</h4>
+                                <p>Direction du village</p>
+                            </div>
+                        </div>
+                        <div class="role-card" onclick="selectRole('admin')">
+                            <div class="role-icon">⚙️</div>
+                            <div class="role-info">
+                                <h4>Administrateur</h4>
+                                <p>Gestion des comptes et paramètres</p>
                             </div>
                         </div>
                     </div>
@@ -846,10 +1386,41 @@
         let currentRole = null;
         let currentUser = null;
 
+        // Stockage local des comptes utilisateurs
+        let userAccounts = JSON.parse(localStorage.getItem('sos_userAccounts')) || [
+            { id: 1, nom: 'Admin', prenom: 'Système', email: 'admin@sos.tn', role: 'admin', identifiant: 'admin', motDePasse: 'admin123', actif: true, dateCreation: '2026-02-14' }
+        ];
+
+        // Stockage des signalements
+        let reports = JSON.parse(localStorage.getItem('sos_reports')) || [];
+
+        // Stockage des notifications
+        let notifications = JSON.parse(localStorage.getItem('sos_notifications')) || [];
+
+        // Workflow steps definition
+        const WORKFLOW_STEPS = [
+            { id: 1, name: 'Fiche Initiale', description: 'Signalement reçu + Rapport DPE', duration: 1 },
+            { id: 2, name: 'Évaluation Complète', description: 'Analyse approfondie du cas', duration: 3 },
+            { id: 3, name: 'Plan d\'Action', description: 'Élaboration de la stratégie', duration: 2 },
+            { id: 4, name: 'Rapport de Suivi', description: 'Suivi documenté', duration: 7 },
+            { id: 5, name: 'Rapport Final', description: 'Synthèse et recommandations', duration: 2 },
+            { id: 6, name: 'Avis de Clôture', description: 'Validation et archivage', duration: 1 }
+        ];
+
+        // Status definitions
+        const STATUS = {
+            EN_ATTENTE: 'en-attente',
+            EN_COURS: 'en-cours',
+            FAUX: 'faux',
+            CLOTURE: 'cloture',
+            PRIS_EN_CHARGE: 'pris-en-charge',
+            SAUVEGARDE: 'sauvegarde'
+        };
+
         function selectRole(role) {
             currentRole = role;
             document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
-            document.querySelector(`.role-card.level-${role}`).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
 
         function handleLogin(e) {
@@ -859,36 +1430,315 @@
                 return;
             }
             
-            currentUser = {
-                role: currentRole,
-                name: getRoleName(currentRole)
-            };
+            const identifiant = e.target.querySelector('input[type="text"]').value;
+            const motDePasse = e.target.querySelector('input[type="password"]').value;
+            
+            const user = userAccounts.find(u => u.identifiant === identifiant && u.motDePasse === motDePasse && u.role === currentRole && u.actif);
+            
+            if (!user) {
+                alert('Identifiants incorrects ou compte inactif');
+                return;
+            }
+            
+            currentUser = user;
             
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'block';
             
-            // Load interface based on role
             loadInterface(currentRole);
+            
+            // Check for notifications
+            checkNotifications();
         }
 
         function getRoleName(role) {
             const names = {
-                1: 'Mère SOS',
-                2: 'Dr. Psychologue',
-                3: 'Directeur Village'
+                'mere': 'Mère SOS',
+                'tante': 'Tante SOS',
+                'psychologue': 'Psychologue',
+                'educateur': 'Éducateur',
+                'directeur': 'Directeur Responsable',
+                'admin': 'Administrateur'
             };
             return names[role] || 'Utilisateur';
+        }
+
+        function logout() {
+            currentUser = null;
+            currentRole = null;
+            closeProfileModal();
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('landingScreen').style.display = 'flex';
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+            document.querySelector('form').reset();
+        }
+
+        // ========================================
+        // NOTIFICATIONS SYSTEM
+        // ========================================
+        function addNotification(type, title, message, recipientRoles, data = {}) {
+            const notification = {
+                id: Date.now(),
+                type,
+                title,
+                message,
+                recipientRoles,
+                data,
+                date: new Date().toISOString(),
+                read: false
+            };
+            notifications.push(notification);
+            localStorage.setItem('sos_notifications', JSON.stringify(notifications));
+        }
+
+        function checkNotifications() {
+            const userNotifications = notifications.filter(n => 
+                n.recipientRoles.includes(currentUser.role) && !n.read
+            );
+            
+            if (userNotifications.length > 0) {
+                showNotification(userNotifications[0]);
+            }
+        }
+
+        function showNotification(notification) {
+            // Mark as read
+            notification.read = true;
+            localStorage.setItem('sos_notifications', JSON.stringify(notifications));
+            
+            // Show alert (in real app, this would be a toast/notification UI)
+            alert(`🔔 ${notification.title}\n\n${notification.message}`);
+        }
+
+        // ========================================
+        // REPORTS MANAGEMENT
+        // ========================================
+        function saveReport(report) {
+            reports.push(report);
+            localStorage.setItem('sos_reports', JSON.stringify(reports));
+        }
+
+        function updateReport(reportId, updates) {
+            const index = reports.findIndex(r => r.id === reportId);
+            if (index !== -1) {
+                reports[index] = { ...reports[index], ...updates };
+                localStorage.setItem('sos_reports', JSON.stringify(reports));
+            }
+        }
+
+        function getReportById(reportId) {
+            return reports.find(r => r.id === reportId);
+        }
+
+        function getReportsByDeclarant(declarantId) {
+            return reports.filter(r => r.declarantId === declarantId);
+        }
+
+        function getReportsByStatus(status) {
+            return reports.filter(r => r.status === status);
+        }
+
+        function getReportsByVillage(village) {
+            return reports.filter(r => r.village === village);
+        }
+
+        // ========================================
+        // WORKFLOW MANAGEMENT
+        // ========================================
+        function startWorkflow(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            report.workflow = {
+                currentStep: 1,
+                steps: WORKFLOW_STEPS.map(step => ({
+                    ...step,
+                    status: step.id === 1 ? 'in-progress' : 'pending',
+                    startDate: step.id === 1 ? new Date().toISOString() : null,
+                    endDate: null,
+                    documents: [],
+                    notes: ''
+                })),
+                status: 'active'
+            };
+            report.status = STATUS.EN_COURS;
+            
+            updateReport(reportId, report);
+            
+            // Notify Director and National Bureau
+            addNotification(
+                'workflow-started',
+                'Nouveau signalement à traiter',
+                `Le signalement ${report.id} nécessite votre attention. La fiche initiale est en cours.`,
+                ['directeur', 'admin']
+            );
+        }
+
+        function advanceWorkflowStep(reportId) {
+            const report = getReportById(reportId);
+            if (!report || !report.workflow) return;
+            
+            const currentStepIndex = report.workflow.currentStep - 1;
+            const currentStep = report.workflow.steps[currentStepIndex];
+            
+            // Complete current step
+            currentStep.status = 'completed';
+            currentStep.endDate = new Date().toISOString();
+            
+            // Move to next step
+            if (currentStepIndex < report.workflow.steps.length - 1) {
+                report.workflow.currentStep++;
+                const nextStep = report.workflow.steps[currentStepIndex + 1];
+                nextStep.status = 'in-progress';
+                nextStep.startDate = new Date().toISOString();
+                
+                // Notify relevant users
+                addNotification(
+                    'workflow-step',
+                    `Étape ${nextStep.id} : ${nextStep.name}`,
+                    `Le signalement ${report.id} passe à l'étape : ${nextStep.name}`,
+                    ['psychologue', 'directeur']
+                );
+            } else {
+                // Workflow complete
+                report.workflow.status = 'completed';
+                report.status = STATUS.CLOTURE;
+                
+                addNotification(
+                    'workflow-complete',
+                    'Signalement clôturé',
+                    `Le signalement ${report.id} a été clôturé avec succès.`,
+                    ['directeur', 'psychologue', 'admin']
+                );
+            }
+            
+            updateReport(reportId, report);
+        }
+
+        function addWorkflowDocument(reportId, stepId, document) {
+            const report = getReportById(reportId);
+            if (!report || !report.workflow) return;
+            
+            const step = report.workflow.steps.find(s => s.id === stepId);
+            if (step) {
+                step.documents.push({
+                    id: Date.now(),
+                    name: document.name,
+                    type: document.type,
+                    date: new Date().toISOString(),
+                    data: document.data || null
+                });
+                updateReport(reportId, report);
+            }
+        }
+
+        // ========================================
+        // CLASSIFICATION & DECISIONS
+        // ========================================
+        function classifyReport(reportId, classification, notes = '') {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            report.classification = classification;
+            report.classificationNotes = notes;
+            report.classifiedBy = currentUser.id;
+            report.classifiedDate = new Date().toISOString();
+            
+            switch (classification) {
+                case 'prise-en-charge':
+                    report.status = STATUS.PRIS_EN_CHARGE;
+                    startWorkflow(reportId);
+                    break;
+                case 'sauvegarde':
+                    report.status = STATUS.SAUVEGARDE;
+                    break;
+                case 'faux':
+                    report.status = STATUS.FAUX;
+                    break;
+            }
+            
+            updateReport(reportId, report);
+            
+            addNotification(
+                'classification',
+                'Signalement classifié',
+                `Le signalement ${reportId} a été classifié comme : ${classification}`,
+                ['directeur', 'psychologue']
+            );
+        }
+
+        function makeDecision(reportId, decisionType, decisionDetails) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            report.decision = {
+                type: decisionType,
+                details: decisionDetails,
+                madeBy: currentUser.id,
+                date: new Date().toISOString()
+            };
+            
+            updateReport(reportId, report);
+            
+            addNotification(
+                'decision',
+                'Décision prise',
+                `Une décision a été prise pour le signalement ${reportId}`,
+                ['psychologue', 'directeur']
+            );
+        }
+
+        // ========================================
+        // ARCHIVING
+        // ========================================
+        function archiveReport(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            report.archived = true;
+            report.archiveDate = new Date().toISOString();
+            report.archivedBy = currentUser.id;
+            
+            updateReport(reportId, report);
+            
+            addNotification(
+                'archive',
+                'Signalement archivé',
+                `Le signalement ${reportId} a été archivé avec succès.`,
+                ['admin', 'directeur']
+            );
+        }
+
+        function getArchivedReports() {
+            return reports.filter(r => r.archived);
         }
 
         function loadInterface(role) {
             const content = document.getElementById('mainContent');
             
-            if (role === 1) {
-                content.innerHTML = generateLevel1Interface();
-            } else if (role === 2) {
-                content.innerHTML = generateLevel2Interface();
-            } else if (role === 3) {
-                content.innerHTML = generateLevel3Interface();
+            // Ajouter le header utilisateur
+            const header = document.querySelector('.header-content');
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-info';
+            userInfo.style.cssText = 'display: flex; align-items: center; gap: 1rem;';
+            userInfo.innerHTML = `
+                <span style="color: var(--text-secondary);">${currentUser.prenom} ${currentUser.nom}</span>
+                <button onclick="logout()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Déconnexion</button>
+            `;
+            // Supprimer ancien user-info si existe
+            const oldUserInfo = header.querySelector('.user-info');
+            if (oldUserInfo) oldUserInfo.remove();
+            header.appendChild(userInfo);
+            
+            if (role === 'admin') {
+                content.innerHTML = generateAdminInterface();
+            } else if (['mere', 'tante', 'educateur'].includes(role)) {
+                content.innerHTML = generateDeclarantInterface();
+            } else if (role === 'psychologue') {
+                content.innerHTML = generatePsychologueInterface();
+            } else if (role === 'directeur') {
+                content.innerHTML = generateDirecteurInterface();
             }
         }
 
@@ -1002,15 +1852,41 @@
         }
 
         function generateMyReportsTable() {
-            const reports = [
-                { id: '#2026-089', date: '14 Fév 2026', type: 'Comportement', statut: 'En traitement' },
-                { id: '#2026-072', date: '10 Fév 2026', type: 'Santé', statut: 'Clôturé' }
-            ];
+            const myReports = getReportsByDeclarant(currentUser.id);
+            
+            if (myReports.length === 0) {
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Mes Signalements</h2>
+                            <p class="card-subtitle">Historique de vos signalements</p>
+                        </div>
+                        <div style="text-align: center; padding: 3rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+                            <p style="color: var(--text-secondary);">Vous n'avez pas encore de signalements.</p>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Créez votre premier signalement en cliquant sur "Nouveau Signalement".</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const getStatusBadge = (status) => {
+                const statusMap = {
+                    [STATUS.EN_ATTENTE]: { class: 'badge-en-traitement', label: 'En attente' },
+                    [STATUS.EN_COURS]: { class: 'badge-en-traitement', label: 'En cours' },
+                    [STATUS.PRIS_EN_CHARGE]: { class: 'badge-clôturé', label: 'Pris en charge' },
+                    [STATUS.SAUVEGARDE]: { class: 'badge-clôturé', label: 'Sauvegardé' },
+                    [STATUS.FAUX]: { class: 'badge-urgent', label: 'Faux signalement' },
+                    [STATUS.CLOTURE]: { class: 'badge-clôturé', label: 'Clôturé' }
+                };
+                const s = statusMap[status] || { class: 'badge-en-traitement', label: status };
+                return `<span class="badge ${s.class}">${s.label}</span>`;
+            };
             
             return `
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Mes Signalements</h2>
+                        <h2 class="card-title">Mes Signalements (${myReports.length})</h2>
                         <p class="card-subtitle">Historique de vos signalements</p>
                     </div>
                     <div class="table-container">
@@ -1020,18 +1896,24 @@
                                     <th>Référence</th>
                                     <th>Date</th>
                                     <th>Type</th>
+                                    <th>Enfant</th>
                                     <th>Statut</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${reports.map(r => `
+                                ${myReports.map(r => `
                                     <tr>
                                         <td><strong>${r.id}</strong></td>
-                                        <td>${r.date}</td>
+                                        <td>${new Date(r.dateCreation).toLocaleDateString('fr-FR')}</td>
                                         <td>${r.type}</td>
-                                        <td><span class="badge badge-${r.statut.toLowerCase().replace(' ', '-')}">${r.statut}</span></td>
-                                        <td><button class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Voir</button></td>
+                                        <td>${r.enfant}</td>
+                                        <td>${getStatusBadge(r.status)}</td>
+                                        <td>
+                                            <button onclick="viewReportDetails('${r.id}')" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-blue); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                                👁️ Voir
+                                            </button>
+                                        </td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -1041,11 +1923,40 @@
             `;
         }
 
+        function viewReportDetails(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            const statusLabels = {
+                [STATUS.EN_ATTENTE]: 'En attente',
+                [STATUS.EN_COURS]: 'En cours de traitement',
+                [STATUS.PRIS_EN_CHARGE]: 'Pris en charge',
+                [STATUS.SAUVEGARDE]: 'Sauvegardé',
+                [STATUS.FAUX]: 'Faux signalement',
+                [STATUS.CLOTURE]: 'Clôturé'
+            };
+            
+            alert(`📋 Détails du Signalement ${report.id}\n\n` +
+                  `Type: ${report.type}\n` +
+                  `Urgence: ${report.urgence}\n` +
+                  `Village: ${report.village}\n` +
+                  `Enfant: ${report.enfant}\n` +
+                  `Abuseur: ${report.abuseur || 'Non spécifié'}\n` +
+                  `Statut: ${statusLabels[report.status] || report.status}\n` +
+                  `Date: ${new Date(report.dateCreation).toLocaleString('fr-FR')}\n\n` +
+                  `Description:\n${report.description}`);
+        }
+
         function showDeclarantTab(tab) {
             document.querySelectorAll('.declarant-tab').forEach(t => t.style.display = 'none');
             document.getElementById(`declarant-${tab}`).style.display = 'block';
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
+            
+            // Refresh reports table when switching to it
+            if (tab === 'mes-signalements') {
+                document.getElementById('declarant-mes-signalements').innerHTML = generateMyReportsTable();
+            }
         }
 
         function handleSubmitReport(e) {
@@ -1061,15 +1972,26 @@
         // ÉTAPE 4: NIVEAU 2 - ANALYSE & TRAITEMENT
         // ========================================
         function generateLevel2Interface() {
+            // Get real stats
+            const pendingReports = getReportsByStatus(STATUS.EN_ATTENTE);
+            const urgentReports = reports.filter(r => r.urgence === 'urgent' && !r.archived);
+            const inProgressReports = getReportsByStatus(STATUS.EN_COURS);
+            const closedThisMonth = reports.filter(r => {
+                if (r.status !== STATUS.CLOTURE) return false;
+                const date = new Date(r.dateCreation);
+                const now = new Date();
+                return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+            });
+            
             return `
                 <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
                     <button class="nav-btn active" onclick="showAnalystTab('dashboard')">Dashboard</button>
-                    <button class="nav-btn" onclick="showAnalystTab('a-traiter')">À Traiter</button>
+                    <button class="nav-btn" onclick="showAnalystTab('a-traiter')">À Traiter (${pendingReports.length})</button>
                     <button class="nav-btn" onclick="showAnalystTab('workflow')">Workflow</button>
                 </div>
                 
                 <div id="analyst-dashboard" class="analyst-tab">
-                    ${generateAnalystDashboard()}
+                    ${generateAnalystDashboard(pendingReports.length, urgentReports.length, closedThisMonth.length)}
                 </div>
                 
                 <div id="analyst-a-traiter" class="analyst-tab" style="display: none;">
@@ -1082,24 +2004,35 @@
             `;
         }
 
-        function generateAnalystDashboard() {
+        function generateAnalystDashboard(pendingCount, urgentCount, closedCount) {
+            // Calculate village stats
+            const villages = ['tunis', 'sousse', 'sfax', 'bizerte', 'kairouan'];
+            const villageStats = villages.map(v => {
+                const vReports = getReportsByVillage(v);
+                const active = vReports.filter(r => !r.archived).length;
+                const inProgress = vReports.filter(r => r.status === STATUS.EN_COURS).length;
+                const urgent = vReports.filter(r => r.urgence === 'urgent' && !r.archived).length;
+                const closed = vReports.filter(r => r.status === STATUS.CLOTURE).length;
+                return { name: `Village ${v.charAt(0).toUpperCase() + v.slice(1)}`, active, inProgress, urgent, closed };
+            });
+            
             return `
                 <div class="stats-grid">
                     <div class="stat-card info">
-                        <div class="stat-number">24</div>
+                        <div class="stat-number">${pendingCount}</div>
                         <div class="stat-label">Signalements en attente</div>
                     </div>
                     <div class="stat-card urgent">
-                        <div class="stat-number" style="color: var(--sos-pink);">8</div>
+                        <div class="stat-number" style="color: var(--sos-pink);">${urgentCount}</div>
                         <div class="stat-label">Cas urgents</div>
                     </div>
                     <div class="stat-card success">
-                        <div class="stat-number" style="color: var(--success);">156</div>
+                        <div class="stat-number" style="color: var(--success);">${closedCount}</div>
                         <div class="stat-label">Cas traités ce mois</div>
                     </div>
                     <div class="stat-card warning">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Villages actifs</div>
+                        <div class="stat-number">${reports.filter(r => !r.archived).length}</div>
+                        <div class="stat-label">Cas actifs</div>
                     </div>
                 </div>
                 
@@ -1116,34 +2049,18 @@
                                     <th>En traitement</th>
                                     <th>Urgents</th>
                                     <th>Clôturés</th>
-                                    <th>Taux réussite</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>Village Tunis</strong></td>
-                                    <td>12</td>
-                                    <td>8</td>
-                                    <td>3</td>
-                                    <td>45</td>
-                                    <td>96%</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Village Sousse</strong></td>
-                                    <td>8</td>
-                                    <td>5</td>
-                                    <td>2</td>
-                                    <td>38</td>
-                                    <td>93%</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Village Sfax</strong></td>
-                                    <td>6</td>
-                                    <td>4</td>
-                                    <td>1</td>
-                                    <td>32</td>
-                                    <td>95%</td>
-                                </tr>
+                                ${villageStats.map(v => `
+                                    <tr>
+                                        <td><strong>${v.name}</strong></td>
+                                        <td>${v.active}</td>
+                                        <td>${v.inProgress}</td>
+                                        <td style="color: ${v.urgent > 0 ? 'var(--sos-pink)' : 'inherit'}; font-weight: ${v.urgent > 0 ? '600' : 'normal'};">${v.urgent}</td>
+                                        <td>${v.closed}</td>
+                                    </tr>
+                                `).join('')}
                             </tbody>
                         </table>
                     </div>
@@ -1152,18 +2069,34 @@
         }
 
         function generateReportsToProcessTable() {
-            const reports = [
-                { id: '#2026-089', date: '14 Fév 2026', village: 'Village Tunis', type: 'Comportement', priorite: 'Élevée', statut: 'Urgent' },
-                { id: '#2026-088', date: '13 Fév 2026', village: 'Village Sousse', type: 'Santé', priorite: 'Moyenne', statut: 'En traitement' },
-                { id: '#2026-087', date: '12 Fév 2026', village: 'Village Sfax', type: 'Conflit', priorite: 'Basse', statut: 'En attente' },
-                { id: '#2026-086', date: '11 Fév 2026', village: 'Village Tunis', type: 'Violence', priorite: 'Élevée', statut: 'Clôturé' }
-            ];
+            const pendingReports = reports.filter(r => r.status === STATUS.EN_ATTENTE && !r.archived);
+            
+            if (pendingReports.length === 0) {
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Signalements à traiter</h2>
+                            <p class="card-subtitle">Aucun signalement en attente</p>
+                        </div>
+                        <div style="text-align: center; padding: 3rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                            <p style="color: var(--text-secondary);">Tous les signalements ont été traités !</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const priorityLabels = {
+                'urgent': { class: 'priority-élevée', label: '🔴 Urgent' },
+                'moyen': { class: 'priority-moyenne', label: '🟡 Moyen' },
+                'bas': { class: 'priority-basse', label: '🟢 Bas' }
+            };
             
             return `
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Signalements à traiter</h2>
-                        <p class="card-subtitle">Liste des cas nécessitant une analyse</p>
+                        <h2 class="card-title">Signalements à traiter (${pendingReports.length})</h2>
+                        <p class="card-subtitle">Liste des cas nécessitant une classification</p>
                     </div>
                     <div class="table-container">
                         <table>
@@ -1174,27 +2107,81 @@
                                     <th>Village</th>
                                     <th>Type</th>
                                     <th>Priorité</th>
-                                    <th>Statut</th>
+                                    <th>Déclarant</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${reports.map(r => `
+                                ${pendingReports.map(r => {
+                                    const priority = priorityLabels[r.urgence] || priorityLabels['moyen'];
+                                    return `
                                     <tr>
                                         <td><strong>${r.id}</strong></td>
-                                        <td>${r.date}</td>
+                                        <td>${new Date(r.dateCreation).toLocaleDateString('fr-FR')}</td>
                                         <td>${r.village}</td>
                                         <td>${r.type}</td>
-                                        <td><span class="priority-${r.priorite.toLowerCase()}">${r.priorite}</span></td>
-                                        <td><span class="badge badge-${r.statut.toLowerCase().replace(' ', '-')}">${r.statut}</span></td>
-                                        <td><button class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Traiter</button></td>
+                                        <td><span class="${priority.class}">${priority.label}</span></td>
+                                        <td>${r.anonyme === 'oui' ? 'Anonyme' : r.declarantName}</td>
+                                        <td>
+                                            <button onclick="openClassificationModal('${r.id}')" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-blue); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                                🔍 Classifier
+                                            </button>
+                                        </td>
                                     </tr>
-                                `).join('')}
+                                    `;
+                                }).join('')}
                             </tbody>
                         </table>
                     </div>
                 </div>
             `;
+        }
+
+        function openClassificationModal(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            const classification = prompt(
+                `Classifier le signalement ${reportId}\n\n` +
+                `Enfant: ${report.enfant}\n` +
+                `Type: ${report.type}\n` +
+                `Description: ${report.description.substring(0, 100)}...\n\n` +
+                `Choisissez:\n` +
+                `1 - Prise en charge immédiate\n` +
+                `2 - Sauvegarde pour suivi\n` +
+                `3 - Faux signalement\n\n` +
+                `Entrez 1, 2 ou 3:`
+            );
+            
+            if (!classification) return;
+            
+            const notes = prompt('Notes de classification (optionnel):') || '';
+            
+            switch(classification) {
+                case '1':
+                    classifyReport(reportId, 'prise-en-charge', notes);
+                    alert('Signalement classifié : Prise en charge immédiate\n\nLe workflow de traitement a été initié.');
+                    break;
+                case '2':
+                    classifyReport(reportId, 'sauvegarde', notes);
+                    alert('Signalement classifié : Sauvegarde pour suivi');
+                    break;
+                case '3':
+                    classifyReport(reportId, 'faux', notes);
+                    alert('Signalement classifié : Faux signalement');
+                    break;
+                default:
+                    alert('Classification annulée');
+                    return;
+            }
+            
+            // Refresh the table
+            document.getElementById('analyst-a-traiter').innerHTML = generateReportsToProcessTable();
+            document.getElementById('analyst-dashboard').innerHTML = generateAnalystDashboard(
+                getReportsByStatus(STATUS.EN_ATTENTE).length,
+                reports.filter(r => r.urgence === 'urgent' && !r.archived).length,
+                reports.filter(r => r.status === STATUS.CLOTURE).length
+            );
         }
 
         function generateWorkflowInterface() {
@@ -1291,46 +2278,312 @@
         // ÉTAPE 5: NIVEAU 3 - GOUVERNANCE (placeholder)
         // ========================================
         function generateLevel3Interface() {
+            const pendingDecisions = reports.filter(r => 
+                (r.status === STATUS.PRIS_EN_CHARGE || r.status === STATUS.EN_COURS) && 
+                !r.archived && 
+                (!r.decision || !r.decision.type)
+            );
+            
+            const archivedCount = getArchivedReports().length;
+            
             return `
                 <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
                     <button class="nav-btn active" onclick="showGovernanceTab('vue-globale')">Vue Globale</button>
-                    <button class="nav-btn" onclick="showGovernanceTab('decisions')">Décisions</button>
-                    <button class="nav-btn" onclick="showGovernanceTab('archives')">Archives</button>
+                    <button class="nav-btn" onclick="showGovernanceTab('decisions')">Décisions (${pendingDecisions.length})</button>
+                    <button class="nav-btn" onclick="showGovernanceTab('archives')">Archives (${archivedCount})</button>
                 </div>
                 <div id="governance-vue-globale" class="governance-tab">
                     ${generateGovernanceDashboard()}
                 </div>
                 <div id="governance-decisions" class="governance-tab" style="display: none;">
-                    <div class="card"><div class="card-title">Prise de décision</div><p>À développer</p></div>
+                    ${generateDecisionsTable()}
                 </div>
                 <div id="governance-archives" class="governance-tab" style="display: none;">
-                    <div class="card"><div class="card-title">Archives</div><p>À développer</p></div>
+                    ${generateArchivesTable()}
                 </div>
             `;
         }
 
         function generateGovernanceDashboard() {
+            // Calculate real stats
+            const totalReports = reports.length;
+            const activeReports = reports.filter(r => !r.archived).length;
+            const closedThisMonth = reports.filter(r => {
+                if (r.status !== STATUS.CLOTURE) return false;
+                const date = new Date(r.dateCreation);
+                const now = new Date();
+                return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+            }).length;
+            
+            const avgProcessingTime = calculateAverageProcessingTime();
+            const resolutionRate = totalReports > 0 
+                ? Math.round((reports.filter(r => r.status === STATUS.CLOTURE).length / totalReports) * 100) 
+                : 0;
+            
+            // Village stats
+            const villages = ['tunis', 'sousse', 'sfax', 'bizerte', 'kairouan'];
+            const villageStats = villages.map(v => {
+                const vReports = getReportsByVillage(v).filter(r => !r.archived);
+                return {
+                    name: `Village ${v.charAt(0).toUpperCase() + v.slice(1)}`,
+                    count: vReports.length,
+                    urgent: vReports.filter(r => r.urgence === 'urgent').length
+                };
+            }).filter(v => v.count > 0);
+            
             return `
                 <div class="stats-grid">
                     <div class="stat-card info">
-                        <div class="stat-number">127</div>
-                        <div class="stat-label">Total cas ce trimestre</div>
+                        <div class="stat-number">${totalReports}</div>
+                        <div class="stat-label">Total signalements</div>
                     </div>
                     <div class="stat-card warning">
-                        <div class="stat-number" style="color: var(--warning);">2.3j</div>
+                        <div class="stat-number" style="color: var(--warning);">${avgProcessingTime}j</div>
                         <div class="stat-label">Temps moyen traitement</div>
                     </div>
                     <div class="stat-card success">
-                        <div class="stat-number" style="color: var(--success);">94%</div>
+                        <div class="stat-number" style="color: var(--success);">${resolutionRate}%</div>
                         <div class="stat-label">Taux de résolution</div>
                     </div>
                     <div class="stat-card urgent">
-                        <div class="stat-number" style="color: var(--sos-pink);">15</div>
-                        <div class="stat-label">Décisions en attente</div>
+                        <div class="stat-number" style="color: var(--sos-pink);">${activeReports}</div>
+                        <div class="stat-label">Cas actifs</div>
                     </div>
                 </div>
-                ${generateReportsToProcessTable()}
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Vue globale des villages</h2>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Village</th>
+                                    <th>Signalements</th>
+                                    <th>Urgents</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${villageStats.length > 0 ? villageStats.map(v => `
+                                    <tr>
+                                        <td><strong>${v.name}</strong></td>
+                                        <td>${v.count}</td>
+                                        <td style="color: ${v.urgent > 0 ? 'var(--sos-pink)' : 'inherit'}; font-weight: ${v.urgent > 0 ? '600' : 'normal'};">${v.urgent}</td>
+                                        <td>
+                                            <button onclick="viewVillageReports('${v.name.toLowerCase().replace('village ', '')}')" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-blue); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                                👁️ Voir
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('') : '<tr><td colspan="4" style="text-align: center;">Aucun signalement</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `;
+        }
+
+        function generateDecisionsTable() {
+            const pendingDecisions = reports.filter(r => 
+                (r.status === STATUS.PRIS_EN_CHARGE || r.status === STATUS.EN_COURS) && 
+                !r.archived && 
+                (!r.decision || !r.decision.type)
+            );
+            
+            if (pendingDecisions.length === 0) {
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Prise de décision</h2>
+                            <p class="card-subtitle">Aucune décision en attente</p>
+                        </div>
+                        <div style="text-align: center; padding: 3rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                            <p style="color: var(--text-secondary);">Toutes les décisions ont été prises !</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Prise de décision (${pendingDecisions.length})</h2>
+                        <p class="card-subtitle">Signalements nécessitant une décision formelle</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Référence</th>
+                                    <th>Date</th>
+                                    <th>Village</th>
+                                    <th>Enfant</th>
+                                    <th>Type</th>
+                                    <th>Statut Workflow</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${pendingDecisions.map(r => `
+                                    <tr>
+                                        <td><strong>${r.id}</strong></td>
+                                        <td>${new Date(r.dateCreation).toLocaleDateString('fr-FR')}</td>
+                                        <td>${r.village}</td>
+                                        <td>${r.enfant}</td>
+                                        <td>${r.type}</td>
+                                        <td>${r.workflow ? `Étape ${r.workflow.currentStep}/6` : 'Non démarré'}</td>
+                                        <td>
+                                            <button onclick="openDecisionModal('${r.id}')" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-pink); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                                ⚖️ Décider
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateArchivesTable() {
+            const archivedReports = getArchivedReports();
+            
+            if (archivedReports.length === 0) {
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Archives</h2>
+                            <p class="card-subtitle">Signalements archivés</p>
+                        </div>
+                        <div style="text-align: center; padding: 3rem;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                            <p style="color: var(--text-secondary);">Aucun signalement archivé</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Archives (${archivedReports.length})</h2>
+                        <p class="card-subtitle">Signalements archivés sécurisés</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Référence</th>
+                                    <th>Archivé le</th>
+                                    <th>Par</th>
+                                    <th>Enfant</th>
+                                    <th>Décision finale</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${archivedReports.map(r => `
+                                    <tr>
+                                        <td><strong>${r.id}</strong></td>
+                                        <td>${new Date(r.archiveDate).toLocaleDateString('fr-FR')}</td>
+                                        <td>${userAccounts.find(u => u.id === r.archivedBy)?.prenom || 'Inconnu'}</td>
+                                        <td>${r.enfant}</td>
+                                        <td>${r.decision?.type || 'Non spécifiée'}</td>
+                                        <td>
+                                            <button onclick="viewArchivedReport('${r.id}')" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-blue); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                                📂 Voir
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateAverageProcessingTime() {
+            const closedReports = reports.filter(r => r.status === STATUS.CLOTURE && r.workflow);
+            if (closedReports.length === 0) return 0;
+            
+            const totalDays = closedReports.reduce((sum, r) => {
+                const start = new Date(r.dateCreation);
+                const end = new Date(r.workflow.steps[5].endDate || r.dateCreation);
+                const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+                return sum + days;
+            }, 0);
+            
+            return Math.round(totalDays / closedReports.length);
+        }
+
+        function viewVillageReports(village) {
+            const villageReports = getReportsByVillage(village).filter(r => !r.archived);
+            alert(`Village ${village.charAt(0).toUpperCase() + village.slice(1)}\n\n` +
+                  `Signalements actifs: ${villageReports.length}\n` +
+                  `Urgents: ${villageReports.filter(r => r.urgence === 'urgent').length}\n` +
+                  `En attente: ${villageReports.filter(r => r.status === STATUS.EN_ATTENTE).length}`);
+        }
+
+        function openDecisionModal(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            const decision = prompt(
+                `Prise de décision pour ${reportId}\n\n` +
+                `Enfant: ${report.enfant}\n` +
+                `Type: ${report.type}\n` +
+                `Description: ${report.description.substring(0, 100)}...\n\n` +
+                `Choisissez la décision:\n` +
+                `1 - Prise en charge formelle\n` +
+                `2 - Sanction\n` +
+                `3 - Suivi renforcé\n` +
+                `4 - Clôturer le dossier\n\n` +
+                `Entrez 1, 2, 3 ou 4:`
+            );
+            
+            if (!decision) return;
+            
+            const details = prompt('Détails de la décision:') || '';
+            
+            let decisionType;
+            switch(decision) {
+                case '1': decisionType = 'prise-en-charge'; break;
+                case '2': decisionType = 'sanction'; break;
+                case '3': decisionType = 'suivi'; break;
+                case '4': decisionType = 'cloture'; break;
+                default: alert('Décision annulée'); return;
+            }
+            
+            makeDecision(reportId, decisionType, details);
+            
+            if (decision === '4') {
+                archiveReport(reportId);
+                alert('Décision enregistrée : Clôture et archivage du dossier');
+            } else {
+                alert(`Décision enregistrée : ${decisionType}`);
+            }
+            
+            // Refresh tables
+            document.getElementById('governance-decisions').innerHTML = generateDecisionsTable();
+            document.getElementById('governance-archives').innerHTML = generateArchivesTable();
+        }
+
+        function viewArchivedReport(reportId) {
+            const report = getReportById(reportId);
+            if (!report) return;
+            
+            alert(`📁 Dossier Archivé ${report.id}\n\n` +
+                  `Enfant: ${report.enfant}\n` +
+                  `Type: ${report.type}\n` +
+                  `Décision: ${report.decision?.type || 'Non spécifiée'}\n` +
+                  `Détails: ${report.decision?.details || 'Aucun'}\n` +
+                  `Archivé le: ${new Date(report.archiveDate).toLocaleDateString('fr-FR')}\n\n` +
+                  `Description originale:\n${report.description}`);
         }
 
         function showGovernanceTab(tab) {
@@ -1338,6 +2591,536 @@
             document.getElementById(`governance-${tab}`).style.display = 'block';
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
+        }
+
+        // ========================================
+        // INTERFACE ADMIN - GESTION DES COMPTES
+        // ========================================
+        function generateAdminInterface() {
+            return `
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <button class="nav-btn active" onclick="showAdminTab('dashboard')">Dashboard</button>
+                    <button class="nav-btn" onclick="showAdminTab('comptes')">Gestion des Comptes</button>
+                    <button class="nav-btn" onclick="showAdminTab('nouveau')">Nouveau Compte</button>
+                </div>
+                
+                <div id="admin-dashboard" class="admin-tab">
+                    ${generateAdminDashboard()}
+                </div>
+                
+                <div id="admin-comptes" class="admin-tab" style="display: none;">
+                    ${generateAccountManagementTable()}
+                </div>
+                
+                <div id="admin-nouveau" class="admin-tab" style="display: none;">
+                    ${generateCreateAccountForm()}
+                </div>
+            `;
+        }
+
+        function generateAdminDashboard() {
+            const totalAccounts = userAccounts.length;
+            const activeAccounts = userAccounts.filter(u => u.actif).length;
+            const inactiveAccounts = totalAccounts - activeAccounts;
+            const roleCounts = {
+                'mere': userAccounts.filter(u => u.role === 'mere').length,
+                'tante': userAccounts.filter(u => u.role === 'tante').length,
+                'psychologue': userAccounts.filter(u => u.role === 'psychologue').length,
+                'educateur': userAccounts.filter(u => u.role === 'educateur').length,
+                'directeur': userAccounts.filter(u => u.role === 'directeur').length,
+                'admin': userAccounts.filter(u => u.role === 'admin').length
+            };
+            
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card info">
+                        <div class="stat-number">${totalAccounts}</div>
+                        <div class="stat-label">Total comptes</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-number" style="color: var(--success);">${activeAccounts}</div>
+                        <div class="stat-label">Comptes actifs</div>
+                    </div>
+                    <div class="stat-card urgent">
+                        <div class="stat-number" style="color: var(--sos-pink);">${inactiveAccounts}</div>
+                        <div class="stat-label">Comptes inactifs</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Répartition par rôle</h2>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rôle</th>
+                                    <th>Nombre de comptes</th>
+                                    <th>Pourcentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Mère SOS</strong></td>
+                                    <td>${roleCounts.mere}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.mere/totalAccounts*100) : 0}%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tante SOS</strong></td>
+                                    <td>${roleCounts.tante}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.tante/totalAccounts*100) : 0}%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Psychologue</strong></td>
+                                    <td>${roleCounts.psychologue}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.psychologue/totalAccounts*100) : 0}%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Éducateur</strong></td>
+                                    <td>${roleCounts.educateur}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.educateur/totalAccounts*100) : 0}%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Directeur</strong></td>
+                                    <td>${roleCounts.directeur}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.directeur/totalAccounts*100) : 0}%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Administrateur</strong></td>
+                                    <td>${roleCounts.admin}</td>
+                                    <td>${totalAccounts > 0 ? Math.round(roleCounts.admin/totalAccounts*100) : 0}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateAccountManagementTable() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Gestion des Comptes Utilisateurs</h2>
+                        <p class="card-subtitle">Créer, modifier ou supprimer des comptes</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Rôle</th>
+                                    <th>Identifiant</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${userAccounts.map(u => `
+                                    <tr>
+                                        <td><strong>${u.nom}</strong></td>
+                                        <td>${u.prenom}</td>
+                                        <td>${getRoleName(u.role)}</td>
+                                        <td>${u.identifiant}</td>
+                                        <td><span class="badge badge-${u.actif ? 'clôturé' : 'en-traitement'}">${u.actif ? 'Actif' : 'Inactif'}</span></td>
+                                        <td>
+                                            <button onclick="editAccount(${u.id})" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;">✏️ Modifier</button>
+                                            <button onclick="deleteAccount(${u.id})" class="btn btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--sos-pink); color: white;">🗑️ Supprimer</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateCreateAccountForm() {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Créer un Nouveau Compte</h2>
+                        <p class="card-subtitle">Les champs marqués d'un astérisque (*) sont obligatoires</p>
+                    </div>
+                    <form onsubmit="handleCreateAccount(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label required">Nom</label>
+                                <input type="text" class="form-input" name="nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Prénom</label>
+                                <input type="text" class="form-input" name="prenom" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Rôle</label>
+                                <select class="form-select" name="role" required>
+                                    <option value="">Sélectionner un rôle</option>
+                                    <option value="mere">Mère SOS</option>
+                                    <option value="tante">Tante SOS</option>
+                                    <option value="psychologue">Psychologue</option>
+                                    <option value="educateur">Éducateur-Éducatrice</option>
+                                    <option value="directeur">Directeur Responsable</option>
+                                    <option value="admin">Administrateur</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Identifiant</label>
+                                <input type="text" class="form-input" name="identifiant" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Mot de passe</label>
+                                <input type="password" class="form-input" name="motDePasse" required>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+                            <button type="submit" class="btn btn-primary">Créer le compte</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function showAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+            document.getElementById(`admin-${tab}`).style.display = 'block';
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Rafraîchir le tableau si on affiche les comptes
+            if (tab === 'comptes') {
+                document.getElementById('admin-comptes').innerHTML = generateAccountManagementTable();
+            }
+        }
+
+        function handleCreateAccount(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const newAccount = {
+                id: Date.now(),
+                nom: formData.get('nom'),
+                prenom: formData.get('prenom'),
+                email: formData.get('email'),
+                role: formData.get('role'),
+                identifiant: formData.get('identifiant'),
+                motDePasse: formData.get('motDePasse'),
+                actif: true,
+                dateCreation: new Date().toISOString().split('T')[0]
+            };
+            
+            // Vérifier si l'identifiant existe déjà
+            if (userAccounts.find(u => u.identifiant === newAccount.identifiant)) {
+                alert('Cet identifiant existe déjà. Veuillez en choisir un autre.');
+                return;
+            }
+            
+            userAccounts.push(newAccount);
+            localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+            
+            alert('Compte créé avec succès !');
+            e.target.reset();
+            showAdminTab('comptes');
+        }
+
+        function deleteAccount(id) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer ce compte ?')) return;
+            
+            // Empêcher la suppression de son propre compte
+            if (id === currentUser.id) {
+                alert('Vous ne pouvez pas supprimer votre propre compte.');
+                return;
+            }
+            
+            userAccounts = userAccounts.filter(u => u.id !== id);
+            localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+            
+            // Rafraîchir l'affichage
+            document.getElementById('admin-comptes').innerHTML = generateAccountManagementTable();
+            alert('Compte supprimé avec succès.');
+        }
+
+        function editAccount(id) {
+            const user = userAccounts.find(u => u.id === id);
+            if (!user) return;
+            
+            const newNom = prompt('Nom:', user.nom);
+            if (newNom === null) return;
+            
+            const newPrenom = prompt('Prénom:', user.prenom);
+            if (newPrenom === null) return;
+            
+            const newEmail = prompt('Email:', user.email);
+            if (newEmail === null) return;
+            
+            const roles = ['mere', 'tante', 'psychologue', 'educateur', 'directeur', 'admin'];
+            const roleNames = ['Mère SOS', 'Tante SOS', 'Psychologue', 'Éducateur', 'Directeur', 'Administrateur'];
+            let rolePrompt = 'Rôle (0-5):\n';
+            roles.forEach((r, i) => rolePrompt += `${i}: ${roleNames[i]}\n`);
+            const roleIndex = prompt(rolePrompt + '\nActuel: ' + user.role + ' (' + roleNames[roles.indexOf(user.role)] + ')');
+            if (roleIndex === null) return;
+            
+            const newActif = confirm('Compte actif ?\nOK = Actif, Annuler = Inactif');
+            
+            const newPassword = prompt('Nouveau mot de passe (laisser vide pour ne pas changer):');
+            
+            user.nom = newNom || user.nom;
+            user.prenom = newPrenom || user.prenom;
+            user.email = newEmail || user.email;
+            if (roleIndex !== '' && roles[roleIndex]) {
+                user.role = roles[roleIndex];
+            }
+            user.actif = newActif;
+            if (newPassword && newPassword.trim() !== '') {
+                user.motDePasse = newPassword;
+            }
+            
+            localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+            document.getElementById('admin-comptes').innerHTML = generateAccountManagementTable();
+            alert('Compte modifié avec succès.');
+        }
+
+        // ========================================
+        // INTERFACE DÉCLARANT (Mère, Tante, Éducateur)
+        // ========================================
+        function generateDeclarantInterface() {
+            return generateLevel1Interface();
+        }
+
+        // ========================================
+        // INTERFACE PSYCHOLOGUE
+        // ========================================
+        function generatePsychologueInterface() {
+            return generateLevel2Interface();
+        }
+
+        // ========================================
+        // INTERFACE DIRECTEUR
+        // ========================================
+        function generateDirecteurInterface() {
+            return generateLevel3Interface();
+        }
+
+        // ========================================
+        // LANDING PAGE NAVIGATION
+        // ========================================
+        function goToLogin() {
+            document.getElementById('landingScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+        }
+
+        function goToLanding() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('landingScreen').style.display = 'flex';
+            currentUser = null;
+            currentRole = null;
+        }
+
+        // ========================================
+        // PROFILE MANAGEMENT
+        // ========================================
+        function openProfileModal() {
+            if (!currentUser) return;
+            
+            // Populate profile info
+            document.getElementById('profileNom').value = currentUser.nom || '';
+            document.getElementById('profilePrenom').value = currentUser.prenom || '';
+            document.getElementById('profileEmail').value = currentUser.email || '';
+            document.getElementById('profileRole').value = getRoleName(currentUser.role);
+            document.getElementById('profileIdentifiant').value = currentUser.identifiant || '';
+            
+            // Load profile photo if exists
+            updateProfileAvatarDisplay();
+            
+            // Show modal
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+            // Clear password fields
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function updateProfileAvatarDisplay() {
+            const display = document.getElementById('profileAvatarDisplay');
+            if (currentUser && currentUser.photo) {
+                display.innerHTML = `<img src="${currentUser.photo}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+            } else {
+                display.innerHTML = '👤';
+            }
+        }
+
+        function handleProfilePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('La photo ne doit pas dépasser 2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Update current user photo
+                currentUser.photo = e.target.result;
+                
+                // Update in userAccounts
+                const userIndex = userAccounts.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    userAccounts[userIndex].photo = e.target.result;
+                    localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+                }
+                
+                // Update displays
+                updateProfileAvatarDisplay();
+                updateHeaderAvatar();
+                
+                alert('Photo de profil mise à jour avec succès !');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function deleteProfilePhoto() {
+            if (!currentUser || !currentUser.photo) {
+                alert('Aucune photo à supprimer');
+                return;
+            }
+            
+            if (!confirm('Êtes-vous sûr de vouloir supprimer votre photo de profil ?')) return;
+            
+            // Remove photo from current user
+            delete currentUser.photo;
+            
+            // Update in userAccounts
+            const userIndex = userAccounts.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                delete userAccounts[userIndex].photo;
+                localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+            }
+            
+            // Update displays
+            updateProfileAvatarDisplay();
+            updateHeaderAvatar();
+            
+            alert('Photo de profil supprimée avec succès !');
+        }
+
+        function updateHeaderAvatar() {
+            const headerInfo = document.querySelector('.user-info');
+            if (headerInfo && currentUser) {
+                const avatarHtml = currentUser.photo 
+                    ? `<img src="${currentUser.photo}" class="profile-avatar" onclick="openProfileModal()">`
+                    : `<div class="profile-avatar-placeholder" onclick="openProfileModal()">👤</div>`;
+                
+                headerInfo.innerHTML = `
+                    ${avatarHtml}
+                    <span style="color: var(--text-secondary);">${currentUser.prenom} ${currentUser.nom}</span>
+                    <button onclick="logout()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Déconnexion</button>
+                `;
+            }
+        }
+
+        function handleChangePassword(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Verify current password
+            if (currentPassword !== currentUser.motDePasse) {
+                alert('Mot de passe actuel incorrect');
+                return;
+            }
+            
+            // Check new password length
+            if (newPassword.length < 6) {
+                alert('Le nouveau mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+            
+            // Check passwords match
+            if (newPassword !== confirmPassword) {
+                alert('Les nouveaux mots de passe ne correspondent pas');
+                return;
+            }
+            
+            // Update password
+            currentUser.motDePasse = newPassword;
+            
+            // Update in userAccounts
+            const userIndex = userAccounts.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                userAccounts[userIndex].motDePasse = newPassword;
+                localStorage.setItem('sos_userAccounts', JSON.stringify(userAccounts));
+            }
+            
+            // Clear password fields
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            
+            alert('Mot de passe changé avec succès !');
+        }
+
+        // Override logout function to return to landing page
+        function logout() {
+            currentUser = null;
+            currentRole = null;
+            closeProfileModal();
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('landingScreen').style.display = 'flex';
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+            document.querySelector('form').reset();
+        }
+
+        // Override loadInterface to add profile avatar in header
+        function loadInterface(role) {
+            const content = document.getElementById('mainContent');
+            
+            // Ajouter le header utilisateur avec avatar
+            const header = document.querySelector('#appContainer .header-content');
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-info';
+            userInfo.style.cssText = 'display: flex; align-items: center; gap: 1rem;';
+            
+            const avatarHtml = currentUser.photo 
+                ? `<img src="${currentUser.photo}" class="profile-avatar" onclick="openProfileModal()">`
+                : `<div class="profile-avatar-placeholder" onclick="openProfileModal()">👤</div>`;
+            
+            userInfo.innerHTML = `
+                ${avatarHtml}
+                <span style="color: var(--text-secondary);">${currentUser.prenom} ${currentUser.nom}</span>
+                <button onclick="logout()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Déconnexion</button>
+            `;
+            
+            // Supprimer ancien user-info si existe
+            const oldUserInfo = header.querySelector('.user-info');
+            if (oldUserInfo) oldUserInfo.remove();
+            header.appendChild(userInfo);
+            
+            if (role === 'admin') {
+                content.innerHTML = generateAdminInterface();
+            } else if (['mere', 'tante', 'educateur'].includes(role)) {
+                content.innerHTML = generateDeclarantInterface();
+            } else if (role === 'psychologue') {
+                content.innerHTML = generatePsychologueInterface();
+            } else if (role === 'directeur') {
+                content.innerHTML = generateDirecteurInterface();
+            }
         }
     </script>
 </body>
