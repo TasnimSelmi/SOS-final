@@ -1,0 +1,307 @@
+/* ReportsList.css - Liste des signalements */
+
+.reports-list-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.reports-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reports-header h1 {
+  color: #2563eb;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.reports-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filters-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.filters-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 150px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.filter-group select,
+.filter-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.search-group {
+  flex: 2;
+  min-width: 200px;
+}
+
+.btn-clear {
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+.stats-bar {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.stat-item {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.stat-item strong {
+  color: #374151;
+  margin-right: 0.25rem;
+}
+
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reports-table th {
+  background: #f9fafb;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.reports-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.reports-table tr:hover {
+  background: #f9fafb;
+}
+
+.report-id {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+.report-id:hover {
+  text-decoration: underline;
+}
+
+.child-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge {
+  font-weight: 600;
+}
+
+.status-badge.en_attente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.en_cours {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.pris_en_charge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.sauvegarde {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.status-badge.faux {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge.cloture {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.urgency-badge {
+  font-weight: 600;
+}
+
+.classification-badge {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.btn-view {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.btn-view:hover {
+  background: #dbeafe;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-message {
+  color: #9ca3af;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.btn-page {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.btn-page.active {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-pagination {
+  font-size: 0.85rem;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 4rem;
+  color: #6b7280;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reports-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .filters-row {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .stats-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

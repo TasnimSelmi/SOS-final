@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import SidebarNavigation from './SidebarNavigation'
 import ConfidentialBanner from './ConfidentialBanner'
 import StatsOverview from './StatsOverview'
@@ -9,18 +10,26 @@ import Level3Dashboard from './Level3Dashboard'
 import './Dashboard.css'
 
 function Dashboard({ user, onLogout }) {
+  const navigate = useNavigate()
+
   const renderDashboard = () => {
-    switch(user.role) {
-      case 1:
-        return <Level1Dashboard />
-      case 2:
-        return <Level2Dashboard />
-      case 3:
-        return <Level3Dashboard />
-      default:
-        return <Level1Dashboard />
+    // Backend uses string roles: 'mere', 'tante', 'educateur', 'psychologue', 'directeur', 'admin'
+    const level1Roles = ['mere', 'tante', 'educateur']
+    const level2Roles = ['psychologue']
+    const level3Roles = ['directeur', 'admin']
+
+    if (level1Roles.includes(user.role)) {
+      return <Level1Dashboard />
+    } else if (level2Roles.includes(user.role)) {
+      return <Level2Dashboard />
+    } else if (level3Roles.includes(user.role)) {
+      return <Level3Dashboard />
+    } else {
+      return <Level1Dashboard />
     }
   }
+
+  const canCreateReport = ['mere', 'tante', 'educateur'].includes(user.role)
 
   return (
     <div className="dashboard-container">
@@ -33,9 +42,14 @@ function Dashboard({ user, onLogout }) {
               <h1>Hack for Hope</h1>
               <p className="header-subtitle">"Aucun enfant ne devrait grandir seul" — SOS Tunisie</p>
             </div>
-            <button className="btn btn-primary btn-new-report">
-              + Nouveau signalement
-            </button>
+            {canCreateReport && (
+              <button 
+                className="btn btn-primary btn-new-report"
+                onClick={() => navigate('/reports/create')}
+              >
+                + Nouveau signalement
+              </button>
+            )}
           </div>
           
           <div className="dashboard-body">

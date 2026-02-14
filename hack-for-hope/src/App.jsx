@@ -10,6 +10,13 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import ProfileSettings from './pages/ProfileSettings'
+// New pages
+import ReportCreate from './pages/ReportCreate'
+import ReportsList from './pages/ReportsList'
+import ReportDetail from './pages/ReportDetail'
+import AdminUsers from './pages/AdminUsers'
+import ReportClassify from './pages/ReportClassify'
+import ReportDecision from './pages/ReportDecision'
 import './App.css'
 
 // Layout pour les pages publiques avec navigation
@@ -109,6 +116,82 @@ function AppContent() {
               </PrivateLayout>
             ) : (
               <Navigate to="/login" />
+            )
+          } 
+        />
+        
+        {/* Reports Routes - Private */}
+        <Route 
+          path="/reports" 
+          element={
+            user ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <ReportsList />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } 
+        />
+        <Route 
+          path="/reports/create" 
+          element={
+            user ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <ReportCreate />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } 
+        />
+        <Route 
+          path="/reports/:id" 
+          element={
+            user ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <ReportDetail />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } 
+        />
+        <Route 
+          path="/reports/:id/classify" 
+          element={
+            user ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <ReportClassify />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } 
+        />
+        <Route 
+          path="/reports/:id/decision" 
+          element={
+            user ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <ReportDecision />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } 
+        />
+        
+        {/* Admin Routes - Private (Admin only) */}
+        <Route 
+          path="/admin/users" 
+          element={
+            user?.role === 'admin' ? (
+              <PrivateLayout user={user} onLogout={logout}>
+                <AdminUsers />
+              </PrivateLayout>
+            ) : (
+              <Navigate to="/dashboard" />
             )
           } 
         />

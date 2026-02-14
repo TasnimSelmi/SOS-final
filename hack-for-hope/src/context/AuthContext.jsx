@@ -19,13 +19,14 @@ export function AuthProvider({ children }) {
   const login = async (credentials) => {
     try {
       const response = await authAPI.login(credentials)
-      const { token, user } = response.data
+      // Handle backend response format: { status, message, data: { token, user } }
+      const { token, user } = response.data.data || response.data
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
       setUser(user)
       return { success: true, user }
     } catch (error) {
-      return { success: false, error: error.response?.data?.error || 'Erreur de connexion' }
+      return { success: false, error: error.response?.data?.message || 'Erreur de connexion' }
     }
   }
 

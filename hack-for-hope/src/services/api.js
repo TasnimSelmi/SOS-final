@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3001/api'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const api = axios.create({
   baseURL: API_URL,
@@ -21,14 +21,58 @@ api.interceptors.request.use((config) => {
 // Auth API
 export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
+  register: (userData) => api.post('/auth/register', userData),
+  getMe: () => api.get('/auth/me'),
+  changePassword: (data) => api.post('/auth/change-password', data)
+}
+
+// Users API (Admin only)
+export const usersAPI = {
+  getAll: (params = {}) => api.get('/users', { params }),
+  getById: (id) => api.get(`/users/${id}`),
+  update: (id, data) => api.put(`/users/${id}`, data),
+  delete: (id) => api.delete(`/users/${id}`),
+  resetPassword: (id, newPassword) => api.post(`/users/${id}/reset-password`, { newPassword }),
+  getRoles: () => api.get('/users/roles/list')
 }
 
 // Reports API
 export const reportsAPI = {
-  getAll: () => api.get('/reports'),
-  create: (data) => api.post('/reports', data),
+  getAll: (params = {}) => api.get('/reports', { params }),
+  getById: (id) => api.get(`/reports/${id}`),
+  create: (data) => {
+    const formData = new FormData()
+    
+    // Append text data
+    Object.keys(data).forEach(key => {
+      if (key !== 'attachments') {
+        formData.append(key, data[key])
+      }
+    })
+    
+    // Append files
+    if (data.attachments) {
+      data.attachments.forEach(file => {
+        formData.append('attachments', file)
+      })
+    }
+    
+    return api.post('/reports', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
   classify: (id, data) => api.put(`/reports/${id}/classify`, data),
-  updateStatus: (id, status) => api.put(`/reports/${id}/status`, { statut: status })
+  assign: (id, userId) => api.put(`/reports/${id}/assign`, { userId }),
+  makeDecision: (id, data) => api.put(`/reports/${id}/decision`, data)
+}
+
+// Notifications API
+export const notificationsAPI = {
+  getAll: (params = {}) => api.get('/notifications', { params }),
+  getUnreadCount: () => api.get('/notifications/unread-count'),
+  markAsRead: (id) => api.put(`/notifications/${id}/read`),
+  markAllAsRead: () => api.put('/notifications/mark-all-read'),
+  delete: (id) => api.delete(`/notifications/${id}`)
 }
 
 // Upload API
