@@ -16,6 +16,11 @@ function SidebarNavigation({ user, onLogout }) {
     { path: '/settings', icon: SOSIcons.Heart, label: 'Paramètres' }
   ]
 
+  // Add admin link if user is admin
+  if (user?.role === 'admin') {
+    menuItems.push({ path: '/admin/users', icon: SOSIcons.User, label: 'Gestion Utilisateurs' })
+  }
+
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
@@ -51,11 +56,16 @@ function SidebarNavigation({ user, onLogout }) {
                 <SOSIcons.User size={24} />
               </div>
               <div className="user-details">
-                <span className="user-name">{user.name}</span>
+                <span className="user-name">{user.fullName || user.name || `${user.firstName} ${user.lastName}`}</span>
                 <span className="user-role">
-                  {user.role === 1 ? 'Niveau 1 - Déclarant' : 
-                   user.role === 2 ? 'Niveau 2 - Analyse' : 
-                   'Niveau 3 - Gouvernance'}
+                  {user.role === 'admin' ? 'Administrateur' :
+                   user.role === 'mere' ? 'Mère SOS' :
+                   user.role === 'tante' ? 'Tante SOS' :
+                   user.role === 'educateur' ? 'Éducateur' :
+                   user.role === 'psychologue' ? 'Psychologue' :
+                   user.role === 'decideur1' ? 'Décideur 1' :
+                   user.role === 'decideur2' ? 'Décideur 2' :
+                   user.role}
                 </span>
               </div>
             </div>

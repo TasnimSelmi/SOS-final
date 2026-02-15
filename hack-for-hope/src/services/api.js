@@ -65,7 +65,29 @@ export const reportsAPI = {
   },
   classify: (id, data) => api.put(`/reports/${id}/classify`, data),
   assign: (id, userId) => api.put(`/reports/${id}/assign`, { userId }),
-  makeDecision: (id, data) => api.put(`/reports/${id}/decision`, data)
+  makeDecision: (id, data) => api.put(`/reports/${id}/decision`, data),
+  startWorkflowStep: (reportId, stepNumber) => api.put(`/reports/${reportId}/workflow/steps/${stepNumber}/start`),
+  completeWorkflowStep: (reportId, stepNumber, notes) => api.put(`/reports/${reportId}/workflow/steps/${stepNumber}/complete`, { notes }),
+  uploadStepDocuments: (reportId, stepNumber, files) => {
+    const formData = new FormData()
+    files.forEach(file => formData.append('documents', file))
+    return api.post(`/reports/${reportId}/workflow/steps/${stepNumber}/documents`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  createDocument: (reportId, data) => {
+    const formData = new FormData()
+    formData.append('type', data.type)
+    formData.append('title', data.title)
+    formData.append('content', data.content)
+    if (data.attachments) {
+      data.attachments.forEach(file => formData.append('attachments', file))
+    }
+    return api.post(`/reports/${reportId}/documents`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  getVillageStats: () => api.get('/reports/stats/village')
 }
 
 // Notifications API

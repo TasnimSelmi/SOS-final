@@ -91,19 +91,15 @@ function ReportCreate() {
     setError(null)
 
     try {
-      const data = {
+      const reportData = {
         ...formData,
+        childAge: formData.childAge ? parseInt(formData.childAge) : undefined,
         attachments
       }
 
-      const response = await reportsAPI.create(data)
-      
-      if (response.data?.status === 'success') {
-        setSuccess(true)
-        setTimeout(() => {
-          navigate('/reports')
-        }, 2000)
-      }
+      const response = await reportsAPI.create(reportData)
+      setSuccess(true)
+      setTimeout(() => navigate('/reports'), 2000)
     } catch (err) {
       setError(err.response?.data?.message || 'Erreur lors de la création du signalement')
     } finally {

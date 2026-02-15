@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { reportsAPI } from '../services/api'
+import { useAuth } from '../context/AuthContext'
 import { useSocket } from '../context/SocketContext'
 import { SOSIcons } from './SOSIcons'
 import { SOSCard, SOSStatCard } from './SOSCard'
@@ -76,12 +77,26 @@ function Level3Dashboard() {
 }
 
 function GovernanceOverview({ stats }) {
-  const [villageStats, setVillageStats] = useState([
-    { label: 'Gammarth', total: 85, pending: 12, resolved: 73 },
-    { label: 'Siliana', total: 78, pending: 8, resolved: 70 },
-    { label: 'Mahrès', total: 72, pending: 6, resolved: 66 },
-    { label: 'Akouda', total: 80, pending: 10, resolved: 70 }
-  ])
+  const [villageStats, setVillageStats] = useState([])
+  const [loadingStats, setLoadingStats] = useState(true)
+
+  useEffect(() => {
+    fetchVillageStats()
+  }, [])
+
+  const fetchVillageStats = async () => {
+    try {
+      setLoadingStats(true)
+      const response = await reportsAPI.getVillageStats()
+      if (response.data?.status === 'success') {
+        setVillageStats(response.data.data.stats || [])
+      }
+    } catch (error) {
+      console.error('Erreur chargement stats villages:', error)
+    } finally {
+      setLoadingStats(false)
+    }
+  }
 
   return (
     <>
@@ -93,32 +108,45 @@ function GovernanceOverview({ stats }) {
       </div>
       
       <SOSCard title="Performance par village" subtitle="Taux de résolution et statistiques" variant="info">
-        <table className="sos-table">
-          <thead>
-            <tr>
-              <th><SOSIcons.Village size={16} /> Village</th>
-              <th><SOSIcons.Document size={16} /> Total Cas</th>
-              <th><SOSIcons.Notification size={16} /> En attente</th>
-              <th><SOSIcons.Check size={16} /> Résolus</th>
-              <th><SOSIcons.Heart size={16} /> Taux résolution</th>
-            </tr>
-          </thead>
-          <tbody>
-            {villageStats.map((v) => (
-              <tr key={v.label}>
-                <td><strong>Village {v.label}</strong></td>
-                <td>{v.total}</td>
-                <td>{v.pending}</td>
-                <td>{v.resolved}</td>
-                <td>
-                  <span className={`success-rate ${v.resolved/v.total > 0.8 ? 'high' : 'medium'}`}>
-                    {Math.round((v.resolved/v.total) * 100)}%
-                  </span>
-                </td>
+        {loadingStats ? (
+          <div className="loading-state">Chargement des statistiques...</div>
+        ) : villageStats.length === 0 ? (
+          <div className="empty-state">
+            <SOSIcons.Village size={64} color="#00abec" />
+            <p>Aucune statistique disponible</p>
+          </div>
+        ) : (
+          <table className="sos-table">
+            <thead>
+              <tr>
+                <th><SOSIcons.Village size={16} /> Village</th>
+                <th><SOSIcons.Document size={16} /> Total Cas</th>
+                <th><SOSIcons.Notification size={16} /> En attente</th>
+                <th><SOSIcons.Check size={16} /> Résolus</th>
+                <th><SOSIcons.Alert size={16} /> Urgents</th>
+                <th><SOSIcons.Heart size={16} /> Taux résolution</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {villageStats.map((v) => (
+                <tr key={v.village}>
+                  <td><strong>Village {v.village}</strong></td>
+                  <td>{v.total}</td>
+                  <td>{v.pending}</td>
+                  <td>{v.resolved}</td>
+                  <td>
+                    <span className="urgent-count">{v.urgent}</span>
+                  </td>
+                  <td>
+                    <span className={`success-rate ${v.resolutionRate > 80 ? 'high' : v.resolutionRate > 60 ? 'medium' : 'low'}`}>
+                      {Math.round(v.resolutionRate || 0)}%
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </SOSCard>
       
       <SOSCard title="Alertes et Priorités" subtitle="Cas nécessitant une attention immédiate" variant="urgent">
@@ -144,10 +172,12 @@ function GovernanceOverview({ stats }) {
 }
 
 function DecisionMaking() {
+  const { user } = useAuth()
   const [reports, setReports] = useState([])
   const [loading, setLoading] = useState(false)
   const [selectedReport, setSelectedReport] = useState(null)
   const [decisionModal, setDecisionModal] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchPendingDecisions()
@@ -156,16 +186,28 @@ function DecisionMaking() {
   const fetchPendingDecisions = async () => {
     try {
       setLoading(true)
-      const response = await reportsAPI.getAll({ 
+      // Filter by village if user is decideur1 (Directeur village)
+      const params = { 
         status: 'sauvegarde,pris_en_charge',
         classification: 'sauvegarde,prise_en_charge'
-      })
+      }
+      
+      // Directeur village only sees their village reports
+      if (user?.role === 'decideur1' && user?.village) {
+        params.village = user.village
+      }
+      
+      const response = await reportsAPI.getAll(params)
       setReports(response.data?.data?.reports || [])
     } catch (error) {
       console.error('Erreur chargement décisions:', error)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleViewDetails = (reportId) => {
+    navigate(`/reports/${reportId}`)
   }
 
   const handleMakeDecision = (report) => {
@@ -233,13 +275,22 @@ function DecisionMaking() {
                     </span>
                   </td>
                   <td>
-                    <button 
-                      className="btn btn-primary btn-sm"
-                      onClick={() => handleMakeDecision(report)}
-                    >
-                      <SOSIcons.Check size={16} />
-                      Décider
-                    </button>
+                    <div className="action-buttons">
+                      <button 
+                        className="btn btn-sm btn-secondary"
+                        onClick={() => handleViewDetails(report.id)}
+                        title="Voir détails"
+                      >
+                        <SOSIcons.Search size={16} />
+                      </button>
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleMakeDecision(report)}
+                      >
+                        <SOSIcons.Check size={16} />
+                        Décider
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -276,7 +327,9 @@ function DecisionModal({ report, onClose, onSubmit }) {
   }
 
   const decisions = [
-    { value: 'validation', label: 'Validation', desc: 'Valider la prise en charge ou sauvegarde', color: '#22c55e' },
+    { value: 'prise_en_charge', label: 'Prise en charge', desc: 'Valider la prise en charge formelle', color: '#22c55e' },
+    { value: 'sanction', label: 'Sanction', desc: 'Appliquer des sanctions appropriées', color: '#ef4444' },
+    { value: 'suivi', label: 'Suivi', desc: 'Mettre en place un suivi renforcé', color: '#3b82f6' },
     { value: 'escalade', label: 'Escalade', desc: 'Escalader vers instances supérieures', color: '#f59e0b' },
     { value: 'cloture', label: 'Clôture', desc: 'Clôturer le dossier définitivement', color: '#6b7280' }
   ]
@@ -343,6 +396,7 @@ function SecureArchives() {
   const [archivedReports, setArchivedReports] = useState([])
   const [loading, setLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchArchivedReports()
@@ -358,6 +412,10 @@ function SecureArchives() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleViewDetails = (reportId) => {
+    navigate(`/reports/${reportId}`)
   }
 
   const filteredReports = archivedReports.filter(r => 
@@ -418,7 +476,11 @@ function SecureArchives() {
                 <td>{report.incidentType}</td>
                 <td>{getStatusBadge(report.status)}</td>
                 <td>
-                  <button className="btn btn-sm btn-secondary">
+                  <button 
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => handleViewDetails(report.id)}
+                    title="Voir détails"
+                  >
                     <SOSIcons.Search size={16} />
                     Voir
                   </button>

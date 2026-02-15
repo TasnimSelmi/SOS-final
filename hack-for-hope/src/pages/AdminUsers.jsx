@@ -30,6 +30,7 @@ function AdminUsers() {
   })
 
   const [formData, setFormData] = useState({
+    username: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -45,7 +46,8 @@ function AdminUsers() {
     'tante': 'Tante SOS',
     'educateur': 'Éducateur',
     'psychologue': 'Psychologue',
-    'directeur': 'Directeur',
+    'decideur1': 'Décideur 1',
+    'decideur2': 'Décideur 2',
     'admin': 'Administrateur'
   }
 
@@ -120,7 +122,7 @@ function AdminUsers() {
   const handleCreateUser = async (e) => {
     e.preventDefault()
     try {
-      const response = await usersAPI.register(formData)
+      const response = await usersAPI.create(formData)
       
       if (response.data?.status === 'success') {
         setShowCreateModal(false)
@@ -137,6 +139,7 @@ function AdminUsers() {
     e.preventDefault()
     try {
       const updateData = {
+        username: formData.username,
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
@@ -180,7 +183,7 @@ function AdminUsers() {
     }
 
     try {
-      await usersAPI.resetPassword(userId, newPassword)
+      await usersAPI.resetPassword(userId, { newPassword })
       alert('Mot de passe réinitialisé avec succès !')
     } catch (err) {
       alert(err.response?.data?.message || 'Erreur lors de la réinitialisation')
@@ -190,6 +193,7 @@ function AdminUsers() {
   const openEditModal = (user) => {
     setSelectedUser(user)
     setFormData({
+      username: user.username || '',
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -204,6 +208,7 @@ function AdminUsers() {
 
   const resetForm = () => {
     setFormData({
+      username: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -243,6 +248,23 @@ function AdminUsers() {
         </div>
         
         <form onSubmit={onSubmit} className="modal-form">
+          <div className="form-group">
+            <label>Nom d'utilisateur *</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              required
+              disabled={isEdit}
+              placeholder="Ex: jdupont"
+              pattern="[a-zA-Z0-9_]+"
+              title="Lettres, chiffres et underscores uniquement"
+              minLength="3"
+              maxLength="30"
+            />
+          </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Prénom *</label>
@@ -267,13 +289,13 @@ function AdminUsers() {
           </div>
 
           <div className="form-group">
-            <label>Email *</label>
+            <label>Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              required
+              placeholder="Optionnel"
             />
           </div>
 
@@ -308,13 +330,18 @@ function AdminUsers() {
             </div>
             <div className="form-group">
               <label>Village</label>
-              <input
-                type="text"
+              <select
                 name="village"
                 value={formData.village}
                 onChange={handleInputChange}
-                placeholder="Nom du village"
-              />
+              >
+                <option value="">Aucun village</option>
+                <option value="gammarth">Village Gammarth</option>
+                <option value="siliana">Village Siliana</option>
+                <option value="mahres">Village Mahrès</option>
+                <option value="akouda">Village Akouda</option>
+              </select>
+              <small>Requis pour les psychologues</small>
             </div>
           </div>
 

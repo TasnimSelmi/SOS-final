@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { reportsAPI } from '../services/api'
 import { useSocket } from '../context/SocketContext'
+import { useAuth } from '../context/AuthContext'
 import { SOSIcons } from './SOSIcons'
 import { SOSCard, SOSStatCard } from './SOSCard'
 import './Level2Dashboard.css'
@@ -340,7 +341,69 @@ function ClassificationModal({ report, onClose, onClassify }) {
 }
 
 function WorkflowView() {
+  const [reports, setReports] = useState([])
+  const [selectedReport, setSelectedReport] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
+
+  useEffect(() => {
+    fetchReportsWithWorkflow()
+  }, [])
+
+  const fetchReportsWithWorkflow = async () => {
+    try {
+      setLoading(true)
+      const response = await reportsAPI.getAll({ status: 'en_cours,pris_en_charge,sauvegarde' })
+      setReports(response.data?.data?.reports || [])
+    } catch (error) {
+      console.error('Erreur chargement signalements:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleStartStep = async (reportId, stepNumber) => {
+    try {
+      await reportsAPI.startWorkflowStep(reportId, stepNumber)
+      alert('Étape démarrée avec succès')
+      fetchReportsWithWorkflow()
+      if (selectedReport?.id === reportId) {
+        const updated = await reportsAPI.getById(reportId)
+        setSelectedReport(updated.data.data.report)
+      }
+    } catch (error) {
+      alert('Erreur lors du démarrage de l\'étape')
+      console.error(error)
+    }
+  }
+
+  const handleCompleteStep = async (reportId, stepNumber, notes) => {
+    try {
+      await reportsAPI.completeWorkflowStep(reportId, stepNumber, notes)
+      alert('Étape complétée avec succès')
+      fetchReportsWithWorkflow()
+      if (selectedReport?.id === reportId) {
+        const updated = await reportsAPI.getById(reportId)
+        setSelectedReport(updated.data.data.report)
+      }
+    } catch (error) {
+      alert('Erreur lors de la complétion de l\'étape')
+      console.error(error)
+    }
+  }
+
+  const getStepStatus = (report, stepNumber) => {
+    if (!report.workflowSteps || report.workflowSteps.length === 0) return 'pending'
+    const step = report.workflowSteps.find(s => s.stepNumber === stepNumber)
+    if (!step) return 'pending'
+    
+    // Check if overdue
+    if (step.deadline && new Date(step.deadline) < new Date() && step.status !== 'completed') {
+      return 'overdue'
+    }
+    
+    return step.status || 'pending'
+  }
   
   const workflowSteps = [
     { 
@@ -375,60 +438,184 @@ function WorkflowView() {
     }
   ]
 
+  if (loading) {
+    return (
+      <SOSCard title="Chargement..." variant="info">
+        <div className="loading-state">Chargement des signalements...</div>
+      </SOSCard>
+    )
+  }
+
   return (
-    <SOSCard title="Processus de Traitement SOS" subtitle="Workflow des 6 étapes obligatoires" variant="info">
-      <div className="workflow-container">
-        <div className="workflow-steps">
-          {workflowSteps.map((step, idx) => (
-            <div 
-              key={idx} 
-              className={`workflow-step ${idx === activeStep ? 'active' : ''} ${idx < activeStep ? 'completed' : ''}`}
-              onClick={() => setActiveStep(idx)}
-            >
-              <div className="step-number">{idx + 1}</div>
-              <div className="step-content">
-                <h4>{step.title}</h4>
-                <p>{step.description}</p>
+    <>
+      <SOSCard title="Gestion du Workflow" subtitle="Sélectionnez un signalement pour gérer ses étapes" variant="info">
+        {reports.length === 0 ? (
+          <div className="empty-state">
+            <SOSIcons.Check size={64} color="#00abec" />
+            <p>Aucun signalement en cours de traitement</p>
+          </div>
+        ) : (
+          <div className="reports-selector">
+            {reports.map(report => (
+              <div 
+                key={report.id}
+                className={`report-selector-item ${selectedReport?.id === report.id ? 'selected' : ''}`}
+                onClick={() => {
+                  setSelectedReport(report)
+                  setActiveStep(0)
+                }}
+              >
+                <div>
+                  <strong>{report.reportId}</strong>
+                  <span className="report-meta">{report.village} - {report.childName}</span>
+                </div>
+                <span className={`urgency-badge ${report.urgencyLevel}`}>{report.urgencyLevel}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </SOSCard>
+
+      {selectedReport && (
+        <SOSCard title={`Workflow - ${selectedReport.reportId}`} subtitle="Gestion des 6 étapes du processus" variant="info">
+          <div className="workflow-container">
+            <div className="workflow-steps">
+              {workflowSteps.map((step, idx) => {
+                const stepStatus = getStepStatus(selectedReport, idx + 1)
+                const stepData = selectedReport.workflowSteps?.find(s => s.stepNumber === idx + 1)
+                
+                return (
+                  <div 
+                    key={idx} 
+                    className={`workflow-step ${idx === activeStep ? 'active' : ''} ${stepStatus}`}
+                    onClick={() => setActiveStep(idx)}
+                  >
+                    <div className={`step-number ${stepStatus}`}>{idx + 1}</div>
+                    <div className="step-content">
+                      <h4>{step.title}</h4>
+                      <p>{step.description}</p>
+                      {stepData?.deadline && (
+                        <small className="step-deadline">
+                          Échéance: {new Date(stepData.deadline).toLocaleDateString('fr-FR')}
+                        </small>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            
+            <div className="workflow-detail">
+              <h3>Étape {activeStep + 1}: {workflowSteps[activeStep].title}</h3>
+              <p>{workflowSteps[activeStep].description}</p>
+              
+              {selectedReport.workflowSteps && selectedReport.workflowSteps.length > 0 && (() => {
+                const currentStep = selectedReport.workflowSteps.find(s => s.stepNumber === activeStep + 1)
+                const stepStatus = getStepStatus(selectedReport, activeStep + 1)
+                
+                return (
+                  <>
+                    <div className="step-status-info">
+                      <span className={`status-badge ${stepStatus}`}>
+                        {stepStatus === 'completed' ? '✓ Complété' : 
+                         stepStatus === 'in_progress' ? '⟳ En cours' : 
+                         stepStatus === 'overdue' ? '⚠ En retard' : '○ En attente'}
+                      </span>
+                      {currentStep?.deadline && (
+                        <span className="deadline-info">
+                          Échéance: {new Date(currentStep.deadline).toLocaleDateString('fr-FR')}
+                        </span>
+                      )}
+                    </div>
+
+                    {currentStep?.notes && (
+                      <div className="step-notes-display">
+                        <strong>Notes:</strong>
+                        <p>{currentStep.notes}</p>
+                      </div>
+                    )}
+
+                    <div className="step-actions">
+                      {stepStatus === 'pending' && (
+                        <button 
+                          className="btn btn-primary"
+                          onClick={() => handleStartStep(selectedReport.id, activeStep + 1)}
+                        >
+                          <SOSIcons.Check size={18} />
+                          Démarrer l'étape
+                        </button>
+                      )}
+                      
+                      {stepStatus === 'in_progress' && (
+                        <WorkflowStepCompleteForm
+                          reportId={selectedReport.id}
+                          stepNumber={activeStep + 1}
+                          onComplete={handleCompleteStep}
+                        />
+                      )}
+                      
+                      {stepStatus === 'completed' && (
+                        <div className="completed-info">
+                          <SOSIcons.Check size={24} color="#22c55e" />
+                          <p>Cette étape a été complétée le {currentStep.completedAt ? new Date(currentStep.completedAt).toLocaleDateString('fr-FR') : 'N/A'}</p>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )
+              })()}
+
+              <div className="workflow-navigation">
+                <button 
+                  className="btn btn-secondary"
+                  disabled={activeStep === 0}
+                  onClick={() => setActiveStep(activeStep - 1)}
+                >
+                  ← Étape précédente
+                </button>
+                <button 
+                  className="btn btn-secondary"
+                  disabled={activeStep === workflowSteps.length - 1}
+                  onClick={() => setActiveStep(activeStep + 1)}
+                >
+                  Étape suivante →
+                </button>
               </div>
             </div>
-          ))}
-        </div>
-        
-        <div className="workflow-detail">
-          <h3>Étape {activeStep + 1}: {workflowSteps[activeStep].title}</h3>
-          <p>{workflowSteps[activeStep].description}</p>
-          
-          <div className="workflow-actions">
-            <h4>Actions requises:</h4>
-            <ul>
-              {workflowSteps[activeStep].actions.map((action, idx) => (
-                <li key={idx}>
-                  <SOSIcons.Check size={16} />
-                  {action}
-                </li>
-              ))}
-            </ul>
           </div>
+        </SOSCard>
+      )}
+    </>
+  )
+}
 
-          <div className="workflow-navigation">
-            <button 
-              className="btn btn-secondary"
-              disabled={activeStep === 0}
-              onClick={() => setActiveStep(activeStep - 1)}
-            >
-              ← Étape précédente
-            </button>
-            <button 
-              className="btn btn-primary"
-              disabled={activeStep === workflowSteps.length - 1}
-              onClick={() => setActiveStep(activeStep + 1)}
-            >
-              Étape suivante →
-            </button>
-          </div>
-        </div>
+function WorkflowStepCompleteForm({ reportId, stepNumber, onComplete }) {
+  const [notes, setNotes] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSubmitting(true)
+    await onComplete(reportId, stepNumber, notes)
+    setSubmitting(false)
+    setNotes('')
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="step-complete-form">
+      <div className="form-group">
+        <label>Notes de complétion</label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows="4"
+          placeholder="Ajoutez des notes sur la complétion de cette étape..."
+        />
       </div>
-    </SOSCard>
+      <button type="submit" className="btn btn-primary" disabled={submitting}>
+        {submitting ? 'Enregistrement...' : 'Marquer comme complété'}
+      </button>
+    </form>
   )
 }
 

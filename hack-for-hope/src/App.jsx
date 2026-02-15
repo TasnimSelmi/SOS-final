@@ -14,6 +14,7 @@ import ProfileSettings from './pages/ProfileSettings'
 import ReportCreate from './pages/ReportCreate'
 import ReportsList from './pages/ReportsList'
 import ReportDetail from './pages/ReportDetail'
+import ReportDetailView from './pages/ReportDetailView'
 import AdminUsers from './pages/AdminUsers'
 import ReportClassify from './pages/ReportClassify'
 import ReportDecision from './pages/ReportDecision'
@@ -144,7 +145,7 @@ function AppContent() {
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
-                <ReportDetail />
+                <ReportDetailView />
               </PrivateLayout>
             ) : (
               <Navigate to="/login" />

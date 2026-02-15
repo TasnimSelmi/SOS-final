@@ -42,8 +42,6 @@ function Dashboard({ user, onLogout }) {
     }
   }
 
-  const canCreateReport = ['mere', 'tante', 'educateur'].includes(user.role)
-
   return (
     <div className="dashboard-container">
       <ConfidentialBanner />
@@ -55,14 +53,6 @@ function Dashboard({ user, onLogout }) {
               <h1>Hack for Hope</h1>
               <p className="header-subtitle">"Aucun enfant ne devrait grandir seul" — SOS Tunisie</p>
             </div>
-            {canCreateReport && (
-              <button 
-                className="btn btn-primary btn-new-report"
-                onClick={() => navigate('/reports/create')}
-              >
-                + Nouveau signalement
-              </button>
-            )}
           </div>
           
           <div className="dashboard-body">

@@ -52,7 +52,7 @@ function AdminDashboard() {
       return
     }
     try {
-      await usersAPI.resetPassword(userId, { password: newPassword })
+      await usersAPI.resetPassword(userId, { newPassword })
       alert('Mot de passe réinitialisé !')
     } catch (error) {
       alert('Erreur')
