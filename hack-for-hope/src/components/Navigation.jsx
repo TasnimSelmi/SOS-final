@@ -61,9 +61,6 @@ function Navigation({ user, onLogout }) {
             </div>
           ) : (
             <div className="nav-auth">
-              <Link to="/signup" className="btn btn-secondary">
-                Inscription
-              </Link>
               <Link to="/login" className="btn btn-primary">
                 <SOSIcons.Village size={18} />
                 Connexion

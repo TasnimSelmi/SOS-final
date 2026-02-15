@@ -6,7 +6,6 @@ import Navigation from './components/Navigation'
 import LandingPage from './pages/LandingPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
-import Signup from './components/Signup'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import ProfileSettings from './pages/ProfileSettings'
@@ -78,12 +77,6 @@ function AppContent() {
               <ContactPage />
             </PublicLayout>
           } 
-        />
-        
-        {/* Signup page */}
-        <Route 
-          path="/signup" 
-          element={user ? <Navigate to="/dashboard" /> : <Signup />} 
         />
         
         {/* Login page */}
