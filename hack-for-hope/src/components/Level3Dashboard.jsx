@@ -26,13 +26,17 @@ function Level3Dashboard() {
       const response = await reportsAPI.getAll();
       const reports = response.data?.data?.reports || [];
 
-      // Count reports awaiting decision (workflow complete, no decision)
+      // Count reports awaiting decision (5 workflow steps completed, no decision)
       const pendingDecisions = reports.filter((r) => {
         const hasWorkflow = r.workflowSteps && r.workflowSteps.length > 0;
-        const workflowCompleted =
-          hasWorkflow && r.workflowSteps.every((s) => s.status === "completed");
+        // Check if first 5 steps are completed
+        const first5StepsCompleted =
+          hasWorkflow &&
+          r.workflowSteps.filter(
+            (s) => s.stepNumber <= 5 && s.status === "completed",
+          ).length >= 5;
         const noDecision = !r.decision || !r.decision.type;
-        return workflowCompleted && noDecision;
+        return first5StepsCompleted && noDecision;
       }).length;
 
       // Count all urgent cases (not just those awaiting decision)
@@ -245,11 +249,14 @@ function AlertsSection({ stats, villageStats }) {
       const reportsReadyForDecision = allReports.filter((report) => {
         const hasWorkflow =
           report.workflowSteps && report.workflowSteps.length > 0;
-        const workflowCompleted =
+        // Check if first 5 workflow steps are completed
+        const first5StepsCompleted =
           hasWorkflow &&
-          report.workflowSteps.every((s) => s.status === "completed");
+          report.workflowSteps.filter(
+            (s) => s.stepNumber <= 5 && s.status === "completed",
+          ).length >= 5;
         const noDecision = !report.decision || !report.decision.type;
-        return workflowCompleted && noDecision;
+        return first5StepsCompleted && noDecision;
       });
 
       const alertsList = [];
@@ -383,18 +390,20 @@ function DecisionMaking() {
       const response = await reportsAPI.getAll(params);
       const allReports = response.data?.data?.reports || [];
 
-      // Filter for reports that:
-      // 1. Have completed all workflow steps
+      // Filter for reports where:
+      // 1. First 5 workflow steps are completed
       // 2. Don't have a decision yet
       const pendingReports = allReports.filter((report) => {
         const hasWorkflow =
           report.workflowSteps && report.workflowSteps.length > 0;
-        const workflowCompleted =
+        const first5StepsCompleted =
           hasWorkflow &&
-          report.workflowSteps.every((s) => s.status === "completed");
+          report.workflowSteps.filter(
+            (s) => s.stepNumber <= 5 && s.status === "completed",
+          ).length >= 5;
         const noDecision = !report.decision || !report.decision.type;
 
-        return workflowCompleted && noDecision;
+        return first5StepsCompleted && noDecision;
       });
 
       setReports(pendingReports);
@@ -486,10 +495,13 @@ function DecisionMaking() {
             </thead>
             <tbody>
               {reports.map((report) => {
-                const workflowCompleted =
+                // Check if first 5 workflow steps are completed
+                const first5StepsCompleted =
                   report.workflowSteps &&
                   report.workflowSteps.length > 0 &&
-                  report.workflowSteps.every((s) => s.status === "completed");
+                  report.workflowSteps.filter(
+                    (s) => s.stepNumber <= 5 && s.status === "completed",
+                  ).length >= 5;
 
                 return (
                   <tr key={report.id}>
@@ -510,13 +522,13 @@ function DecisionMaking() {
                       </span>
                     </td>
                     <td>
-                      {workflowCompleted ? (
+                      {first5StepsCompleted ? (
                         <span className="sos-badge sos-badge-success">
-                          <SOSIcons.CheckCircle size={14} /> Complet
+                          <SOSIcons.CheckCircle size={14} /> Analyse complète
                         </span>
                       ) : (
                         <span className="sos-badge sos-badge-warning">
-                          <SOSIcons.Clock size={14} /> En cours
+                          <SOSIcons.Clock size={14} /> En cours d'analyse
                         </span>
                       )}
                     </td>
@@ -532,11 +544,11 @@ function DecisionMaking() {
                         <button
                           className="btn btn-primary btn-sm"
                           onClick={() => handleMakeDecision(report)}
-                          disabled={!workflowCompleted}
+                          disabled={!first5StepsCompleted}
                           title={
-                            workflowCompleted
+                            first5StepsCompleted
                               ? "Prendre une décision"
-                              : "Attendez la fin du workflow"
+                              : "Attendez la fin de l'analyse psychologique"
                           }
                         >
                           <SOSIcons.Check size={16} />
@@ -652,22 +664,27 @@ function DecisionModal({ report, onClose, onSubmit }) {
             <div className="workflow-summary">
               <h4>
                 <SOSIcons.CheckCircle size={18} color="#22c55e" /> Analyse
-                psychologique complète
+                psychologique complète (5 étapes)
               </h4>
               <div className="workflow-steps-list">
-                {report.workflowSteps.map((step, idx) => (
-                  <div key={idx} className="workflow-step-item">
-                    <SOSIcons.Check size={14} color="#22c55e" />
-                    <span>
-                      Étape {step.stepNumber}: {step.title}
-                    </span>
-                    {step.completedAt && (
-                      <span className="step-date">
-                        {new Date(step.completedAt).toLocaleDateString("fr-FR")}
+                {report.workflowSteps
+                  .filter((step) => step.stepNumber <= 5)
+                  .sort((a, b) => a.stepNumber - b.stepNumber)
+                  .map((step, idx) => (
+                    <div key={idx} className="workflow-step-item">
+                      <SOSIcons.Check size={14} color="#22c55e" />
+                      <span>
+                        Étape {step.stepNumber}: {step.title}
                       </span>
-                    )}
-                  </div>
-                ))}
+                      {step.completedAt && (
+                        <span className="step-date">
+                          {new Date(step.completedAt).toLocaleDateString(
+                            "fr-FR",
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
           )}

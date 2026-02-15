@@ -842,9 +842,33 @@ router.put(
         madeAt: new Date(),
       };
 
+      // Create Step 6 (Avis de Clôture) in pending state after decision
+      // The psychologist must then complete this final step
+      const step6Index = report.workflowSteps.findIndex(
+        (s) => s.stepNumber === 6,
+      );
+      if (step6Index === -1) {
+        report.workflowSteps.push({
+          stepNumber: 6,
+          title: "Avis de Clôture",
+          status: "pending",
+          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+          notes: `En attente de clôture finale par le psychologue suite à la décision: ${decision}`,
+        });
+      }
+
+      // Create decision document
+      report.documents.push({
+        type: "decision_finale",
+        title: `Décision du Décideur: ${decision}`,
+        content: `Type de décision: ${decision}\n\nDétails: ${details || "Aucun détail supplémentaire"}`,
+        createdBy: req.user._id,
+        createdAt: new Date(),
+      });
+
       // Update status based on decision
       if (decision === "cloture") {
-        report.status = "cloture";
+        report.status = "en_attente_cloture";
       }
 
       // Add to history
@@ -1023,6 +1047,16 @@ router.put(
       step.completedAt = new Date();
       step.completedBy = req.user._id;
       if (req.body.notes) step.notes = req.body.notes;
+
+      // If Step 6 (Avis de Clôture) is completed, close the report
+      if (stepNumber === 6) {
+        report.status = "cloture";
+        report.history.push({
+          action: "Cas clôturé",
+          performedBy: req.user._id,
+          details: "Avis de clôture validé - dossier archivé",
+        });
+      }
 
       report.history.push({
         action: `Étape ${stepNumber} complétée`,

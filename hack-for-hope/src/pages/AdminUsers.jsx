@@ -6,6 +6,7 @@ import SOSLogo from "../components/SOSLogo";
 import SOSDecorations from "../components/SOSDecorations";
 import { useAuth } from "../context/AuthContext";
 import { SOSIcons } from "../components/SOSIcons";
+import PasswordRequirements from "../components/PasswordRequirements";
 import "./AdminUsers.css";
 
 function AdminUsers() {
@@ -315,18 +316,21 @@ function AdminUsers() {
           </div>
 
           {!isEdit && (
-            <div className="form-group">
-              <label>Mot de passe *</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required={!isEdit}
-                minLength="6"
-                placeholder="Min. 6 caractères"
-              />
-            </div>
+            <>
+              <div className="form-group">
+                <label>Mot de passe *</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required={!isEdit}
+                  minLength="8"
+                  placeholder="Min. 8 caractères"
+                />
+              </div>
+              <PasswordRequirements password={formData.password} />
+            </>
           )}
 
           <div className="form-row">

@@ -697,34 +697,35 @@ function WorkflowView() {
     {
       title: "Rapport Final",
       description:
-        "Synthèse complète du cas avec recommandations finales et proposition de clôture.",
+        "Synthèse complète du cas avec recommandations finales pour décision. Une fois cette étape complétée, le cas est transmis au décideur pour validation finale.",
       documents: [
         "Rapport final de synthèse",
-        "Recommandations",
+        "Recommandations finales",
         "Bilan des interventions",
       ],
       actions: [
         "Rédiger la synthèse complète du cas",
         "Formuler les recommandations finales",
         "Évaluer l'atteinte des objectifs",
-        "Proposer la clôture au décideur",
+        "Transmettre au décideur pour décision formelle",
       ],
     },
     {
       title: "Avis de Clôture",
       description:
-        "Validation finale par le décideur, archivage sécurisé et notifications de clôture.",
+        "Clôture finale du dossier après décision du décideur. Rédaction de l'avis de clôture et archivage sécurisé du dossier complet.",
       documents: [
         "Avis de clôture signé",
-        "Documents d'archivage",
-        "Notifications finales",
+        "Dossier complet archivé",
+        "Rapport de transmission",
       ],
       actions: [
-        "Soumettre au Décideur pour validation",
-        "Obtenir l'avis de clôture officiel",
-        "Archiver tous les documents de manière sécurisée",
-        "Notifier toutes les parties concernées",
+        "Examiner la décision du décideur",
+        "Rédiger l'avis de clôture formel",
+        "Archiver le dossier de manière sécurisée",
+        "Confirmer la clôture définitive du cas",
       ],
+      requiresDecision: true,
     },
   ];
 
@@ -740,7 +741,7 @@ function WorkflowView() {
     <>
       <SOSCard
         title="Gestion du Workflow - 6 Étapes"
-        subtitle="Sélectionnez un signalement pour gérer son processus de prise en charge"
+        subtitle="Complétez les 5 premières étapes d'analyse. Après la décision du décideur, complétez l'étape 6 de clôture."
         variant="info"
       >
         {reports.length === 0 ? (
@@ -755,8 +756,9 @@ function WorkflowView() {
           <div className="reports-selector">
             {reports.map((report) => {
               const completedSteps =
-                report.workflowSteps?.filter((s) => s.status === "completed")
-                  .length || 0;
+                report.workflowSteps?.filter(
+                  (s) => s.stepNumber <= 6 && s.status === "completed",
+                ).length || 0;
               const totalSteps = 6;
               const progress = (completedSteps / totalSteps) * 100;
 
@@ -838,14 +840,28 @@ function WorkflowView() {
                 const isCompleted = stepStatus === "completed";
                 const isOverdue = stepStatus === "overdue";
 
+                // Step 6 (Clôture) is only accessible after a decision has been made
+                const hasDecision =
+                  selectedReport.decision && selectedReport.decision.type;
+                const isStep6 = idx === 5; // Step 6 (index 5)
+                const isStep6Disabled = isStep6 && !hasDecision;
+
                 return (
                   <div
                     key={idx}
-                    className={`workflow-step-card ${isActive ? "active" : ""} ${stepStatus}`}
-                    onClick={() => setActiveStep(idx)}
+                    className={`workflow-step-card ${isActive ? "active" : ""} ${stepStatus} ${isStep6Disabled ? "disabled" : ""}`}
+                    onClick={() => {
+                      if (!isStep6Disabled) {
+                        setActiveStep(idx);
+                      }
+                    }}
+                    style={{
+                      cursor: isStep6Disabled ? "not-allowed" : "pointer",
+                      opacity: isStep6Disabled ? 0.5 : 1,
+                    }}
                   >
                     <div className={`step-number ${stepStatus}`}>
-                      {isCompleted ? "✓" : idx + 1}
+                      {isCompleted ? "✓" : isStep6Disabled ? "🔒" : idx + 1}
                     </div>
                     <div className="step-content">
                       <h4>{step.title}</h4>
@@ -900,6 +916,63 @@ function WorkflowView() {
               </div>
 
               <div className="workflow-detail-body">
+                {/* Warning for Step 6 if no decision */}
+                {activeStep === 5 && !selectedReport.decision?.type && (
+                  <div
+                    className="alert-box warning"
+                    style={{
+                      marginBottom: "1rem",
+                      padding: "1rem",
+                      background: "#fff3cd",
+                      border: "1px solid #ffc107",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <h4 style={{ color: "#856404", marginBottom: "0.5rem" }}>
+                      🔒 Étape verrouillée
+                    </h4>
+                    <p style={{ color: "#856404", margin: 0 }}>
+                      L'étape de clôture n'est accessible qu'après qu'une
+                      décision formelle ait été prise par le décideur. Veuillez
+                      compléter les 5 premières étapes pour transmettre le
+                      dossier au décideur.
+                    </p>
+                  </div>
+                )}
+
+                {/* Show decision details if it exists (for Step 6) */}
+                {activeStep === 5 && selectedReport.decision?.type && (
+                  <div
+                    className="alert-box success"
+                    style={{
+                      marginBottom: "1rem",
+                      padding: "1rem",
+                      background: "#d4edda",
+                      border: "1px solid #28a745",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <h4 style={{ color: "#155724", marginBottom: "0.5rem" }}>
+                      ✓ Décision du décideur reçue
+                    </h4>
+                    <p style={{ color: "#155724", margin: 0 }}>
+                      <strong>Type:</strong> {selectedReport.decision.type}
+                      <br />
+                      {selectedReport.decision.details && (
+                        <>
+                          <strong>Détails:</strong>{" "}
+                          {selectedReport.decision.details}
+                          <br />
+                        </>
+                      )}
+                      <strong>Date:</strong>{" "}
+                      {new Date(
+                        selectedReport.decision.madeAt,
+                      ).toLocaleDateString("fr-FR")}
+                    </p>
+                  </div>
+                )}
+
                 <div className="step-description">
                   <p>{workflowSteps[activeStep].description}</p>
                 </div>
@@ -990,27 +1063,30 @@ function WorkflowView() {
 
                       {/* Step Actions */}
                       <div className="step-actions-panel">
-                        {stepStatus === "pending" && (
-                          <div className="action-buttons">
-                            <button
-                              className="btn btn-primary btn-lg"
-                              onClick={() =>
-                                handleStartStep(
-                                  selectedReport.id,
-                                  activeStep + 1,
-                                )
-                              }
-                            >
-                              <SOSIcons.Check size={20} />
-                              Démarrer cette étape
-                            </button>
-                            <p className="action-hint">
-                              <SOSIcons.Lightbulb size={16} color="#00abec" />{" "}
-                              Démarrez l'étape pour commencer à travailler
-                              dessus
-                            </p>
-                          </div>
-                        )}
+                        {stepStatus === "pending" &&
+                          !(
+                            activeStep === 5 && !selectedReport.decision?.type
+                          ) && (
+                            <div className="action-buttons">
+                              <button
+                                className="btn btn-primary btn-lg"
+                                onClick={() =>
+                                  handleStartStep(
+                                    selectedReport.id,
+                                    activeStep + 1,
+                                  )
+                                }
+                              >
+                                <SOSIcons.Check size={20} />
+                                Démarrer cette étape
+                              </button>
+                              <p className="action-hint">
+                                <SOSIcons.Lightbulb size={16} color="#00abec" />{" "}
+                                Démarrez l'étape pour commencer à travailler
+                                dessus
+                              </p>
+                            </div>
+                          )}
 
                         {stepStatus === "in_progress" && (
                           <>
