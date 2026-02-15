@@ -1,12 +1,13 @@
-const ROLE_VALUES = ['mere', 'tante', 'educateur', 'psychologue', 'directeur', 'admin'];
-const MANAGED_ROLE_VALUES = ['mere', 'tante', 'educateur', 'psychologue', 'directeur'];
+const ROLE_VALUES = ['mere', 'tante', 'educateur', 'psychologue', 'decideur1', 'decideur2', 'admin'];
+const MANAGED_ROLE_VALUES = ['mere', 'tante', 'educateur', 'psychologue', 'decideur1', 'decideur2'];
 
 const ROLE_LABELS = {
-  mere: 'Mères SOS',
-  tante: 'Tantes SOS',
-  educateur: 'Éducateurs',
+  mere: 'Mère SOS',
+  tante: 'Tante SOS',
+  educateur: 'Éducateur',
   psychologue: 'Psychologue',
-  directeur: 'Directeur',
+  decideur1: 'Décideur 1',
+  decideur2: 'Décideur 2',
   admin: 'Administrateur'
 };
 
@@ -22,7 +23,11 @@ const ROLE_INPUT_MAP = {
   educateur: 'educateur',
   educateurs: 'educateur',
   psychologue: 'psychologue',
-  directeur: 'directeur',
+  decideur1: 'decideur1',
+  'decideur 1': 'decideur1',
+  decideur2: 'decideur2',
+  'decideur 2': 'decideur2',
+  directeur: 'decideur1',
   admin: 'admin',
   administrateur: 'admin'
 };

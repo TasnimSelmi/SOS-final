@@ -102,33 +102,22 @@ router.get('/', auth, isAdmin, async (req, res) => {
 });
 
 // @route   POST /api/users
-<<<<<<< HEAD
 // @desc    Create user (Admin only)
-=======
-// @desc    Create new user (Admin only)
->>>>>>> 4841434 (My latest changes)
 // @access  Private (Admin)
 router.post(
   '/',
   auth,
   isAdmin,
   [
-<<<<<<< HEAD
+    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire'),
     body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
     body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
-    body('email').isEmail().withMessage('Email invalide'),
+    body('email').optional().isEmail().withMessage('Email invalide'),
     body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
     body('role')
       .customSanitizer(normalizeRoleInput)
       .custom((value) => MANAGED_ROLE_VALUES.includes(value))
       .withMessage('Rôle invalide')
-=======
-    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire'),
-    body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
-    body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
-    body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
-    body('role').isIn(['mere', 'tante', 'educateur', 'psychologue', 'decideur1', 'decideur2', 'admin']).withMessage('Rôle invalide')
->>>>>>> 4841434 (My latest changes)
   ],
   async (req, res) => {
     try {
@@ -141,23 +130,7 @@ router.post(
         });
       }
 
-<<<<<<< HEAD
-      const { firstName, lastName, email, password, role, village, phoneNumber, isActive } = req.body;
-
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Un utilisateur avec cet email existe déjà'
-        });
-      }
-
-      const user = new User({
-        firstName,
-        lastName,
-        email,
-=======
-      const { username, firstName, lastName, email, password, role, village, phoneNumber } = req.body;
+      const { username, firstName, lastName, email, password, role, village, phoneNumber, isActive } = req.body;
 
       // Check if username already exists
       const existingUser = await User.findOne({ username: username.toLowerCase() });
@@ -185,16 +158,11 @@ router.post(
         firstName,
         lastName,
         email: email ? email.toLowerCase() : undefined,
->>>>>>> 4841434 (My latest changes)
         password,
         role,
         village,
         phoneNumber,
-<<<<<<< HEAD
         isActive: isActive === undefined ? true : isActive
-=======
-        isActive: true
->>>>>>> 4841434 (My latest changes)
       });
 
       await user.save();
@@ -205,26 +173,17 @@ router.post(
         data: {
           user: {
             id: user._id,
-<<<<<<< HEAD
-=======
             username: user.username,
->>>>>>> 4841434 (My latest changes)
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-<<<<<<< HEAD
             roleDisplay: User.getRoleDisplayName(user.role),
             village: user.village,
             isActive: user.isActive,
             phoneNumber: user.phoneNumber,
             fullName: user.fullName,
             createdAt: user.createdAt
-=======
-            village: user.village,
-            isActive: user.isActive,
-            fullName: user.fullName
->>>>>>> 4841434 (My latest changes)
           }
         }
       });
@@ -237,6 +196,47 @@ router.post(
     }
   }
 );
+
+// @route   GET /api/users/psychologues/:village
+// @desc    Get psychologues for a specific village
+// @access  Private (Declarants)
+router.get('/psychologues/:village', auth, async (req, res) => {
+  try {
+    const { village } = req.params;
+    
+    console.log('Looking for psychologues in village:', village);
+    
+    // Find psychologues for this village
+    const psychologues = await User.find({
+      role: 'psychologue',
+      village: village,
+      isActive: true
+    }).select('-password');
+
+    console.log('Found psychologues:', psychologues.length, psychologues.map(p => ({ name: p.fullName, village: p.village })));
+
+    res.json({
+      status: 'success',
+      data: {
+        psychologues: psychologues.map(p => ({
+          id: p._id,
+          firstName: p.firstName,
+          lastName: p.lastName,
+          email: p.email,
+          username: p.username,
+          fullName: p.fullName,
+          phoneNumber: p.phoneNumber
+        }))
+      }
+    });
+  } catch (error) {
+    console.error('Get psychologues error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Erreur lors de la récupération des psychologues'
+    });
+  }
+});
 
 // @route   GET /api/users/:id
 // @desc    Get user by ID (Admin only)
@@ -455,72 +455,4 @@ router.post(
   }
 );
 
-<<<<<<< HEAD
-=======
-// @route   GET /api/users/roles/list
-// @desc    Get list of available roles
-// @access  Private (Admin)
-router.get('/roles/list', auth, isAdmin, async (req, res) => {
-  try {
-    const roles = [
-      { value: 'mere', label: 'Mère SOS' },
-      { value: 'tante', label: 'Tante SOS' },
-      { value: 'educateur', label: 'Éducateur' },
-      { value: 'psychologue', label: 'Psychologue' },
-      { value: 'decideur1', label: 'Décideur 1' },
-      { value: 'decideur2', label: 'Décideur 2' },
-      { value: 'admin', label: 'Administrateur' }
-    ];
-
-    res.json({
-      status: 'success',
-      data: { roles }
-    });
-  } catch (error) {
-    console.error('Get roles error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Erreur lors de la récupération des rôles'
-    });
-  }
-});
-
-// @route   GET /api/users/psychologues/:village
-// @desc    Get psychologues for a specific village
-// @access  Private (Declarants)
-router.get('/psychologues/:village', auth, async (req, res) => {
-  try {
-    const { village } = req.params;
-    
-    // Find psychologues for this village
-    const psychologues = await User.find({
-      role: 'psychologue',
-      village: village,
-      isActive: true
-    }).select('-password');
-
-    res.json({
-      status: 'success',
-      data: {
-        psychologues: psychologues.map(p => ({
-          id: p._id,
-          firstName: p.firstName,
-          lastName: p.lastName,
-          email: p.email,
-          username: p.username,
-          fullName: p.fullName,
-          phoneNumber: p.phoneNumber
-        }))
-      }
-    });
-  } catch (error) {
-    console.error('Get psychologues error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Erreur lors de la récupération des psychologues'
-    });
-  }
-});
-
->>>>>>> 4841434 (My latest changes)
 module.exports = router;

@@ -115,9 +115,7 @@ userSchema.statics.getRoleDisplayName = function(role) {
   return ROLE_LABELS[role] || role;
 };
 
-// Index for faster queries
-userSchema.index({ username: 1 });
-userSchema.index({ email: 1 });
+// Index for faster queries (username and email already indexed via unique: true)
 userSchema.index({ role: 1 });
 userSchema.index({ isActive: 1 });
 

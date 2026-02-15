@@ -189,7 +189,7 @@ const reportSchema = new mongoose.Schema({
   decision: {
     type: {
       type: String,
-      enum: ['validation', 'escalade', 'cloture', null],
+      enum: ['prise_en_charge', 'sanction', 'suivi', 'escalade', 'cloture', null],
       default: null
     },
     details: String,
@@ -287,7 +287,7 @@ reportSchema.pre('save', async function(next) {
 });
 
 // Indexes for faster queries
-reportSchema.index({ reportId: 1 });
+// reportId already indexed via unique: true
 reportSchema.index({ status: 1 });
 reportSchema.index({ urgencyLevel: 1 });
 reportSchema.index({ declarant: 1 });

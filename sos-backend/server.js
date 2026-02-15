@@ -16,6 +16,7 @@ const userRoutes = require('./routes/users');
 const reportRoutes = require('./routes/reports');
 const notificationRoutes = require('./routes/notifications');
 const { initializeSocket } = require('./socket');
+const { handleMulterError } = require('./middleware/upload');
 
 const app = express();
 
@@ -84,10 +85,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Database connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sos-hackforhope', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sos-hackforhope');
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     
     // Create default admin if none exists
@@ -131,6 +129,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);
+
+// Multer error handler
+app.use(handleMulterError);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
