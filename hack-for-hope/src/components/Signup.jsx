@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import SOSLogo from "./SOSLogo";
 import { SOSDecorations } from "./SOSDecorations";
+import { validatePasswordStrength } from "../utils/passwordValidator";
+import PasswordRequirements from "./PasswordRequirements";
 import "./Signup.css";
+import "../utils/passwordValidator.css";
 
 function Signup() {
   const navigate = useNavigate();
@@ -48,6 +51,15 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Validation de la force du mot de passe
+    const passwordValidation = validatePasswordStrength(formData.password);
+    if (!passwordValidation.isValid) {
+      setError(
+        "Mot de passe trop faible. " + passwordValidation.errors.join(", "),
+      );
+      return;
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setError("Les mots de passe ne correspondent pas");
@@ -118,31 +130,31 @@ function Signup() {
             />
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Mot de passe *</label>
-              <input
-                type="password"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                required
-                placeholder="••••••••"
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirmer mot de passe *</label>
-              <input
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                required
-                placeholder="••••••••"
-              />
-            </div>
+          <div className="form-group">
+            <label>Mot de passe *</label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              required
+              placeholder="••••••••"
+            />
+            <PasswordRequirements password={formData.password} />
+          </div>
+
+          <div className="form-group">
+            <label>Confirmer mot de passe *</label>
+            <input
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+              required
+              placeholder="••••••••"
+            />
           </div>
 
           <div className="form-row">

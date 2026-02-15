@@ -1,18 +1,18 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
-const { auth, isAdmin } = require('../middleware/auth');
-const { MANAGED_ROLE_VALUES, normalizeRoleInput } = require('../utils/roles');
-
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const { body, validationResult } = require("express-validator");
+const User = require("../models/User");
+const { auth, isAdmin } = require("../middleware/auth");
+const { MANAGED_ROLE_VALUES, normalizeRoleInput } = require("../utils/roles");
+const { validatePasswordStrength } = require("../utils/passwordValidator");
 const router = express.Router();
 
 // Generate JWT token
 const generateToken = (userId) => {
   return jwt.sign(
     { userId },
-    process.env.JWT_SECRET || 'your-secret-key-change-in-production',
-    { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+    process.env.JWT_SECRET || "your-secret-key-change-in-production",
+    { expiresIn: process.env.JWT_EXPIRES_IN || "24h" },
   );
 };
 
@@ -20,40 +20,62 @@ const generateToken = (userId) => {
 // @desc    Register new user (Admin only)
 // @access  Private (Admin)
 router.post(
-  '/register',
+  "/register",
   auth,
   isAdmin,
   [
-    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire')
-      .matches(/^[a-zA-Z0-9_]+$/).withMessage('Le nom d\'utilisateur ne peut contenir que des lettres, chiffres et underscores'),
-    body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
-    body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
-    body('email').optional().isEmail().withMessage('Email invalide'),
-    body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
-    body('role')
+    body("username")
+      .trim()
+      .notEmpty()
+      .withMessage("Le nom d'utilisateur est obligatoire")
+      .matches(/^[a-zA-Z0-9_]+$/)
+      .withMessage(
+        "Le nom d'utilisateur ne peut contenir que des lettres, chiffres et underscores",
+      ),
+    body("firstName")
+      .trim()
+      .notEmpty()
+      .withMessage("Le prénom est obligatoire"),
+    body("lastName").trim().notEmpty().withMessage("Le nom est obligatoire"),
+    body("email").optional().isEmail().withMessage("Email invalide"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Le mot de passe doit contenir au moins 6 caractères"),
+    body("role")
       .customSanitizer(normalizeRoleInput)
       .custom((value) => MANAGED_ROLE_VALUES.includes(value))
-      .withMessage('Rôle invalide')
+      .withMessage("Rôle invalide"),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          status: 'error',
-          message: 'Données invalides',
-          errors: errors.array()
+          status: "error",
+          message: "Données invalides",
+          errors: errors.array(),
         });
       }
 
-      const { username, firstName, lastName, email, password, role, village, phoneNumber } = req.body;
+      const {
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        village,
+        phoneNumber,
+      } = req.body;
 
       // Check if user already exists
-      const existingUser = await User.findOne({ username: username.toLowerCase() });
+      const existingUser = await User.findOne({
+        username: username.toLowerCase(),
+      });
       if (existingUser) {
         return res.status(400).json({
-          status: 'error',
-          message: 'Un utilisateur avec ce nom d\'utilisateur existe déjà'
+          status: "error",
+          message: "Un utilisateur avec ce nom d'utilisateur existe déjà",
         });
       }
 
@@ -66,14 +88,14 @@ router.post(
         password,
         role,
         village,
-        phoneNumber
+        phoneNumber,
       });
 
       await user.save();
 
       res.status(201).json({
-        status: 'success',
-        message: 'Utilisateur créé avec succès',
+        status: "success",
+        message: "Utilisateur créé avec succès",
         data: {
           user: {
             id: user._id,
@@ -82,56 +104,61 @@ router.post(
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            fullName: user.fullName
-          }
-        }
+            fullName: user.fullName,
+          },
+        },
       });
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       res.status(500).json({
-        status: 'error',
-        message: 'Erreur lors de la création de l\'utilisateur'
+        status: "error",
+        message: "Erreur lors de la création de l'utilisateur",
       });
     }
-  }
+  },
 );
 
 // @route   POST /api/auth/login
 // @desc    Login user
 // @access  Public
 router.post(
-  '/login',
+  "/login",
   [
-    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire'),
-    body('password').notEmpty().withMessage('Le mot de passe est obligatoire')
+    body("username")
+      .trim()
+      .notEmpty()
+      .withMessage("Le nom d'utilisateur est obligatoire"),
+    body("password").notEmpty().withMessage("Le mot de passe est obligatoire"),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          status: 'error',
-          message: 'Données invalides',
-          errors: errors.array()
+          status: "error",
+          message: "Données invalides",
+          errors: errors.array(),
         });
       }
 
       const { username, password } = req.body;
 
       // Find user by username
-      const user = await User.findOne({ username: username.toLowerCase() }).select('+password');
+      const user = await User.findOne({
+        username: username.toLowerCase(),
+      }).select("+password");
       if (!user) {
         return res.status(401).json({
-          status: 'error',
-          message: 'Nom d\'utilisateur ou mot de passe incorrect'
+          status: "error",
+          message: "Nom d'utilisateur ou mot de passe incorrect",
         });
       }
 
       // Check if user is active
       if (!user.isActive) {
         return res.status(401).json({
-          status: 'error',
-          message: 'Compte désactivé. Contactez l\'administrateur.'
+          status: "error",
+          message: "Compte désactivé. Contactez l'administrateur.",
         });
       }
 
@@ -139,8 +166,8 @@ router.post(
       const isMatch = await user.comparePassword(password);
       if (!isMatch) {
         return res.status(401).json({
-          status: 'error',
-          message: 'Nom d\'utilisateur ou mot de passe incorrect'
+          status: "error",
+          message: "Nom d'utilisateur ou mot de passe incorrect",
         });
       }
 
@@ -152,8 +179,8 @@ router.post(
       const token = generateToken(user._id);
 
       res.json({
-        status: 'success',
-        message: 'Connexion réussie',
+        status: "success",
+        message: "Connexion réussie",
         data: {
           token,
           user: {
@@ -165,28 +192,28 @@ router.post(
             role: user.role,
             village: user.village,
             fullName: user.fullName,
-            profilePhoto: user.profilePhoto
-          }
-        }
+            profilePhoto: user.profilePhoto,
+          },
+        },
       });
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       res.status(500).json({
-        status: 'error',
-        message: 'Erreur lors de la connexion'
+        status: "error",
+        message: "Erreur lors de la connexion",
       });
     }
-  }
+  },
 );
 
 // @route   GET /api/auth/me
 // @desc    Get current user
 // @access  Private
-router.get('/me', auth, async (req, res) => {
+router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     res.json({
-      status: 'success',
+      status: "success",
       data: {
         user: {
           id: user._id,
@@ -199,15 +226,15 @@ router.get('/me', auth, async (req, res) => {
           profilePhoto: user.profilePhoto,
           fullName: user.fullName,
           lastLogin: user.lastLogin,
-          createdAt: user.createdAt
-        }
-      }
+          createdAt: user.createdAt,
+        },
+      },
     });
   } catch (error) {
-    console.error('Get me error:', error);
+    console.error("Get me error:", error);
     res.status(500).json({
-      status: 'error',
-      message: 'Erreur lors de la récupération des données'
+      status: "error",
+      message: "Erreur lors de la récupération des données",
     });
   }
 });
@@ -216,32 +243,45 @@ router.get('/me', auth, async (req, res) => {
 // @desc    Change password
 // @access  Private
 router.post(
-  '/change-password',
+  "/change-password",
   auth,
   [
-    body('currentPassword').notEmpty().withMessage('Le mot de passe actuel est obligatoire'),
-    body('newPassword').isLength({ min: 6 }).withMessage('Le nouveau mot de passe doit contenir au moins 6 caractères')
+    body("currentPassword")
+      .notEmpty()
+      .withMessage("Le mot de passe actuel est obligatoire"),
+    body("newPassword")
+      .isLength({ min: 8 })
+      .withMessage(
+        "Le nouveau mot de passe doit contenir au moins 8 caractères",
+      )
+      .custom((value) => {
+        const validation = validatePasswordStrength(value);
+        if (!validation.isValid) {
+          throw new Error(validation.errors.join(", "));
+        }
+        return true;
+      }),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          status: 'error',
-          message: 'Données invalides',
-          errors: errors.array()
+          status: "error",
+          message: "Données invalides",
+          errors: errors.array(),
         });
       }
 
       const { currentPassword, newPassword } = req.body;
-      const user = await User.findById(req.user._id).select('+password');
+      const user = await User.findById(req.user._id).select("+password");
 
       // Verify current password
       const isMatch = await user.comparePassword(currentPassword);
       if (!isMatch) {
         return res.status(401).json({
-          status: 'error',
-          message: 'Mot de passe actuel incorrect'
+          status: "error",
+          message: "Mot de passe actuel incorrect",
         });
       }
 
@@ -250,17 +290,17 @@ router.post(
       await user.save();
 
       res.json({
-        status: 'success',
-        message: 'Mot de passe changé avec succès'
+        status: "success",
+        message: "Mot de passe changé avec succès",
       });
     } catch (error) {
-      console.error('Change password error:', error);
+      console.error("Change password error:", error);
       res.status(500).json({
-        status: 'error',
-        message: 'Erreur lors du changement de mot de passe'
+        status: "error",
+        message: "Erreur lors du changement de mot de passe",
       });
     }
-  }
+  },
 );
 
 module.exports = router;
