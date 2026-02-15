@@ -24,7 +24,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   z-index: 2;
 }
 
@@ -79,11 +79,11 @@
   font-size: 18px !important;
   color: var(--sos-blue) !important;
   border: none !important;
-  border-bottom: 1px solid var(--sos-light-blue) !important;
+  border-bottom: 1px solid var(--sos-blue-lightest) !important;
 }
 
 .leaflet-control-zoom a:hover {
-  background: var(--sos-light-blue) !important;
+  background: var(--sos-blue-lightest) !important;
 }
 
 .leaflet-control-zoom a:last-child {
@@ -146,3 +146,6 @@
 .legend-dot.urgent {
   background: var(--danger);
 }
+
+
+

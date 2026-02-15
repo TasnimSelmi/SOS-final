@@ -13,7 +13,7 @@
 .btn-back {
   background: none;
   border: none;
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.9rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -21,7 +21,7 @@
 }
 
 .btn-back:hover {
-  color: #374151;
+  color: #1c325d;
 }
 
 .classify-header h1 {
@@ -40,7 +40,7 @@
 
 .report-summary h3 {
   font-size: 1.1rem;
-  color: #374151;
+  color: #1c325d;
   margin-bottom: 1rem;
 }
 
@@ -59,12 +59,12 @@
 
 .summary-item label {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .summary-item span {
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
 }
 
 .urgency-badge {
@@ -80,12 +80,12 @@
 .summary-description label {
   display: block;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #78849e;
   margin-bottom: 0.5rem;
 }
 
 .summary-description p {
-  color: #374151;
+  color: #1c325d;
   line-height: 1.5;
   background: #f9fafb;
   padding: 1rem;
@@ -102,7 +102,7 @@
 
 .classify-form h3 {
   font-size: 1.1rem;
-  color: #374151;
+  color: #1c325d;
   margin-bottom: 1.5rem;
 }
 
@@ -134,7 +134,7 @@
 }
 
 .classification-card:hover {
-  border-color: #9ca3af;
+  border-color: #b3c3cf;
 }
 
 .classification-card.selected {
@@ -166,13 +166,13 @@
 .card-text h4 {
   font-size: 1rem;
   font-weight: 600;
-  color: #374151;
+  color: #1c325d;
   margin-bottom: 0.25rem;
 }
 
 .card-text p {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #78849e;
   line-height: 1.4;
 }
 
@@ -208,7 +208,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
 }
 
 .form-group textarea {
@@ -259,7 +259,7 @@
 
 .btn-secondary {
   background: #e5e7eb;
-  color: #374151;
+  color: #1c325d;
 }
 
 .btn-secondary:hover {
@@ -281,13 +281,13 @@
 
 .info-box p {
   font-size: 0.9rem;
-  color: #374151;
+  color: #1c325d;
 }
 
 .loading-container {
   text-align: center;
   padding: 4rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .loading-spinner {
@@ -310,7 +310,7 @@
 }
 
 .error-container h2 {
-  color: #dc2626;
+  color: #de5a6c;
   margin-bottom: 1rem;
 }
 
@@ -329,3 +329,7 @@
     width: 100%;
   }
 }
+
+
+
+

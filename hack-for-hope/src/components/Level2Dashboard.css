@@ -12,9 +12,9 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding: 2rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 171, 236, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -58,7 +58,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background: #ef4444;
+  background: #de5a6c;
   color: white;
   font-size: 0.7rem;
   font-weight: 700;
@@ -100,21 +100,21 @@
 }
 
 .nav-btn:hover {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: rgba(0, 171, 236, 0.1);
+  color: #00abec;
   transform: translateY(-2px);
 }
 
 .nav-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 171, 236, 0.3);
 }
 
 /* Tab Badge */
 .tab-badge {
   background: white;
-  color: #667eea;
+  color: #00abec;
   font-size: 0.7rem;
   font-weight: 700;
   padding: 0.2rem 0.6rem;
@@ -153,17 +153,17 @@
 }
 
 .btn-secondary {
-  background: #6b7280;
+  background: #78849e;
   color: white;
   border: none;
 }
 
 .btn-secondary:hover {
-  background: #4b5563;
+  background: #78849e;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
   border: none;
 }
@@ -190,7 +190,7 @@
 .empty-state {
   text-align: center;
   padding: 4rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(0, 171, 236, 0.05) 0%, rgba(132, 204, 241, 0.05) 100%);
   border-radius: 12px;
 }
 
@@ -214,7 +214,7 @@
 }
 
 .level2-dashboard .sos-table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
 }
 
 .level2-dashboard .sos-table th {
@@ -230,7 +230,7 @@
 }
 
 .level2-dashboard .sos-table tbody tr:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(0, 171, 236, 0.05) 0%, rgba(132, 204, 241, 0.05) 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -251,22 +251,22 @@
 }
 
 .level2-dashboard .sos-badge-urgent {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #de5a6c 0%, #de5a6c 100%);
   color: white;
 }
 
 .level2-dashboard .sos-badge-warning {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  background: linear-gradient(135deg, #84ccf1 0%, #00abec 100%);
   color: white;
 }
 
 .level2-dashboard .sos-badge-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
 }
 
 .level2-dashboard .sos-badge-info {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
 }
 }
@@ -301,7 +301,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
 }
 
 .modal-header h3 {
@@ -325,7 +325,7 @@
 }
 
 .btn-close:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--text-primary);
 }
 
@@ -335,7 +335,7 @@
 }
 
 .report-info {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
@@ -358,7 +358,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -366,7 +366,7 @@
 
 .classification-option:hover {
   border-color: var(--sos-blue);
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .classification-option.selected {
@@ -417,7 +417,7 @@
 }
 
 .workflow-step:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .workflow-step.active {
@@ -427,14 +427,14 @@
 
 .workflow-step.completed {
   background: rgba(34, 197, 94, 0.1);
-  border-color: #22c55e;
+  border-color: #00abec;
 }
 
 .workflow-step .step-number {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -449,7 +449,7 @@
 }
 
 .workflow-step.completed .step-number {
-  background: #22c55e;
+  background: #00abec;
   color: white;
 }
 
@@ -466,7 +466,7 @@
 
 /* Workflow Detail */
 .workflow-detail {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   padding: 1.5rem;
   border-radius: 12px;
 }
@@ -506,7 +506,7 @@
   justify-content: space-between;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--sos-light-blue);
+  border-top: 1px solid var(--sos-blue-lightest);
 }
 
 /* Modal Actions */
@@ -515,8 +515,524 @@
   gap: 1rem;
   justify-content: flex-end;
   padding-top: 1rem;
-  border-top: 1px solid var(--sos-light-blue);
+  border-top: 1px solid var(--sos-blue-lightest);
   margin-top: 1rem;
+}
+
+/* Workflow Progress Bar */
+.workflow-progress {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(0, 171, 236, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00abec 0%, #84ccf1 100%);
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #00abec;
+  white-space: nowrap;
+}
+
+/* Workflow Steps Timeline */
+.workflow-steps-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.workflow-step-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.workflow-step-card:hover {
+  border-color: #00abec;
+  box-shadow: 0 4px 12px rgba(0, 171, 236, 0.1);
+  transform: translateY(-2px);
+}
+
+.workflow-step-card.active {
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
+  color: white;
+  border-color: #00abec;
+  box-shadow: 0 8px 20px rgba(0, 171, 236, 0.3);
+}
+
+.workflow-step-card.completed {
+  border-color: #00abec;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.workflow-step-card.overdue {
+  border-color: #de5a6c;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+}
+
+.workflow-step-card .step-number {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  background: rgba(0, 171, 236, 0.1);
+  color: #00abec;
+}
+
+.workflow-step-card.active .step-number {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.workflow-step-card.completed .step-number {
+  background: #00abec;
+  color: white;
+}
+
+.workflow-step-card.overdue .step-number {
+  background: #de5a6c;
+  color: white;
+}
+
+.workflow-step-card .step-content {
+  flex: 1;
+}
+
+.workflow-step-card .step-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.workflow-step-card.active .step-content h4 {
+  color: white;
+}
+
+.step-deadline,
+.step-completed {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+.step-deadline.overdue {
+  color: #de5a6c;
+  font-weight: 600;
+}
+
+/* Workflow Detail Panel */
+.workflow-detail-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.workflow-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--sos-blue-lightest);
+}
+
+.workflow-detail-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.step-badge {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-badge.pending {
+  background: #f3f4f6;
+  color: #78849e;
+}
+
+.status-badge.in_progress {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+}
+
+.status-badge.completed {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+}
+
+.status-badge.overdue {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+}
+
+.workflow-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step-description {
+  padding: 1rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-left: 4px solid #00abec;
+  border-radius: 8px;
+}
+
+.step-description p {
+  margin: 0;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* Documents Section */
+.step-documents-section,
+.step-actions-section {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.step-documents-section h4,
+.step-actions-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.documents-list,
+.actions-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.documents-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.actions-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid #00abec;
+}
+
+.action-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Uploaded Documents */
+.uploaded-documents {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 12px;
+  border: 2px solid #00abec;
+}
+
+.uploaded-documents h4 {
+  margin: 0 0 1rem 0;
+  color: #065f46;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.document-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.doc-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  word-break: break-word;
+}
+
+.doc-size {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Step Notes Display */
+.step-notes-display {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 12px;
+  border-left: 4px solid #84ccf1;
+}
+
+.step-notes-display h4 {
+  margin: 0 0 1rem 0;
+  color: #92400e;
+}
+
+.step-notes-display p {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.step-notes-display small {
+  color: #92400e;
+  font-style: italic;
+}
+
+/* Step Actions Panel */
+.step-actions-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  border: 2px dashed #00abec;
+}
+
+.action-hint {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Document Upload Section */
+.document-upload-section {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  border: 2px dashed #00abec;
+}
+
+.document-upload-section h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text-dark);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-input-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 171, 236, 0.3);
+}
+
+.selected-files {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.selected-files p {
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+/* Step Complete Form */
+.step-complete-form {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #00abec;
+}
+
+.step-complete-form h4 {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-dark);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #00abec;
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+}
+
+/* Completed Info */
+.completed-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.completed-info h4 {
+  margin: 0;
+  color: #065f46;
+  font-size: 1.25rem;
+}
+
+.completed-info p {
+  margin: 0;
+  color: #047857;
+}
+
+/* Overdue Warning */
+.overdue-warning {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-radius: 12px;
+  border-left: 4px solid #de5a6c;
+}
+
+.overdue-warning p {
+  margin: 0;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+/* Workflow Navigation */
+.workflow-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--sos-blue-lightest);
+}
+
+.step-indicator {
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
 /* Responsive */
@@ -537,5 +1053,30 @@
   .action-buttons {
     flex-direction: column;
   }
+
+  .workflow-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .documents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-navigation {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .workflow-navigation .btn {
+    width: 100%;
+  }
 }
+
+
+
+
+
+
 

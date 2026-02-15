@@ -2,7 +2,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   min-height: 100vh;
 }
 
@@ -54,7 +54,7 @@
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
   transition: all 0.2s;
 }
 
@@ -92,7 +92,7 @@
 .report-meta {
   display: flex;
   gap: 1.5rem;
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.95rem;
 }
 
@@ -124,20 +124,20 @@
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #6b7280;
+  color: #78849e;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
 .tab-btn:hover {
   background: #f3f4f6;
-  color: #374151;
+  color: #1c325d;
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 171, 236, 0.4);
 }
 
 .report-detail-content {
@@ -190,7 +190,7 @@
 .detail-item label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #6b7280;
+  color: #78849e;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -228,7 +228,7 @@
 }
 
 .attachment-item small {
-  color: #6b7280;
+  color: #78849e;
 }
 
 /* Workflow View */
@@ -255,17 +255,17 @@
 }
 
 .workflow-step.in_progress {
-  border-left-color: #3b82f6;
+  border-left-color: #00abec;
   background: #eff6ff;
 }
 
 .workflow-step.completed {
-  border-left-color: #10b981;
+  border-left-color: #00abec;
   background: #f0fdf4;
 }
 
 .workflow-step.overdue {
-  border-left-color: #ef4444;
+  border-left-color: #de5a6c;
   background: #fef2f2;
 }
 
@@ -279,7 +279,7 @@
   border-radius: 50%;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #667eea;
+  color: #00abec;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
@@ -296,7 +296,7 @@
 
 .step-content p {
   margin: 0 0 1rem 0;
-  color: #6b7280;
+  color: #78849e;
   line-height: 1.6;
 }
 
@@ -315,7 +315,7 @@
 
 .step-status.status-pending {
   background: #f3f4f6;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .step-status.status-in_progress {
@@ -335,7 +335,7 @@
 
 .step-deadline {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .step-notes {
@@ -369,7 +369,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #374151;
+  color: #1c325d;
 }
 
 .form-group select,
@@ -385,8 +385,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #00abec;
+  box-shadow: 0 0 0 3px rgba(0, 171, 236, 0.1);
 }
 
 .classification-display,
@@ -487,12 +487,12 @@
 
 .history-content p {
   margin: 0.5rem 0;
-  color: #6b7280;
+  color: #78849e;
   line-height: 1.6;
 }
 
 .history-content small {
-  color: #9ca3af;
+  color: #b3c3cf;
   font-size: 0.875rem;
 }
 
@@ -508,14 +508,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 171, 236, 0.4);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 171, 236, 0.5);
 }
 
 .btn-primary:active {
@@ -542,3 +542,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+

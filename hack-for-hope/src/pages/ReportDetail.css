@@ -13,7 +13,7 @@
 .btn-back {
   background: none;
   border: none;
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.9rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -21,17 +21,17 @@
 }
 
 .btn-back:hover {
-  color: #374151;
+  color: #1c325d;
 }
 
 .detail-header h1 {
-  color: #2563eb;
+  color: #00abec;
   font-size: 1.5rem;
   margin-bottom: 0.25rem;
 }
 
 .subtitle {
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.9rem;
 }
 
@@ -72,7 +72,7 @@
 
 .status-banner.cloture {
   background: #f3f4f6;
-  color: #374151;
+  color: #1c325d;
 }
 
 .banner-actions {
@@ -97,7 +97,7 @@
   padding: 0.75rem 1.5rem;
   border: none;
   background: none;
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.9rem;
   cursor: pointer;
   border-bottom: 2px solid transparent;
@@ -106,12 +106,12 @@
 }
 
 .tab-btn:hover {
-  color: #374151;
+  color: #1c325d;
 }
 
 .tab-btn.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
+  color: #00abec;
+  border-bottom-color: #00abec;
   font-weight: 500;
 }
 
@@ -140,14 +140,14 @@
 
 .detail-item label {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #78849e;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .detail-item span {
   font-size: 0.95rem;
-  color: #374151;
+  color: #1c325d;
   font-weight: 500;
 }
 
@@ -155,9 +155,9 @@
   background: #f9fafb;
   padding: 1rem;
   border-radius: 8px;
-  border-left: 4px solid #2563eb;
+  border-left: 4px solid #00abec;
   line-height: 1.6;
-  color: #374151;
+  color: #1c325d;
 }
 
 .assign-section {
@@ -208,10 +208,10 @@
   top: 0;
   width: 1rem;
   height: 1rem;
-  background: #2563eb;
+  background: #00abec;
   border-radius: 50%;
   border: 3px solid white;
-  box-shadow: 0 0 0 2px #2563eb;
+  box-shadow: 0 0 0 2px #00abec;
 }
 
 .timeline-content {
@@ -228,23 +228,23 @@
 
 .timeline-action {
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
 }
 
 .timeline-date {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .timeline-user {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #78849e;
   margin-bottom: 0.5rem;
 }
 
 .timeline-notes {
   font-size: 0.9rem;
-  color: #374151;
+  color: #1c325d;
   background: white;
   padding: 0.75rem;
   border-radius: 6px;
@@ -270,7 +270,7 @@
 }
 
 .attachment-card:hover {
-  border-color: #2563eb;
+  border-color: #00abec;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -285,7 +285,7 @@
 
 .attachment-name {
   font-size: 0.9rem;
-  color: #374151;
+  color: #1c325d;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -294,12 +294,12 @@
 
 .attachment-meta {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .btn-download {
   background: #eff6ff;
-  color: #2563eb;
+  color: #00abec;
   border: none;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
@@ -314,7 +314,7 @@
 .empty-attachments {
   text-align: center;
   padding: 3rem;
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .empty-icon {
@@ -325,14 +325,14 @@
 .loading-container {
   text-align: center;
   padding: 4rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
   border: 3px solid #e5e7eb;
-  border-top-color: #2563eb;
+  border-top-color: #00abec;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -348,7 +348,7 @@
 }
 
 .error-container h2 {
-  color: #dc2626;
+  color: #de5a6c;
   margin-bottom: 1rem;
 }
 
@@ -363,7 +363,7 @@
 }
 
 .btn-primary {
-  background: #2563eb;
+  background: #00abec;
   color: white;
 }
 
@@ -373,7 +373,7 @@
 
 .btn-secondary {
   background: #e5e7eb;
-  color: #374151;
+  color: #1c325d;
 }
 
 .btn-secondary:hover {
@@ -406,3 +406,8 @@
     justify-content: center;
   }
 }
+
+
+
+
+

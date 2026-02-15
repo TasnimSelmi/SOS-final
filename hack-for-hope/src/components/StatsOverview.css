@@ -12,7 +12,7 @@
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--sos-light-blue);
+  border: 1px solid var(--sos-blue-lightest);
 }
 
 .stat-card-header {
@@ -61,7 +61,7 @@
 }
 
 .legend-dot.resolved {
-  background: #4ECDC4;
+  background: #00abec;
 }
 
 .legend-dot.ongoing {
@@ -100,3 +100,7 @@
     padding: 1rem;
   }
 }
+
+
+
+

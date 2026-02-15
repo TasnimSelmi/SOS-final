@@ -5,7 +5,7 @@
   border-radius: 16px;
   padding: 1.25rem;
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--sos-light-blue);
+  border: 1px solid var(--sos-blue-lightest);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -108,3 +108,6 @@
 .report-card.urgent .report-title {
   color: var(--sos-pink);
 }
+
+
+

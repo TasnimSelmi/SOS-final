@@ -7,14 +7,68 @@
 }
 
 .admin-header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #00abec 0%, #84ccf1 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 171, 236, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .admin-header h1 {
-  color: #2563eb;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-header p.subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Notification Badge */
+.notification-badge {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  border-radius: 12px;
+  color: white;
+  margin-left: auto;
+}
+
+.badge-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #de5a6c;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
 }
 
 .admin-actions {
@@ -44,7 +98,7 @@
 .filter-group label {
   display: block;
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #78849e;
   margin-bottom: 0.25rem;
 }
 
@@ -95,7 +149,7 @@
   text-align: left;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #374151;
+  color: #1c325d;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid #e5e7eb;
@@ -117,7 +171,7 @@
 }
 
 .user-name strong {
-  color: #374151;
+  color: #1c325d;
 }
 
 .badge {
@@ -177,7 +231,7 @@
 }
 
 .empty-message {
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .empty-icon {
@@ -220,14 +274,14 @@
 
 .modal-header h2 {
   font-size: 1.25rem;
-  color: #374151;
+  color: #1c325d;
 }
 
 .btn-close {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #6b7280;
+  color: #78849e;
   cursor: pointer;
 }
 
@@ -249,7 +303,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  color: #374151;
+  color: #1c325d;
 }
 
 .modal-form input,
@@ -317,7 +371,7 @@
 
 .btn-secondary {
   background: #e5e7eb;
-  color: #374151;
+  color: #1c325d;
 }
 
 .btn-secondary:hover {
@@ -376,7 +430,7 @@
 .loading-container {
   text-align: center;
   padding: 4rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .loading-spinner {
@@ -426,3 +480,6 @@
     width: 100%;
   }
 }
+
+
+

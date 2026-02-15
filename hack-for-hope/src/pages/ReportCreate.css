@@ -11,14 +11,14 @@
 
 .report-create-container h1 {
   text-align: center;
-  color: #2563eb;
+  color: #00abec;
   margin-bottom: 0.5rem;
   font-size: 1.75rem;
 }
 
 .subtitle {
   text-align: center;
-  color: #6b7280;
+  color: #78849e;
   margin-bottom: 2rem;
   font-size: 0.95rem;
 }
@@ -35,7 +35,7 @@
 
 .form-section h3 {
   font-size: 1.1rem;
-  color: #374151;
+  color: #1c325d;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -56,7 +56,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
   font-size: 0.9rem;
 }
 
@@ -75,7 +75,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: #00abec;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -107,7 +107,7 @@
 }
 
 .urgency-option:hover {
-  border-color: #9ca3af;
+  border-color: #b3c3cf;
 }
 
 .urgency-option input {
@@ -125,17 +125,17 @@
 
 .urgency-option.faible input:checked {
   background: #dcfce7;
-  border-color: #10b981;
+  border-color: #00abec;
 }
 
 .urgency-option.moyen input:checked {
   background: #fef3c7;
-  border-color: #f59e0b;
+  border-color: #84ccf1;
 }
 
 .urgency-option.critique input:checked {
   background: #fee2e2;
-  border-color: #ef4444;
+  border-color: #de5a6c;
 }
 
 .option-icon {
@@ -160,12 +160,12 @@
 }
 
 .upload-zone:hover {
-  border-color: #2563eb;
+  border-color: #00abec;
   background: #eff6ff;
 }
 
 .upload-zone.dragover {
-  border-color: #2563eb;
+  border-color: #00abec;
   background: #dbeafe;
 }
 
@@ -175,19 +175,19 @@
 }
 
 .upload-text {
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
 .upload-text span {
-  color: #2563eb;
+  color: #00abec;
   text-decoration: underline;
 }
 
 .file-hint {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .file-list {
@@ -216,17 +216,17 @@
 
 .file-name {
   font-size: 0.9rem;
-  color: #374151;
+  color: #1c325d;
 }
 
 .file-size {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .btn-remove {
   background: #fee2e2;
-  color: #dc2626;
+  color: #de5a6c;
   border: none;
   padding: 0.4rem 0.75rem;
   border-radius: 6px;
@@ -267,7 +267,7 @@
 }
 
 .btn-primary {
-  background: #2563eb;
+  background: #00abec;
   color: white;
 }
 
@@ -282,7 +282,7 @@
 
 .btn-secondary {
   background: #e5e7eb;
-  color: #374151;
+  color: #1c325d;
 }
 
 .btn-secondary:hover {
@@ -338,3 +338,8 @@
     width: 100%;
   }
 }
+
+
+
+
+

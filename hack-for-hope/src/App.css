@@ -9,13 +9,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-blue-lightest) 100%);
 }
 
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 4px solid var(--sos-light-blue);
+  border: 4px solid var(--sos-blue-lighter);
   border-top-color: var(--sos-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -32,3 +32,6 @@
   color: var(--text-secondary);
   font-weight: 500;
 }
+
+
+

@@ -1,24 +1,30 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import { ProfileProvider } from './context/ProfileContext'
-import { SocketProvider } from './context/SocketContext'
-import Navigation from './components/Navigation'
-import LandingPage from './pages/LandingPage'
-import AboutPage from './pages/AboutPage'
-import ContactPage from './pages/ContactPage'
-import Login from './components/Login'
-import Dashboard from './components/Dashboard'
-import ProfileSettings from './pages/ProfileSettings'
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ProfileProvider } from "./context/ProfileContext";
+import { SocketProvider } from "./context/SocketContext";
+import Navigation from "./components/Navigation";
+import LandingPage from "./pages/LandingPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import ProfileSettings from "./pages/ProfileSettings";
 // New pages
-import ReportCreate from './pages/ReportCreate'
-import ReportsList from './pages/ReportsList'
-import ReportDetail from './pages/ReportDetail'
-import ReportDetailView from './pages/ReportDetailView'
-import AdminUsers from './pages/AdminUsers'
-import ReportClassify from './pages/ReportClassify'
-import ReportDecision from './pages/ReportDecision'
-import './App.css'
+import ReportCreate from "./pages/ReportCreate";
+import ReportsList from "./pages/ReportsList";
+import ReportDetail from "./pages/ReportDetail";
+import ReportDetailView from "./pages/ReportDetailView";
+import AdminUsers from "./pages/AdminUsers";
+import ReportClassify from "./pages/ReportClassify";
+import ReportDecision from "./pages/ReportDecision";
+import ToastNotification from "./components/ToastNotification";
+import "./App.css";
 
 // Layout pour les pages publiques avec navigation
 function PublicLayout({ children, user, onLogout }) {
@@ -27,7 +33,7 @@ function PublicLayout({ children, user, onLogout }) {
       <Navigation user={user} onLogout={onLogout} />
       {children}
     </>
-  )
+  );
 }
 
 // Layout pour les pages privées (dashboard)
@@ -37,11 +43,11 @@ function PrivateLayout({ children, user, onLogout }) {
       <Navigation user={user} onLogout={onLogout} />
       {children}
     </>
-  )
+  );
 }
 
 function AppContent() {
-  const { user, logout, loading } = useAuth()
+  const { user, logout, loading } = useAuth();
 
   if (loading) {
     return (
@@ -49,47 +55,50 @@ function AppContent() {
         <div className="loading-spinner"></div>
         <p>Chargement...</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="app">
+      {user && <ToastNotification />}
       <Routes>
         {/* Pages publiques */}
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
             <PublicLayout user={user} onLogout={logout}>
-              <LandingPage onEnterApp={() => window.location.href = '/login'} />
+              <LandingPage
+                onEnterApp={() => (window.location.href = "/login")}
+              />
             </PublicLayout>
-          } 
+          }
         />
-        <Route 
-          path="/about" 
+        <Route
+          path="/about"
           element={
             <PublicLayout user={user} onLogout={logout}>
               <AboutPage />
             </PublicLayout>
-          } 
+          }
         />
-        <Route 
-          path="/contact" 
+        <Route
+          path="/contact"
           element={
             <PublicLayout user={user} onLogout={logout}>
               <ContactPage />
             </PublicLayout>
-          } 
+          }
         />
-        
+
         {/* Login page */}
-        <Route 
-          path="/login" 
-          element={user ? <Navigate to="/dashboard" /> : <Login />} 
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/dashboard" /> : <Login />}
         />
-        
+
         {/* Pages privées */}
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -98,12 +107,12 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        
+
         {/* Profile Settings - Private */}
-        <Route 
-          path="/profile" 
+        <Route
+          path="/profile"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -112,12 +121,12 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        
+
         {/* Reports Routes - Private */}
-        <Route 
-          path="/reports" 
+        <Route
+          path="/reports"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -126,10 +135,10 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        <Route 
-          path="/reports/create" 
+        <Route
+          path="/reports/create"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -138,10 +147,10 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        <Route 
-          path="/reports/:id" 
+        <Route
+          path="/reports/:id"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -150,10 +159,10 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        <Route 
-          path="/reports/:id/classify" 
+        <Route
+          path="/reports/:id/classify"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -162,10 +171,10 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        <Route 
-          path="/reports/:id/decision" 
+        <Route
+          path="/reports/:id/decision"
           element={
             user ? (
               <PrivateLayout user={user} onLogout={logout}>
@@ -174,28 +183,28 @@ function AppContent() {
             ) : (
               <Navigate to="/login" />
             )
-          } 
+          }
         />
-        
+
         {/* Admin Routes - Private (Admin only) */}
-        <Route 
-          path="/admin/users" 
+        <Route
+          path="/admin/users"
           element={
-            user?.role === 'admin' ? (
+            user?.role === "admin" ? (
               <PrivateLayout user={user} onLogout={logout}>
                 <AdminUsers />
               </PrivateLayout>
             ) : (
               <Navigate to="/dashboard" />
             )
-          } 
+          }
         />
-        
+
         {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
-  )
+  );
 }
 
 function App() {
@@ -209,7 +218,7 @@ function App() {
         </SocketProvider>
       </AuthProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

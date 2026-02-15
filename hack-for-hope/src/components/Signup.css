@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-blue-lightest) 100%);
   padding: 2rem;
   position: relative;
 }
@@ -64,7 +64,7 @@
 .form-group input,
 .form-group select {
   padding: 1rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-size: 1rem;
   background: var(--sos-white);
@@ -78,7 +78,7 @@
 }
 
 .role-info {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   padding: 0.75rem 1rem;
   border-radius: 10px;
   margin-top: 0.5rem;
@@ -95,7 +95,7 @@
   text-align: center;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 2px solid var(--sos-light-blue);
+  border-top: 2px solid var(--sos-blue-lightest);
 }
 
 .signup-footer p {
@@ -121,3 +121,6 @@
     font-size: 1.5rem;
   }
 }
+
+
+

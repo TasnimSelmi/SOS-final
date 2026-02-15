@@ -2,7 +2,7 @@
 
 .landing-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-blue-lightest) 100%);
 }
 
 .landing-container {
@@ -116,7 +116,7 @@
 }
 
 .btn-pink:hover {
-  background: #c94e5f;
+  background: #de5a6c;
 }
 
 .landing-hero-visual {
@@ -196,7 +196,7 @@
   gap: 1.5rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 2px solid var(--sos-light-blue);
+  border-top: 2px solid var(--sos-blue-lightest);
 }
 
 .vision-stat {
@@ -297,7 +297,7 @@
 }
 
 .landing-cta-section .btn-primary:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 /* FOOTER */
@@ -459,3 +459,7 @@
     justify-content: center;
   }
 }
+
+
+
+

@@ -3,7 +3,7 @@
 .sidebar {
   width: 260px;
   background: var(--sos-white);
-  border-right: 1px solid var(--sos-light-blue);
+  border-right: 1px solid var(--sos-blue-lightest);
   height: 100vh;
   position: fixed;
   left: 0;
@@ -16,7 +16,7 @@
 
 .sidebar-header {
   padding: 1.5rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -76,7 +76,7 @@
 }
 
 .nav-item:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-blue);
 }
 
@@ -160,3 +160,6 @@
     transform: translateX(0);
   }
 }
+
+
+

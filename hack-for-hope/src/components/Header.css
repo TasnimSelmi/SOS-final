@@ -84,7 +84,7 @@
 
 .logout-btn {
   background: none;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   color: var(--text-secondary);
@@ -97,3 +97,6 @@
   border-color: var(--sos-pink);
   color: var(--sos-pink);
 }
+
+
+

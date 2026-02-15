@@ -31,7 +31,7 @@
   align-items: center;
   padding: 1.5rem 2rem;
   background: var(--sos-white);
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
 }
 
 .header-title h1 {
@@ -102,7 +102,7 @@
 
 .nav-btn {
   padding: 0.75rem 1.5rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   background: var(--sos-white);
   border-radius: 12px;
   font-family: inherit;
@@ -156,7 +156,7 @@
 .form-select, .form-textarea {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-family: inherit;
   font-size: 0.95rem;
@@ -194,7 +194,7 @@
 }
 
 .btn-secondary:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .btn-sm {
@@ -254,7 +254,7 @@ table {
 }
 
 thead {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 th {
@@ -269,7 +269,7 @@ th {
 
 td {
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
   color: var(--text-secondary);
 }
 
@@ -405,7 +405,7 @@ tr:hover {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .sos-table th svg {
@@ -415,7 +415,7 @@ tr:hover {
 
 .sos-table td {
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
   color: var(--text-secondary);
 }
 
@@ -570,7 +570,7 @@ tr:hover {
 .form-textarea {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-family: inherit;
   font-size: 0.95rem;
@@ -621,3 +621,6 @@ tr:hover {
     justify-content: center;
   }
 }
+
+
+

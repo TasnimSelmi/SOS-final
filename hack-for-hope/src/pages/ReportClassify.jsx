@@ -1,125 +1,131 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { reportsAPI } from '../services/api'
-import SOSLogo from '../components/SOSLogo'
-import SOSDecorations from '../components/SOSDecorations'
-import './ReportClassify.css'
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { reportsAPI } from "../services/api";
+import SOSLogo from "../components/SOSLogo";
+import SOSDecorations from "../components/SOSDecorations";
+import { SOSIcons } from "../components/SOSIcons";
+import "./ReportClassify.css";
 
 function ReportClassify() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  
-  const [report, setReport] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(null)
-  
-  const [classification, setClassification] = useState('')
-  const [notes, setNotes] = useState('')
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [classification, setClassification] = useState("");
+  const [notes, setNotes] = useState("");
 
   const classificationOptions = [
     {
-      value: 'sauvegarde',
-      label: 'Sauvegarde',
-      description: 'L\'enfant nécessite une protection immédiate et doit être placé en lieu sûr.',
-      color: '#8b5cf6',
-      icon: '🛡️'
+      value: "sauvegarde",
+      label: "Sauvegarde",
+      description:
+        "L'enfant nécessite une protection immédiate et doit être placé en lieu sûr.",
+      color: "#8b5cf6",
+      icon: "🛡️",
     },
     {
-      value: 'prise_en_charge',
-      label: 'Prise en charge',
-      description: 'L\'incident nécessite un suivi psychologique et des mesures d\'accompagnement.',
-      color: '#10b981',
-      icon: '🤝'
+      value: "prise_en_charge",
+      label: "Prise en charge",
+      description:
+        "L'incident nécessite un suivi psychologique et des mesures d'accompagnement.",
+      color: "#10b981",
+      icon: "🤝",
     },
     {
-      value: 'faux_signalement',
-      label: 'Faux signalement',
-      description: 'Après analyse, le signalement ne présente pas de fondement réel.',
-      color: '#ef4444',
-      icon: '❌'
-    }
-  ]
+      value: "faux_signalement",
+      label: "Faux signalement",
+      description:
+        "Après analyse, le signalement ne présente pas de fondement réel.",
+      color: "#ef4444",
+      icon: "❌",
+    },
+  ];
 
   useEffect(() => {
-    fetchReport()
-  }, [id])
+    fetchReport();
+  }, [id]);
 
   const fetchReport = async () => {
     try {
-      setLoading(true)
-      const response = await reportsAPI.getById(id)
-      
-      if (response.data?.status === 'success') {
-        const reportData = response.data.data.report
-        setReport(reportData)
-        
+      setLoading(true);
+      const response = await reportsAPI.getById(id);
+
+      if (response.data?.status === "success") {
+        const reportData = response.data.data.report;
+        setReport(reportData);
+
         // Pre-fill if already classified
         if (reportData.classification) {
-          setClassification(reportData.classification)
-          setNotes(reportData.classificationNotes || '')
+          setClassification(reportData.classification);
+          setNotes(reportData.classificationNotes || "");
         }
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors du chargement')
+      setError(err.response?.data?.message || "Erreur lors du chargement");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!classification) {
-      setError('Veuillez sélectionner une classification')
-      return
+      setError("Veuillez sélectionner une classification");
+      return;
     }
 
-    setSubmitting(true)
-    setError(null)
+    setSubmitting(true);
+    setError(null);
 
     try {
       const response = await reportsAPI.classify(id, {
         classification,
-        notes
-      })
+        notes,
+      });
 
-      if (response.data?.status === 'success') {
-        alert('Signalement classifié avec succès !')
-        navigate(`/reports/${id}`)
+      if (response.data?.status === "success") {
+        alert("Signalement classifié avec succès !");
+        navigate(`/reports/${id}`);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de la classification')
+      setError(
+        err.response?.data?.message || "Erreur lors de la classification",
+      );
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
+  };
 
   const getUrgencyColor = (urgency) => {
     const colors = {
-      'faible': '#10b981',
-      'moyen': '#f59e0b',
-      'critique': '#ef4444'
-    }
-    return colors[urgency] || '#6b7280'
-  }
+      faible: "#10b981",
+      moyen: "#f59e0b",
+      critique: "#ef4444",
+    };
+    return colors[urgency] || "#6b7280";
+  };
 
   const getUrgencyLabel = (urgency) => {
     const labels = {
-      'faible': 'Faible',
-      'moyen': 'Moyen',
-      'critique': 'Critique'
-    }
-    return labels[urgency] || urgency
-  }
+      faible: "Faible",
+      moyen: "Moyen",
+      critique: "Critique",
+    };
+    return labels[urgency] || urgency;
+  };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'Non spécifié'
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
+    if (!dateString) return "Non spécifié";
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   if (loading) {
     return (
@@ -130,7 +136,7 @@ function ReportClassify() {
           <p>Chargement...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!report) {
@@ -139,30 +145,41 @@ function ReportClassify() {
         <SOSDecorations />
         <div className="error-container">
           <h2>Signalement non trouvé</h2>
-          <button className="btn btn-primary" onClick={() => navigate('/reports')}>
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate("/reports")}
+          >
             Retour
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="report-classify-container">
       <SOSDecorations />
-      
+
       <div className="classify-header">
-        <button className="btn btn-back" onClick={() => navigate(`/reports/${id}`)}>
+        <button
+          className="btn btn-back"
+          onClick={() => navigate(`/reports/${id}`)}
+        >
           ← Retour au signalement
         </button>
         <SOSLogo size="small" />
         <h1>Classifier le Signalement</h1>
-        <p className="subtitle">{report.reportId} - {report.childName}</p>
+        <p className="subtitle">
+          {report.reportId} - {report.childName}
+        </p>
       </div>
 
       {/* Résumé du signalement */}
       <div className="report-summary">
-        <h3>📋 Résumé du signalement</h3>
+        <h3 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <SOSIcons.Clipboard size={20} color="#00abec" />
+          Résumé du signalement
+        </h3>
         <div className="summary-grid">
           <div className="summary-item">
             <label>Enfant</label>
@@ -174,7 +191,7 @@ function ReportClassify() {
           </div>
           <div className="summary-item">
             <label>Urgence</label>
-            <span 
+            <span
               className="urgency-badge"
               style={{ color: getUrgencyColor(report.urgencyLevel) }}
             >
@@ -194,11 +211,16 @@ function ReportClassify() {
 
       {/* Formulaire de classification */}
       <form onSubmit={handleSubmit} className="classify-form">
-        <h3>🏷️ Classification</h3>
-        
+        <h3 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <SOSIcons.Tag size={20} color="#00abec" />
+          Classification
+        </h3>
+
         {error && (
           <div className="error-banner">
-            <span className="error-icon">⚠️</span>
+            <span className="error-icon">
+              <SOSIcons.Alert size={20} color="#de5a6c" />
+            </span>
             {error}
           </div>
         )}
@@ -207,8 +229,8 @@ function ReportClassify() {
           {classificationOptions.map((option) => (
             <label
               key={option.value}
-              className={`classification-card ${classification === option.value ? 'selected' : ''}`}
-              style={{ '--option-color': option.color }}
+              className={`classification-card ${classification === option.value ? "selected" : ""}`}
+              style={{ "--option-color": option.color }}
             >
               <input
                 type="radio"
@@ -218,7 +240,7 @@ function ReportClassify() {
                 onChange={(e) => setClassification(e.target.value)}
               />
               <div className="card-content">
-                <span className="card-icon">{option.icon}</span>
+                <span className="card-icon">{option.iconComponent}</span>
                 <div className="card-text">
                   <h4>{option.label}</h4>
                   <p>{option.description}</p>
@@ -254,21 +276,27 @@ function ReportClassify() {
             className="btn btn-primary"
             disabled={submitting || !classification}
           >
-            {submitting ? 'Classification en cours...' : 'Confirmer la classification'}
+            {submitting
+              ? "Classification en cours..."
+              : "Confirmer la classification"}
           </button>
         </div>
       </form>
 
       {/* Information */}
       <div className="info-box">
-        <h4>ℹ️ Information</h4>
+        <h4 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <SOSIcons.Info size={18} color="#00abec" />
+          Information
+        </h4>
         <p>
-          La classification déterminera le statut du signalement et les prochaines étapes du processus. 
-          Cette action est enregistrée dans l'historique et ne peut pas être annulée.
+          La classification déterminera le statut du signalement et les
+          prochaines étapes du processus. Cette action est enregistrée dans
+          l'historique et ne peut pas être annulée.
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default ReportClassify
+export default ReportClassify;

@@ -1,142 +1,150 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { usersAPI } from '../services/api'
-import SOSLogo from '../components/SOSLogo'
-import SOSDecorations from '../components/SOSDecorations'
-import { useAuth } from '../context/AuthContext'
-import './AdminUsers.css'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { usersAPI } from "../services/api";
+import { useSocket } from "../context/SocketContext";
+import SOSLogo from "../components/SOSLogo";
+import SOSDecorations from "../components/SOSDecorations";
+import { useAuth } from "../context/AuthContext";
+import { SOSIcons } from "../components/SOSIcons";
+import "./AdminUsers.css";
 
 function AdminUsers() {
-  const navigate = useNavigate()
-  const { user } = useAuth()
-  
-  const [users, setUsers] = useState([])
-  const [roles, setRoles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [selectedUser, setSelectedUser] = useState(null)
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { notifications, unreadCount } = useSocket();
+
+  const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [filters, setFilters] = useState({
-    role: '',
-    isActive: '',
-    search: ''
-  })
+    role: "",
+    isActive: "",
+    search: "",
+  });
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
     total: 0,
-    pages: 0
-  })
+    pages: 0,
+  });
 
   const [formData, setFormData] = useState({
-    username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    role: 'mere',
-    village: '',
-    phoneNumber: '',
-    isActive: true
-  })
+    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    role: "mere",
+    village: "",
+    phoneNumber: "",
+    isActive: true,
+  });
 
   const roleLabels = {
-    'mere': 'Mère SOS',
-    'tante': 'Tante SOS',
-    'educateur': 'Éducateur',
-    'psychologue': 'Psychologue',
-    'decideur1': 'Décideur 1',
-    'decideur2': 'Décideur 2',
-    'admin': 'Administrateur'
-  }
+    mere: "Mère SOS",
+    tante: "Tante SOS",
+    educateur: "Éducateur",
+    psychologue: "Psychologue",
+    decideur1: "Décideur 1",
+    decideur2: "Décideur 2",
+    admin: "Administrateur",
+  };
 
   useEffect(() => {
-    fetchUsers()
-    fetchRoles()
-  }, [filters, pagination.page])
+    fetchUsers();
+    fetchRoles();
+  }, [filters, pagination.page]);
 
   const fetchUsers = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const params = {
         page: pagination.page,
         limit: pagination.limit,
-        ...Object.fromEntries(Object.entries(filters).filter(([_, v]) => v !== ''))
-      }
+        ...Object.fromEntries(
+          Object.entries(filters).filter(([_, v]) => v !== ""),
+        ),
+      };
 
-      const response = await usersAPI.getAll(params)
-      
-      if (response.data?.status === 'success') {
-        setUsers(response.data.data.users)
-        setPagination(prev => ({
+      const response = await usersAPI.getAll(params);
+
+      if (response.data?.status === "success") {
+        setUsers(response.data.data.users);
+        setPagination((prev) => ({
           ...prev,
           total: response.data.data.pagination.total,
-          pages: response.data.data.pagination.pages
-        }))
+          pages: response.data.data.pagination.pages,
+        }));
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors du chargement des utilisateurs')
+      setError(
+        err.response?.data?.message ||
+          "Erreur lors du chargement des utilisateurs",
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const fetchRoles = async () => {
     try {
-      const response = await usersAPI.getRoles()
-      if (response.data?.status === 'success') {
-        setRoles(response.data.data.roles)
+      const response = await usersAPI.getRoles();
+      if (response.data?.status === "success") {
+        setRoles(response.data.data.roles);
       }
     } catch (err) {
-      console.error('Error fetching roles:', err)
+      console.error("Error fetching roles:", err);
     }
-  }
+  };
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
-  }
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleFilterChange = (e) => {
-    const { name, value } = e.target
-    setFilters(prev => ({
+    const { name, value } = e.target;
+    setFilters((prev) => ({
       ...prev,
-      [name]: value
-    }))
-    setPagination(prev => ({ ...prev, page: 1 }))
-  }
+      [name]: value,
+    }));
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
 
   const clearFilters = () => {
     setFilters({
-      role: '',
-      isActive: '',
-      search: ''
-    })
-    setPagination(prev => ({ ...prev, page: 1 }))
-  }
+      role: "",
+      isActive: "",
+      search: "",
+    });
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
 
   const handleCreateUser = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const response = await usersAPI.create(formData)
-      
-      if (response.data?.status === 'success') {
-        setShowCreateModal(false)
-        resetForm()
-        fetchUsers()
-        alert('Utilisateur créé avec succès !')
+      const response = await usersAPI.create(formData);
+
+      if (response.data?.status === "success") {
+        setShowCreateModal(false);
+        resetForm();
+        fetchUsers();
+        alert("Utilisateur créé avec succès !");
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Erreur lors de la création')
+      alert(err.response?.data?.message || "Erreur lors de la création");
     }
-  }
+  };
 
   const handleUpdateUser = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const updateData = {
         username: formData.username,
@@ -146,107 +154,114 @@ function AdminUsers() {
         role: formData.role,
         village: formData.village,
         phoneNumber: formData.phoneNumber,
-        isActive: formData.isActive
-      }
+        isActive: formData.isActive,
+      };
 
-      const response = await usersAPI.update(selectedUser.id, updateData)
-      
-      if (response.data?.status === 'success') {
-        setShowEditModal(false)
-        setSelectedUser(null)
-        resetForm()
-        fetchUsers()
-        alert('Utilisateur mis à jour avec succès !')
+      const response = await usersAPI.update(selectedUser.id, updateData);
+
+      if (response.data?.status === "success") {
+        setShowEditModal(false);
+        setSelectedUser(null);
+        resetForm();
+        fetchUsers();
+        alert("Utilisateur mis à jour avec succès !");
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Erreur lors de la mise à jour')
+      alert(err.response?.data?.message || "Erreur lors de la mise à jour");
     }
-  }
+  };
 
   const handleDeleteUser = async (userId) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return
-    
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?"))
+      return;
+
     try {
-      await usersAPI.delete(userId)
-      fetchUsers()
-      alert('Utilisateur supprimé avec succès !')
+      await usersAPI.delete(userId);
+      fetchUsers();
+      alert("Utilisateur supprimé avec succès !");
     } catch (err) {
-      alert(err.response?.data?.message || 'Erreur lors de la suppression')
+      alert(err.response?.data?.message || "Erreur lors de la suppression");
     }
-  }
+  };
 
   const handleResetPassword = async (userId) => {
-    const newPassword = prompt('Entrez le nouveau mot de passe (min. 6 caractères):')
+    const newPassword = prompt(
+      "Entrez le nouveau mot de passe (min. 6 caractères):",
+    );
     if (!newPassword || newPassword.length < 6) {
-      alert('Le mot de passe doit contenir au moins 6 caractères')
-      return
+      alert("Le mot de passe doit contenir au moins 6 caractères");
+      return;
     }
 
     try {
-      await usersAPI.resetPassword(userId, { newPassword })
-      alert('Mot de passe réinitialisé avec succès !')
+      await usersAPI.resetPassword(userId, { newPassword });
+      alert("Mot de passe réinitialisé avec succès !");
     } catch (err) {
-      alert(err.response?.data?.message || 'Erreur lors de la réinitialisation')
+      alert(
+        err.response?.data?.message || "Erreur lors de la réinitialisation",
+      );
     }
-  }
+  };
 
   const openEditModal = (user) => {
-    setSelectedUser(user)
+    setSelectedUser(user);
     setFormData({
-      username: user.username || '',
+      username: user.username || "",
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      password: '',
+      password: "",
       role: user.role,
-      village: user.village || '',
-      phoneNumber: user.phoneNumber || '',
-      isActive: user.isActive
-    })
-    setShowEditModal(true)
-  }
+      village: user.village || "",
+      phoneNumber: user.phoneNumber || "",
+      isActive: user.isActive,
+    });
+    setShowEditModal(true);
+  };
 
   const resetForm = () => {
     setFormData({
-      username: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      role: 'mere',
-      village: '',
-      phoneNumber: '',
-      isActive: true
-    })
-  }
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      role: "mere",
+      village: "",
+      phoneNumber: "",
+      isActive: true,
+    });
+  };
 
   const closeModal = () => {
-    setShowCreateModal(false)
-    setShowEditModal(false)
-    setSelectedUser(null)
-    resetForm()
-  }
+    setShowCreateModal(false);
+    setShowEditModal(false);
+    setSelectedUser(null);
+    resetForm();
+  };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'Jamais'
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
+    if (!dateString) return "Jamais";
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   // Modal Component
   const UserModal = ({ isEdit, onSubmit, onClose }) => (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{isEdit ? 'Modifier Utilisateur' : 'Créer Utilisateur'}</h2>
-          <button className="btn-close" onClick={onClose}>×</button>
+          <h2>{isEdit ? "Modifier Utilisateur" : "Créer Utilisateur"}</h2>
+          <button className="btn-close" onClick={onClose}>
+            ×
+          </button>
         </div>
-        
+
         <form onSubmit={onSubmit} className="modal-form">
           <div className="form-group">
             <label>Nom d'utilisateur *</label>
@@ -323,8 +338,10 @@ function AdminUsers() {
                 onChange={handleInputChange}
                 required
               >
-                {roles.map(role => (
-                  <option key={role.value} value={role.value}>{role.label}</option>
+                {roles.map((role) => (
+                  <option key={role.value} value={role.value}>
+                    {role.label}
+                  </option>
                 ))}
               </select>
             </div>
@@ -370,31 +387,43 @@ function AdminUsers() {
           </div>
 
           <div className="modal-actions">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Annuler
             </button>
             <button type="submit" className="btn btn-primary">
-              {isEdit ? 'Mettre à jour' : 'Créer'}
+              {isEdit ? "Mettre à jour" : "Créer"}
             </button>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 
   return (
     <div className="admin-users-container">
       <SOSDecorations />
-      
+
       <div className="admin-header">
         <SOSLogo size="small" />
-        <h1>Gestion des Utilisateurs</h1>
-        <p className="subtitle">Administration des comptes utilisateurs</p>
+        <div>
+          <h1>Gestion des Utilisateurs</h1>
+          <p className="subtitle">Administration des comptes utilisateurs</p>
+        </div>
+        {unreadCount > 0 && (
+          <div className="notification-badge">
+            <SOSIcons.Notification size={24} />
+            <span className="badge-count">{unreadCount}</span>
+          </div>
+        )}
       </div>
 
       {/* Actions */}
       <div className="admin-actions">
-        <button 
+        <button
           className="btn btn-primary"
           onClick={() => setShowCreateModal(true)}
         >
@@ -407,17 +436,27 @@ function AdminUsers() {
         <div className="filters-row">
           <div className="filter-group">
             <label>Rôle</label>
-            <select name="role" value={filters.role} onChange={handleFilterChange}>
+            <select
+              name="role"
+              value={filters.role}
+              onChange={handleFilterChange}
+            >
               <option value="">Tous les rôles</option>
-              {roles.map(role => (
-                <option key={role.value} value={role.value}>{role.label}</option>
+              {roles.map((role) => (
+                <option key={role.value} value={role.value}>
+                  {role.label}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="filter-group">
             <label>Statut</label>
-            <select name="isActive" value={filters.isActive} onChange={handleFilterChange}>
+            <select
+              name="isActive"
+              value={filters.isActive}
+              onChange={handleFilterChange}
+            >
               <option value="">Tous</option>
               <option value="true">Actif</option>
               <option value="false">Inactif</option>
@@ -435,7 +474,10 @@ function AdminUsers() {
             />
           </div>
 
-          <button className="btn btn-secondary btn-clear" onClick={clearFilters}>
+          <button
+            className="btn btn-secondary btn-clear"
+            onClick={clearFilters}
+          >
             Réinitialiser
           </button>
         </div>
@@ -444,14 +486,17 @@ function AdminUsers() {
       {/* Stats */}
       <div className="stats-bar">
         <span className="stat-item">
-          <strong>{pagination.total}</strong> utilisateur{pagination.total > 1 ? 's' : ''}
+          <strong>{pagination.total}</strong> utilisateur
+          {pagination.total > 1 ? "s" : ""}
         </span>
       </div>
 
       {/* Error */}
       {error && (
         <div className="error-banner">
-          <span className="error-icon">⚠️</span>
+          <span className="error-icon">
+            <SOSIcons.Alert size={20} color="#de5a6c" />
+          </span>
           {error}
         </div>
       )}
@@ -481,14 +526,16 @@ function AdminUsers() {
                 <tr>
                   <td colSpan="7" className="empty-state">
                     <div className="empty-message">
-                      <span className="empty-icon">👥</span>
+                      <span className="empty-icon">
+                        <SOSIcons.Users size={48} color="#00abec" />
+                      </span>
                       <p>Aucun utilisateur trouvé</p>
                     </div>
                   </td>
                 </tr>
               ) : (
-                users.map(u => (
-                  <tr key={u.id} className={!u.isActive ? 'inactive' : ''}>
+                users.map((u) => (
+                  <tr key={u.id} className={!u.isActive ? "inactive" : ""}>
                     <td className="user-name">
                       <strong>{u.fullName}</strong>
                     </td>
@@ -498,35 +545,37 @@ function AdminUsers() {
                         {roleLabels[u.role] || u.role}
                       </span>
                     </td>
-                    <td>{u.village || '-'}</td>
+                    <td>{u.village || "-"}</td>
                     <td>
-                      <span className={`badge status-badge ${u.isActive ? 'active' : 'inactive'}`}>
-                        {u.isActive ? 'Actif' : 'Inactif'}
+                      <span
+                        className={`badge status-badge ${u.isActive ? "active" : "inactive"}`}
+                      >
+                        {u.isActive ? "Actif" : "Inactif"}
                       </span>
                     </td>
                     <td>{formatDate(u.lastLogin)}</td>
                     <td className="actions-cell">
-                      <button 
+                      <button
                         className="btn btn-sm btn-edit"
                         onClick={() => openEditModal(u)}
                         title="Modifier"
                       >
-                        ✏️
+                        <SOSIcons.Edit size={16} />
                       </button>
-                      <button 
+                      <button
                         className="btn btn-sm btn-password"
                         onClick={() => handleResetPassword(u.id)}
                         title="Réinitialiser mot de passe"
                       >
                         🔑
                       </button>
-                      <button 
+                      <button
                         className="btn btn-sm btn-delete"
                         onClick={() => handleDeleteUser(u.id)}
                         title="Supprimer"
                         disabled={u.id === user?.id}
                       >
-                        🗑️
+                        <SOSIcons.Trash size={16} />
                       </button>
                     </td>
                   </tr>
@@ -542,27 +591,33 @@ function AdminUsers() {
         <div className="pagination">
           <button
             className="btn btn-pagination"
-            onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+            onClick={() =>
+              setPagination((prev) => ({ ...prev, page: prev.page - 1 }))
+            }
             disabled={pagination.page === 1}
           >
             ← Précédent
           </button>
-          
+
           <div className="page-numbers">
-            {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(page => (
-              <button
-                key={page}
-                className={`btn btn-page ${page === pagination.page ? 'active' : ''}`}
-                onClick={() => setPagination(prev => ({ ...prev, page }))}
-              >
-                {page}
-              </button>
-            ))}
+            {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  className={`btn btn-page ${page === pagination.page ? "active" : ""}`}
+                  onClick={() => setPagination((prev) => ({ ...prev, page }))}
+                >
+                  {page}
+                </button>
+              ),
+            )}
           </div>
-          
+
           <button
             className="btn btn-pagination"
-            onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+            onClick={() =>
+              setPagination((prev) => ({ ...prev, page: prev.page + 1 }))
+            }
             disabled={pagination.page === pagination.pages}
           >
             Suivant →
@@ -572,22 +627,22 @@ function AdminUsers() {
 
       {/* Modals */}
       {showCreateModal && (
-        <UserModal 
-          isEdit={false} 
-          onSubmit={handleCreateUser} 
-          onClose={closeModal} 
+        <UserModal
+          isEdit={false}
+          onSubmit={handleCreateUser}
+          onClose={closeModal}
         />
       )}
-      
+
       {showEditModal && (
-        <UserModal 
-          isEdit={true} 
-          onSubmit={handleUpdateUser} 
-          onClose={closeModal} 
+        <UserModal
+          isEdit={true}
+          onSubmit={handleUpdateUser}
+          onClose={closeModal}
         />
       )}
     </div>
-  )
+  );
 }
 
-export default AdminUsers
+export default AdminUsers;

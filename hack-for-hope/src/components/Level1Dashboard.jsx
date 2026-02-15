@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { reportsAPI, usersAPI } from "../services/api";
+import { useSocket } from "../context/SocketContext";
 import { SOSIcons } from "./SOSIcons";
 import { SOSCard, SOSDataCard, SOSStatCard } from "./SOSCard";
 import { SOSProgressRing } from "./SOSChart";
@@ -9,6 +10,7 @@ function Level1Dashboard() {
   const [activeTab, setActiveTab] = useState("nouveau");
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { notifications, unreadCount } = useSocket();
 
   useEffect(() => {
     if (activeTab === "mes-signalements") {
@@ -38,6 +40,12 @@ function Level1Dashboard() {
           <h1>Espace Déclarant</h1>
           <p>Niveau 1 - Mères SOS, Tantes SOS, Éducateurs</p>
         </div>
+        {unreadCount > 0 && (
+          <div className="notification-badge">
+            <SOSIcons.Notification size={24} />
+            <span className="badge-count">{unreadCount}</span>
+          </div>
+        )}
       </div>
 
       <div className="nav-tabs">
@@ -232,7 +240,16 @@ function NewReportForm({ onSuccess }) {
             marginBottom: "1rem",
           }}
         >
-          <strong>⚠️ Erreur:</strong>
+          <strong
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <SOSIcons.Alert size={16} color="#de5a6c" />
+            Erreur:
+          </strong>
           <br />
           {error}
         </div>
@@ -260,9 +277,9 @@ function NewReportForm({ onSuccess }) {
             </label>
             <select className="form-select" name="urgence" required>
               <option value="">Sélectionner</option>
-              <option value="urgent">🔴 Urgent</option>
-              <option value="moyen">🟡 Moyen</option>
-              <option value="bas">🟢 Bas</option>
+              <option value="urgent">● Urgent</option>
+              <option value="moyen">● Moyen</option>
+              <option value="bas">● Bas</option>
             </select>
           </div>
           <div className="form-group">
@@ -304,8 +321,16 @@ function NewReportForm({ onSuccess }) {
                     )}
                   </div>
                 ) : (
-                  <span className="no-psychologue">
-                    ⚠️ Aucun psychologue pour ce village
+                  <span
+                    className="no-psychologue"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <SOSIcons.Alert size={14} color="#de5a6c" />
+                    Aucun psychologue pour ce village
                   </span>
                 )}
               </div>
@@ -367,8 +392,17 @@ function NewReportForm({ onSuccess }) {
             {attachments.length > 0 && (
               <div className="attachments-preview">
                 {attachments.map((file, idx) => (
-                  <span key={idx} className="attachment-tag">
-                    📎 {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                  <span
+                    key={idx}
+                    className="attachment-tag"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <SOSIcons.Paperclip size={14} color="#00abec" />
+                    {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
                   </span>
                 ))}
               </div>

@@ -20,7 +20,7 @@
 }
 
 .bell-trigger:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-blue);
 }
 
@@ -87,7 +87,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
 }
 
 .notification-header h3 {
@@ -123,13 +123,13 @@
   padding: 1rem 1.25rem;
   text-decoration: none;
   color: inherit;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
   transition: background 0.2s;
   position: relative;
 }
 
 .notification-item:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .notification-item.unread {
@@ -219,7 +219,7 @@
 
 .notification-footer {
   padding: 0.75rem 1.25rem;
-  border-top: 1px solid var(--sos-light-blue);
+  border-top: 1px solid var(--sos-blue-lightest);
   text-align: center;
 }
 
@@ -244,7 +244,7 @@
 }
 
 .notification-list::-webkit-scrollbar-thumb {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   border-radius: 3px;
 }
 
@@ -260,3 +260,6 @@
     max-height: 400px;
   }
 }
+
+
+

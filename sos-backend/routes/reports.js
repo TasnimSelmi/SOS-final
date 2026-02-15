@@ -284,22 +284,38 @@ router.post(
       });
       await report.save();
 
-      // Notify analysts (psychologues) - both DB and real-time
-      const analysts = await User.find({
+      // Notify village psychologues (only from the same village)
+      const villagePsychologues = await User.find({
         role: "psychologue",
+        village: village,
         isActive: true,
       });
 
-      if (analysts.length > 0) {
-        // Create DB notifications
-        await Notification.createForNewReport(report, analysts);
+      if (villagePsychologues.length > 0) {
+        // Create DB notifications for village psychologues
+        const notifications = villagePsychologues.map((psychologue) => ({
+          recipient: psychologue._id,
+          type: "new_report",
+          title: "Nouveau signalement",
+          message: `Un nouveau signalement (${report.reportId}) a été créé dans votre village ${village}.`,
+          relatedReport: report._id,
+          priority:
+            urgencyLevel === "critique"
+              ? "urgent"
+              : urgencyLevel === "moyen"
+                ? "high"
+                : "normal",
+          link: `/reports/${report._id}`,
+        }));
 
-        // Send real-time notifications
-        analysts.forEach((analyst) => {
-          sendNotificationToUser(analyst._id.toString(), {
+        await Notification.insertMany(notifications);
+
+        // Send real-time notifications to village psychologues
+        villagePsychologues.forEach((psychologue) => {
+          sendNotificationToUser(psychologue._id.toString(), {
             type: "new_report",
             title: "Nouveau signalement",
-            message: `Un nouveau signalement (${report.reportId}) a été créé dans le village ${village}.`,
+            message: `Un nouveau signalement (${report.reportId}) a été créé dans votre village ${village}.`,
             relatedReport: report._id,
             priority:
               urgencyLevel === "critique"
@@ -313,7 +329,7 @@ router.post(
         });
       }
 
-      // Also notify village psychologues
+      // Also send to village room (for real-time updates)
       sendNotificationToVillage(village, {
         type: "new_report",
         title: "Nouveau signalement village",
@@ -415,6 +431,17 @@ router.get("/", auth, async (req, res) => {
       filter.declarant = req.user._id;
     }
 
+    // Level 2 (Psychologues): See only reports from their village
+    if (req.user.role === "psychologue" && req.user.village) {
+      filter.village = req.user.village;
+    }
+
+    // Level 3 decideur1 (Directeur Village): See only their village reports
+    if (req.user.role === "decideur1" && req.user.village) {
+      filter.village = req.user.village;
+    }
+    // decideur2 (Bureau National) sees all villages
+
     // Level 2 & 3: See all reports (with optional filters)
     if (status) {
       // Support comma-separated status values
@@ -425,7 +452,10 @@ router.get("/", auth, async (req, res) => {
       }
     }
     if (urgencyLevel) filter.urgencyLevel = urgencyLevel;
-    if (village) filter.village = village;
+    // Don't override village filter if user is psychologue or decideur1
+    if (village && !["psychologue", "decideur1"].includes(req.user.role)) {
+      filter.village = village;
+    }
     if (incidentType) filter.incidentType = incidentType;
     if (classification) {
       // Support comma-separated classification values
@@ -447,6 +477,7 @@ router.get("/", auth, async (req, res) => {
       .populate("declarant", "firstName lastName fullName")
       .populate("assignedTo", "firstName lastName fullName")
       .populate("classifiedBy", "firstName lastName")
+      .populate("decision.madeBy", "firstName lastName")
       .sort(sort)
       .skip(skip)
       .limit(parseInt(limit));
@@ -470,6 +501,10 @@ router.get("/", auth, async (req, res) => {
           declarant: report.isAnonymous ? null : report.declarant,
           assignedTo: report.assignedTo,
           classification: report.classification,
+          classifiedBy: report.classifiedBy,
+          workflowSteps: report.workflowSteps,
+          currentStep: report.currentStep,
+          decision: report.decision,
           createdAt: report.createdAt,
           daysSinceCreation: report.daysSinceCreation,
           isOverdue: report.isOverdue,
@@ -1037,6 +1072,7 @@ router.put(
         (s) => s.status === "completed",
       );
       if (allCompleted) {
+        // Notify declarant
         await Notification.create({
           recipient: report.declarant,
           type: "workflow_completed",
@@ -1045,6 +1081,38 @@ router.put(
           relatedReport: report._id,
           priority: "high",
           link: `/reports/${report._id}`,
+        });
+
+        // Notify Directeur village and Bureau National - Ready for decision
+        const directeurs = await User.find({
+          role: { $in: ["decideur1", "decideur2"] },
+          $or: [
+            { village: report.village },
+            { role: "decideur2" }, // Bureau National sees all villages
+          ],
+          isActive: true,
+        });
+
+        directeurs.forEach(async (directeur) => {
+          await Notification.create({
+            recipient: directeur._id,
+            type: "workflow_completed",
+            title: "Dossier complet - Décision requise",
+            message: `Le signalement ${report.reportId} (${report.village}) a complété toutes les étapes psychologiques et attend votre décision formelle.`,
+            relatedReport: report._id,
+            priority: report.urgencyLevel === "critique" ? "urgent" : "high",
+            link: `/reports/${report._id}`,
+          });
+
+          sendNotificationToUser(directeur._id.toString(), {
+            type: "workflow_completed",
+            title: "Dossier complet - Décision requise",
+            message: `Le signalement ${report.reportId} attend votre décision.`,
+            relatedReport: report._id,
+            priority: report.urgencyLevel === "critique" ? "urgent" : "high",
+            link: `/reports/${report._id}`,
+            createdAt: new Date(),
+          });
         });
       }
 
@@ -1141,8 +1209,11 @@ router.post(
       .isIn([
         "fiche_initiale",
         "rapport_dpe",
+        "evaluation_complete",
         "plan_action",
         "rapport_suivi",
+        "rapport_final",
+        "avis_cloture",
         "decision_finale",
       ])
       .withMessage("Type de document invalide"),
@@ -1214,22 +1285,57 @@ router.post(
 );
 
 // @route   GET /api/reports/stats/village
-// @desc    Get statistics by village (Level 3)
-// @access  Private (Directors, Admin)
+// @desc    Get statistics by village (Level 2 & 3)
+// @access  Private (Psychologues, Directors, Admin)
 router.get(
   "/stats/village",
   auth,
-  authorize("decideur1", "decideur2", "admin"),
+  authorize("psychologue", "decideur1", "decideur2", "admin"),
   async (req, res) => {
     try {
+      // Build match filter
+      const matchFilter = {};
+
+      // If psychologue, filter by their village
+      if (req.user.role === "psychologue" && req.user.village) {
+        matchFilter.village = req.user.village;
+      }
+
       const stats = await Report.aggregate([
+        ...(Object.keys(matchFilter).length > 0
+          ? [{ $match: matchFilter }]
+          : []),
         {
           $group: {
             _id: "$village",
             total: { $sum: 1 },
+            actifs: {
+              $sum: {
+                $cond: [{ $in: ["$status", ["en_attente", "en_cours"]] }, 1, 0],
+              },
+            },
+            enTraitement: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "en_cours"] }, 1, 0],
+              },
+            },
             pending: {
               $sum: {
                 $cond: [{ $in: ["$status", ["en_attente", "en_cours"]] }, 1, 0],
+              },
+            },
+            clotures: {
+              $sum: {
+                $cond: [
+                  {
+                    $in: [
+                      "$status",
+                      ["cloture", "sauvegarde", "pris_en_charge", "faux"],
+                    ],
+                  },
+                  1,
+                  0,
+                ],
               },
             },
             resolved: {
@@ -1258,6 +1364,9 @@ router.get(
           $project: {
             village: "$_id",
             total: 1,
+            actifs: 1,
+            enTraitement: 1,
+            clotures: 1,
             pending: 1,
             resolved: 1,
             urgent: 1,

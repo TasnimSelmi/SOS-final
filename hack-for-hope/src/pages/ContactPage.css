@@ -2,7 +2,7 @@
 
 .contact-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-blue-lightest) 100%);
   padding-bottom: 4rem;
 }
 
@@ -145,7 +145,7 @@
 .form-group select,
 .form-group textarea {
   padding: 1rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-family: inherit;
   font-size: 1rem;
@@ -290,3 +290,6 @@
     font-size: 1.8rem;
   }
 }
+
+
+

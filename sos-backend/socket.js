@@ -1,4 +1,4 @@
-const { Server } = require('socket.io');
+const { Server } = require("socket.io");
 
 let io = null;
 const connectedUsers = new Map(); // userId -> socketId
@@ -6,17 +6,23 @@ const connectedUsers = new Map(); // userId -> socketId
 const initializeSocket = (httpServer) => {
   io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-      methods: ['GET', 'POST'],
-      credentials: true
-    }
+      origin: [
+        process.env.FRONTEND_URL,
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://127.0.0.1:5173",
+      ].filter(Boolean),
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
   });
 
-  io.on('connection', (socket) => {
-    console.log('New client connected:', socket.id);
+  io.on("connection", (socket) => {
+    console.log("New client connected:", socket.id);
 
     // User authentication
-    socket.on('authenticate', (userId) => {
+    socket.on("authenticate", (userId) => {
       if (userId) {
         connectedUsers.set(userId, socket.id);
         socket.userId = userId;
@@ -26,7 +32,7 @@ const initializeSocket = (httpServer) => {
     });
 
     // Join village room for psychologues
-    socket.on('join-village', (village) => {
+    socket.on("join-village", (village) => {
       if (village) {
         socket.join(`village:${village}`);
         console.log(`Socket ${socket.id} joined village room: ${village}`);
@@ -34,7 +40,7 @@ const initializeSocket = (httpServer) => {
     });
 
     // Join role room
-    socket.on('join-role', (role) => {
+    socket.on("join-role", (role) => {
       if (role) {
         socket.join(`role:${role}`);
         console.log(`Socket ${socket.id} joined role room: ${role}`);
@@ -42,8 +48,8 @@ const initializeSocket = (httpServer) => {
     });
 
     // Handle disconnection
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
+    socket.on("disconnect", () => {
+      console.log("Client disconnected:", socket.id);
       if (socket.userId) {
         connectedUsers.delete(socket.userId);
       }
@@ -55,7 +61,7 @@ const initializeSocket = (httpServer) => {
 
 const getIO = () => {
   if (!io) {
-    throw new Error('Socket.io not initialized');
+    throw new Error("Socket.io not initialized");
   }
   return io;
 };
@@ -63,7 +69,7 @@ const getIO = () => {
 // Send notification to specific user
 const sendNotificationToUser = (userId, notification) => {
   if (io) {
-    io.to(`user:${userId}`).emit('notification', notification);
+    io.to(`user:${userId}`).emit("notification", notification);
     console.log(`Notification sent to user ${userId}`);
   }
 };
@@ -71,7 +77,7 @@ const sendNotificationToUser = (userId, notification) => {
 // Send notification to village psychologues
 const sendNotificationToVillage = (village, notification) => {
   if (io) {
-    io.to(`village:${village}`).emit('notification', notification);
+    io.to(`village:${village}`).emit("notification", notification);
     console.log(`Notification sent to village ${village}`);
   }
 };
@@ -79,7 +85,7 @@ const sendNotificationToVillage = (village, notification) => {
 // Send notification to all users with specific role
 const sendNotificationToRole = (role, notification) => {
   if (io) {
-    io.to(`role:${role}`).emit('notification', notification);
+    io.to(`role:${role}`).emit("notification", notification);
     console.log(`Notification sent to role ${role}`);
   }
 };
@@ -87,7 +93,7 @@ const sendNotificationToRole = (role, notification) => {
 // Broadcast to all connected clients
 const broadcastNotification = (notification) => {
   if (io) {
-    io.emit('notification', notification);
+    io.emit("notification", notification);
   }
 };
 
@@ -97,5 +103,5 @@ module.exports = {
   sendNotificationToUser,
   sendNotificationToVillage,
   sendNotificationToRole,
-  broadcastNotification
+  broadcastNotification,
 };

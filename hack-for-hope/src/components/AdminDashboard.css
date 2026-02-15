@@ -8,7 +8,7 @@
   gap: 1rem;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--sos-light-blue);
+  border-bottom: 2px solid var(--sos-blue-lightest);
 }
 
 .admin-dashboard .dashboard-header > div {
@@ -63,17 +63,17 @@
 
 .sos-badge-success {
   background: rgba(34, 197, 94, 0.15);
-  color: #16a34a;
+  color: #00abec;
 }
 
 .sos-badge-urgent {
   background: rgba(239, 68, 68, 0.15);
-  color: #dc2626;
+  color: #de5a6c;
 }
 
 .sos-badge-warning {
   background: rgba(245, 158, 11, 0.15);
-  color: #d97706;
+  color: #00abec;
 }
 
 .role-admin {
@@ -107,7 +107,7 @@
 }
 
 .btn-secondary {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-dark-blue);
 }
 
@@ -118,21 +118,21 @@
 
 .btn-warning {
   background: rgba(245, 158, 11, 0.2);
-  color: #d97706;
+  color: #00abec;
 }
 
 .btn-warning:hover {
-  background: #f59e0b;
+  background: #84ccf1;
   color: white;
 }
 
 .btn-danger {
   background: rgba(239, 68, 68, 0.15);
-  color: #dc2626;
+  color: #de5a6c;
 }
 
 .btn-danger:hover {
-  background: #ef4444;
+  background: #de5a6c;
   color: white;
 }
 
@@ -166,7 +166,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
 }
 
 .modal-header h3 {
@@ -190,7 +190,7 @@
 }
 
 .btn-close:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--text-primary);
 }
 
@@ -229,7 +229,7 @@
 .modal-content .form-select {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 10px;
   font-family: inherit;
   font-size: 0.9rem;
@@ -248,7 +248,7 @@
   gap: 1rem;
   justify-content: flex-end;
   padding-top: 1rem;
-  border-top: 1px solid var(--sos-light-blue);
+  border-top: 1px solid var(--sos-blue-lightest);
   margin-top: 1rem;
 }
 
@@ -281,3 +281,8 @@
     flex-direction: column;
   }
 }
+
+
+
+
+

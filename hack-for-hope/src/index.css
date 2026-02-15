@@ -1,21 +1,26 @@
 :root {
-  /* SOS Official Brand Colors */
+  /* SOS Official Brand Colors - Strict Palette */
   --sos-blue: #00abec;
+  --sos-blue-light: #84ccf1;
+  --sos-blue-lighter: #cde8f8;
+  --sos-blue-lightest: #e4f3fb;
   --sos-dark-blue: #1c325d;
-  --sos-light-blue: #e8f7fc;
   --sos-pink: #de5a6c;
+  --sos-pink-light: #eba9a9;
+  --sos-pink-lighter: #f1c9c6;
+  --sos-pink-lightest: #f9e5e4;
   --sos-white: #FFFFFF;
-  --sos-cream: #F5FAFC;
-  --sos-logo-bg: #4A6FA5;
+  --sos-gray: #78849e;
+  --sos-gray-light: #b3c3cf;
   
   /* Text Colors */
   --text-primary: #1c325d;
-  --text-secondary: #4A6B82;
-  --text-muted: #7B97AC;
+  --text-secondary: #78849e;
+  --text-muted: #b3c3cf;
   
   /* Functional */
-  --success: #4ECDC4;
-  --warning: #FFB347;
+  --success: #00abec;
+  --warning: #84ccf1;
   --danger: #de5a6c;
   
   /* Shadows */
@@ -32,7 +37,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-light-blue) 100%);
+  background: linear-gradient(135deg, var(--sos-white) 0%, var(--sos-blue-lightest) 100%);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.6;
@@ -129,3 +134,6 @@ body {
     font-size: 1.5rem;
   }
 }
+
+
+

@@ -96,7 +96,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -105,7 +105,7 @@
 
 .role-card:hover, .role-card.active {
   border-color: var(--sos-blue);
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   box-shadow: var(--shadow-md);
 }
 
@@ -125,7 +125,7 @@
 .level-admin .role-icon { background: rgba(139, 92, 246, 0.15); }
 
 .level-admin.role-card:hover, .level-admin.role-card.active {
-  border-color: #8b5cf6;
+  border-color: #00abec;
   background: rgba(139, 92, 246, 0.1);
 }
 
@@ -156,7 +156,7 @@
 .form-input {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-family: inherit;
   font-size: 0.95rem;
@@ -204,3 +204,7 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+
+
+

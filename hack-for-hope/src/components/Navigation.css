@@ -79,7 +79,7 @@
 .nav-divider {
   width: 1px;
   height: 24px;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .nav-auth .btn-secondary {
@@ -91,7 +91,7 @@
 }
 
 .nav-auth .btn-secondary:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
 }
 
 .nav-link {
@@ -109,7 +109,7 @@
 }
 
 .nav-link:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-blue);
 }
 
@@ -133,7 +133,7 @@
 
 .btn-logout {
   background: transparent;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   color: var(--text-secondary);
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -208,7 +208,7 @@
   left: 0;
   right: 0;
   background: var(--sos-white);
-  border-top: 2px solid var(--sos-light-blue);
+  border-top: 2px solid var(--sos-blue-lightest);
   box-shadow: var(--shadow-lg);
   padding: 1rem;
 }
@@ -243,7 +243,7 @@
 
 .nav-mobile-link:hover,
 .nav-mobile-link.active {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-blue);
 }
 
@@ -269,3 +269,6 @@
     display: none;
   }
 }
+
+
+

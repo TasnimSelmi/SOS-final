@@ -12,13 +12,13 @@
 }
 
 .reports-header h1 {
-  color: #2563eb;
+  color: #00abec;
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
-  color: #6b7280;
+  color: #78849e;
   font-size: 0.95rem;
 }
 
@@ -54,7 +54,7 @@
 .filter-group label {
   display: block;
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #78849e;
   margin-bottom: 0.25rem;
 }
 
@@ -89,11 +89,11 @@
 
 .stat-item {
   font-size: 0.9rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .stat-item strong {
-  color: #374151;
+  color: #1c325d;
   margin-right: 0.25rem;
 }
 
@@ -115,7 +115,7 @@
   text-align: left;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #374151;
+  color: #1c325d;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid #e5e7eb;
@@ -134,7 +134,7 @@
 .report-id {
   font-family: monospace;
   font-size: 0.85rem;
-  color: #2563eb;
+  color: #00abec;
   cursor: pointer;
 }
 
@@ -144,7 +144,7 @@
 
 .child-name {
   font-weight: 500;
-  color: #374151;
+  color: #1c325d;
 }
 
 .badge {
@@ -186,7 +186,7 @@
 
 .status-badge.cloture {
   background: #f3f4f6;
-  color: #374151;
+  color: #1c325d;
 }
 
 .urgency-badge {
@@ -210,7 +210,7 @@
 
 .btn-view {
   background: #eff6ff;
-  color: #2563eb;
+  color: #00abec;
 }
 
 .btn-view:hover {
@@ -223,7 +223,7 @@
 }
 
 .empty-message {
-  color: #9ca3af;
+  color: #b3c3cf;
 }
 
 .empty-icon {
@@ -257,7 +257,7 @@
 }
 
 .btn-page.active {
-  background: #2563eb;
+  background: #00abec;
   color: white;
 }
 
@@ -268,14 +268,14 @@
 .loading-container {
   text-align: center;
   padding: 4rem;
-  color: #6b7280;
+  color: #78849e;
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
   border: 3px solid #e5e7eb;
-  border-top-color: #2563eb;
+  border-top-color: #00abec;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -305,3 +305,7 @@
     gap: 0.5rem;
   }
 }
+
+
+
+

@@ -149,7 +149,7 @@
 
 .sos-stat-bar-track {
   height: 8px;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -235,8 +235,8 @@
   left: 35px;
   right: -1000px;
   height: 1px;
-  background: var(--sos-light-blue);
-  border-top: 1px dashed var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
+  border-top: 1px dashed var(--sos-blue-lightest);
 }
 
 .sos-lollipop-bars {
@@ -504,3 +504,6 @@
     font-size: 1.25rem;
   }
 }
+
+
+

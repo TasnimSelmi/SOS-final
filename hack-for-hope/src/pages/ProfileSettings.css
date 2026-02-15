@@ -8,7 +8,7 @@
 /* Header */
 .settings-header {
   background: var(--sos-white);
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
   padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
@@ -152,7 +152,7 @@
 }
 
 .settings-nav-item:hover {
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   color: var(--sos-blue);
 }
 
@@ -190,7 +190,7 @@
 .settings-section {
   margin-bottom: 2.5rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--sos-light-blue);
+  border-bottom: 1px solid var(--sos-blue-lightest);
 }
 
 .settings-section:last-of-type {
@@ -235,7 +235,7 @@
 .form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 2px solid var(--sos-light-blue);
+  border: 2px solid var(--sos-blue-lightest);
   border-radius: 12px;
   font-size: 0.95rem;
   background: var(--sos-white);
@@ -261,7 +261,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   border-radius: 16px;
   flex-wrap: wrap;
 }
@@ -300,7 +300,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem;
-  background: var(--sos-light-blue);
+  background: var(--sos-blue-lightest);
   border-radius: 12px;
   flex-wrap: wrap;
   gap: 1rem;
@@ -360,3 +360,6 @@
     padding: 1.5rem;
   }
 }
+
+
+
