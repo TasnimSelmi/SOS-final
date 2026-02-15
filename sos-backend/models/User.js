@@ -3,6 +3,16 @@ const bcrypt = require('bcryptjs');
 const { ROLE_VALUES, ROLE_LABELS } = require('../utils/roles');
 
 const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: [true, 'Le nom d\'utilisateur est obligatoire'],
+    unique: true,
+    trim: true,
+    lowercase: true,
+    minlength: [3, 'Le nom d\'utilisateur doit contenir au moins 3 caractères'],
+    maxlength: [30, 'Le nom d\'utilisateur ne peut pas dépasser 30 caractères'],
+    match: [/^[a-zA-Z0-9_]+$/, 'Le nom d\'utilisateur ne peut contenir que des lettres, chiffres et underscores']
+  },
   firstName: {
     type: String,
     required: [true, 'Le prénom est obligatoire'],
@@ -17,8 +27,8 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'L\'email est obligatoire'],
     unique: true,
+    sparse: true,
     lowercase: true,
     trim: true,
     match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Veuillez entrer un email valide']
@@ -106,6 +116,7 @@ userSchema.statics.getRoleDisplayName = function(role) {
 };
 
 // Index for faster queries
+userSchema.index({ username: 1 });
 userSchema.index({ email: 1 });
 userSchema.index({ role: 1 });
 userSchema.index({ isActive: 1 });

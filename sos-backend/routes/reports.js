@@ -5,6 +5,7 @@ const Notification = require('../models/Notification');
 const User = require('../models/User');
 const { auth, authorize } = require('../middleware/auth');
 const { upload } = require('../middleware/upload');
+const { sendNotificationToUser, sendNotificationToVillage, sendNotificationToRole } = require('../socket');
 
 const router = express.Router();
 
@@ -82,6 +83,49 @@ router.post(
 
       await report.save();
 
+      // Find and auto-assign to village psychologue
+      const villagePsychologue = await User.findOne({
+        role: 'psychologue',
+        village: village,
+        isActive: true
+      });
+
+      if (villagePsychologue) {
+        report.assignedTo = villagePsychologue._id;
+        report.assignedAt = new Date();
+        report.status = 'en_cours';
+        
+        report.history.push({
+          action: 'Assignation automatique',
+          performedBy: req.user._id,
+          details: `Signalement assigné automatiquement au psychologue du village: ${villagePsychologue.fullName}`
+        });
+        
+        await report.save();
+        
+        // Notify assigned psychologue
+        await Notification.create({
+          recipient: villagePsychologue._id,
+          type: 'report_assigned',
+          title: 'Nouveau signalement assigné',
+          message: `Un signalement (${report.reportId}) du village ${village} vous a été assigné automatiquement.`,
+          relatedReport: report._id,
+          priority: urgencyLevel === 'critique' ? 'urgent' : 'high',
+          link: `/reports/${report._id}`
+        });
+        
+        // Real-time notification
+        sendNotificationToUser(villagePsychologue._id.toString(), {
+          type: 'report_assigned',
+          title: 'Nouveau signalement assigné',
+          message: `Signalement ${report.reportId} du village ${village} assigné automatiquement.`,
+          relatedReport: report._id,
+          priority: urgencyLevel === 'critique' ? 'urgent' : 'high',
+          link: `/reports/${report._id}`,
+          createdAt: new Date()
+        });
+      }
+
       // Add to history
       report.history.push({
         action: 'Création du signalement',
@@ -90,15 +134,42 @@ router.post(
       });
       await report.save();
 
-      // Notify analysts (psychologues)
+      // Notify analysts (psychologues) - both DB and real-time
       const analysts = await User.find({ 
         role: { $in: ['psychologue', 'directeur'] },
         isActive: true 
       });
 
       if (analysts.length > 0) {
+        // Create DB notifications
         await Notification.createForNewReport(report, analysts);
+        
+        // Send real-time notifications
+        analysts.forEach(analyst => {
+          sendNotificationToUser(analyst._id.toString(), {
+            type: 'new_report',
+            title: 'Nouveau signalement',
+            message: `Un nouveau signalement (${report.reportId}) a été créé dans le village ${village}.`,
+            relatedReport: report._id,
+            priority: urgencyLevel === 'critique' ? 'urgent' : 
+                      urgencyLevel === 'moyen' ? 'high' : 'normal',
+            link: `/reports/${report._id}`,
+            createdAt: new Date()
+          });
+        });
       }
+
+      // Also notify village psychologues
+      sendNotificationToVillage(village, {
+        type: 'new_report',
+        title: 'Nouveau signalement village',
+        message: `Un signalement a été créé dans votre village ${village}.`,
+        relatedReport: report._id,
+        priority: urgencyLevel === 'critique' ? 'urgent' : 
+                  urgencyLevel === 'moyen' ? 'high' : 'normal',
+        link: `/reports/${report._id}`,
+        createdAt: new Date()
+      });
 
       res.status(201).json({
         status: 'success',
@@ -231,7 +302,7 @@ router.get('/:id', auth, async (req, res) => {
 
     // Check permissions
     const isDeclarant = report.declarant._id.toString() === req.user._id.toString();
-    const isAnalyst = ['psychologue', 'directeur', 'admin'].includes(req.user.role);
+    const isAnalyst = ['psychologue', 'directeur', 'decideur1', 'decideur2', 'admin'].includes(req.user.role);
     
     if (!isDeclarant && !isAnalyst) {
       return res.status(403).json({
@@ -295,7 +366,7 @@ router.get('/:id', auth, async (req, res) => {
 router.put(
   '/:id/classify',
   auth,
-  authorize('psychologue', 'directeur', 'admin'),
+  authorize('psychologue', 'directeur', 'decideur1', 'decideur2', 'admin'),
   [
     body('classification').isIn(['sauvegarde', 'prise_en_charge', 'faux_signalement']).withMessage('Classification invalide'),
     body('notes').optional().trim()
@@ -420,7 +491,7 @@ router.put(
 
       // Check if user exists and is an analyst
       const user = await User.findById(userId);
-      if (!user || !['psychologue', 'directeur', 'admin'].includes(user.role)) {
+      if (!user || !['psychologue', 'directeur', 'decideur1', 'decideur2', 'admin'].includes(user.role)) {
         return res.status(400).json({
           status: 'error',
           message: 'Utilisateur invalide ou non autorisé'
@@ -481,7 +552,7 @@ router.put(
 router.put(
   '/:id/decision',
   auth,
-  authorize('directeur', 'admin'),
+  authorize('directeur', 'decideur1', 'decideur2', 'admin'),
   [
     body('decision').isIn(['validation', 'escalade', 'cloture']).withMessage('Décision invalide'),
     body('details').optional().trim()

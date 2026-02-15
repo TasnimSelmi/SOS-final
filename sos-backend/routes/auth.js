@@ -24,9 +24,11 @@ router.post(
   auth,
   isAdmin,
   [
+    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire')
+      .matches(/^[a-zA-Z0-9_]+$/).withMessage('Le nom d\'utilisateur ne peut contenir que des lettres, chiffres et underscores'),
     body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
     body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
-    body('email').isEmail().withMessage('Email invalide'),
+    body('email').optional().isEmail().withMessage('Email invalide'),
     body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
     body('role')
       .customSanitizer(normalizeRoleInput)
@@ -44,19 +46,20 @@ router.post(
         });
       }
 
-      const { firstName, lastName, email, password, role, village, phoneNumber } = req.body;
+      const { username, firstName, lastName, email, password, role, village, phoneNumber } = req.body;
 
       // Check if user already exists
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({ username: username.toLowerCase() });
       if (existingUser) {
         return res.status(400).json({
           status: 'error',
-          message: 'Un utilisateur avec cet email existe déjà'
+          message: 'Un utilisateur avec ce nom d\'utilisateur existe déjà'
         });
       }
 
       // Create new user
       const user = new User({
+        username,
         firstName,
         lastName,
         email,
@@ -74,6 +77,7 @@ router.post(
         data: {
           user: {
             id: user._id,
+            username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -98,7 +102,7 @@ router.post(
 router.post(
   '/login',
   [
-    body('email').isEmail().withMessage('Email invalide'),
+    body('username').trim().notEmpty().withMessage('Le nom d\'utilisateur est obligatoire'),
     body('password').notEmpty().withMessage('Le mot de passe est obligatoire')
   ],
   async (req, res) => {
@@ -112,14 +116,14 @@ router.post(
         });
       }
 
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
-      // Find user
-      const user = await User.findOne({ email }).select('+password');
+      // Find user by username
+      const user = await User.findOne({ username: username.toLowerCase() }).select('+password');
       if (!user) {
         return res.status(401).json({
           status: 'error',
-          message: 'Email ou mot de passe incorrect'
+          message: 'Nom d\'utilisateur ou mot de passe incorrect'
         });
       }
 
@@ -136,7 +140,7 @@ router.post(
       if (!isMatch) {
         return res.status(401).json({
           status: 'error',
-          message: 'Email ou mot de passe incorrect'
+          message: 'Nom d\'utilisateur ou mot de passe incorrect'
         });
       }
 
@@ -154,6 +158,7 @@ router.post(
           token,
           user: {
             id: user._id,
+            username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,

@@ -7,19 +7,49 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
+const http = require('http');
 require('dotenv').config();
 
+const User = require('./models/User');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const reportRoutes = require('./routes/reports');
 const notificationRoutes = require('./routes/notifications');
+const { initializeSocket } = require('./socket');
 
 const app = express();
 
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow all localhost origins in development
+    if (origin.startsWith('http://localhost:') || origin.startsWith('https://localhost:')) {
+      return callback(null, true);
+    }
+    
+    // Check against allowed origins
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:5175',
+      'http://localhost:5176',
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:5174',
+      'http://127.0.0.1:5175',
+      'http://127.0.0.1:5176'
+    ].filter(Boolean);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -59,9 +89,38 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    // Create default admin if none exists
+    await createDefaultAdmin();
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);
+  }
+};
+
+// Create default admin user
+const createDefaultAdmin = async () => {
+  try {
+    const adminExists = await User.findOne({ role: 'admin' });
+    
+    if (!adminExists) {
+      const admin = new User({
+        username: 'admin',
+        firstName: 'Admin',
+        lastName: 'SOS',
+        email: 'admin@sos-hackforhope.org',
+        password: 'admin123',
+        role: 'admin',
+        isActive: true
+      });
+      
+      await admin.save();
+      console.log('✅ Default admin created:');
+      console.log('   Username: admin');
+      console.log('   Password: admin123');
+    }
+  } catch (error) {
+    console.error('Error creating default admin:', error);
   }
 };
 
@@ -103,9 +162,16 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.io
+initializeSocket(server);
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Socket.io ready for real-time notifications`);
 });
 
-module.exports = app;
+module.exports = { app, server };

@@ -30,10 +30,12 @@ export const authAPI = {
 export const usersAPI = {
   getAll: (params = {}) => api.get('/users', { params }),
   getById: (id) => api.get(`/users/${id}`),
+  create: (data) => api.post('/users', data),
   update: (id, data) => api.put(`/users/${id}`, data),
   delete: (id) => api.delete(`/users/${id}`),
-  resetPassword: (id, newPassword) => api.post(`/users/${id}/reset-password`, { newPassword }),
-  getRoles: () => api.get('/users/roles/list')
+  resetPassword: (id, data) => api.post(`/users/${id}/reset-password`, data),
+  getRoles: () => api.get('/users/roles/list'),
+  getPsychologuesByVillage: (village) => api.get(`/users/psychologues/${village}`)
 }
 
 // Reports API

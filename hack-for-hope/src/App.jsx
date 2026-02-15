@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ProfileProvider } from './context/ProfileContext'
+import { SocketProvider } from './context/SocketContext'
 import Navigation from './components/Navigation'
 import LandingPage from './pages/LandingPage'
 import AboutPage from './pages/AboutPage'
@@ -200,9 +201,11 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <ProfileProvider>
-          <AppContent />
-        </ProfileProvider>
+        <SocketProvider>
+          <ProfileProvider>
+            <AppContent />
+          </ProfileProvider>
+        </SocketProvider>
       </AuthProvider>
     </Router>
   )

@@ -28,3 +28,343 @@
   color: var(--text-secondary);
   margin: 0.25rem 0 0 0;
 }
+
+/* Notification Badge */
+.notification-badge {
+  position: relative;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.75rem;
+  border-radius: 12px;
+  color: #ef4444;
+}
+
+.badge-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tab Badge */
+.tab-badge {
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  min-width: auto;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  margin-top: 1rem;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--sos-light-blue);
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.btn-close:hover {
+  background: var(--sos-light-blue);
+  color: var(--text-primary);
+}
+
+/* Classification Modal */
+.classification-modal form {
+  padding: 1.5rem;
+}
+
+.report-info {
+  background: var(--sos-light-blue);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.report-info p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.classification-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.classification-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid var(--sos-light-blue);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.classification-option:hover {
+  border-color: var(--sos-blue);
+  background: var(--sos-light-blue);
+}
+
+.classification-option.selected {
+  border-width: 2px;
+  background: rgba(0, 171, 236, 0.05);
+}
+
+.classification-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.classification-details h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.classification-details p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Workflow Styles */
+.workflow-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+
+.workflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.workflow-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.workflow-step:hover {
+  background: var(--sos-light-blue);
+}
+
+.workflow-step.active {
+  background: rgba(0, 171, 236, 0.1);
+  border-color: var(--sos-blue);
+}
+
+.workflow-step.completed {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: #22c55e;
+}
+
+.workflow-step .step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sos-light-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.workflow-step.active .step-number {
+  background: var(--sos-blue);
+  color: white;
+}
+
+.workflow-step.completed .step-number {
+  background: #22c55e;
+  color: white;
+}
+
+.workflow-step .step-content h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.workflow-step .step-content p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Workflow Detail */
+.workflow-detail {
+  background: var(--sos-light-blue);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.workflow-detail h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--sos-dark-blue);
+}
+
+.workflow-detail > p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.workflow-actions h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.workflow-actions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.workflow-actions li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.workflow-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sos-light-blue);
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sos-light-blue);
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .workflow-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .workflow-steps {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  
+  .workflow-step {
+    min-width: 200px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+

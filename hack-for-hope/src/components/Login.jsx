@@ -5,6 +5,7 @@ import { SOSDecorations } from './SOSDecorations'
 import './Login.css'
 
 const roles = [
+  { id: 'admin', level: 'Administrateur', description: 'Gestion des utilisateurs et configuration', icon: '👤' },
   { id: 1, level: 'Niveau 1 - Déclarant', description: 'Mères SOS, Tantes SOS, Éducateurs', icon: '📝' },
   { id: 2, level: 'Niveau 2 - Analyse & Traitement', description: 'Psychologues, Responsables sociaux', icon: '🔍' },
   { id: 3, level: 'Niveau 3 - Gouvernance', description: 'Direction du Village, Bureau National', icon: '⚖️' }
@@ -77,11 +78,11 @@ function Login() {
           
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label">Identifiant</label>
+              <label className="form-label">Nom d'utilisateur</label>
               <input
                 type="text"
                 className="form-input"
-                placeholder="Votre identifiant"
+                placeholder="Ex: admin"
                 value={credentials.username}
                 onChange={(e) => setCredentials({...credentials, username: e.target.value})}
                 required

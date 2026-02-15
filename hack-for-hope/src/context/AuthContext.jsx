@@ -19,14 +19,29 @@ export function AuthProvider({ children }) {
   const login = async (credentials) => {
     try {
       const response = await authAPI.login(credentials)
-      // Handle backend response format: { status, message, data: { token, user } }
-      const { token, user } = response.data.data || response.data
+      console.log('Login response:', response.data)
+      
+      // Handle different response structures
+      let token, user
+      if (response.data.data && response.data.data.token) {
+        // Structure: { status, message, data: { token, user } }
+        token = response.data.data.token
+        user = response.data.data.user
+      } else if (response.data.token) {
+        // Structure: { token, user }
+        token = response.data.token
+        user = response.data.user
+      } else {
+        throw new Error('Format de réponse invalide')
+      }
+      
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
       setUser(user)
       return { success: true, user }
     } catch (error) {
-      return { success: false, error: error.response?.data?.message || 'Erreur de connexion' }
+      console.error('Login error details:', error)
+      return { success: false, error: error.response?.data?.message || error.message || 'Erreur de connexion' }
     }
   }
 

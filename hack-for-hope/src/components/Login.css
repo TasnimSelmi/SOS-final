@@ -122,6 +122,12 @@
 .level-1 .role-icon { background: rgba(0, 171, 236, 0.15); }
 .level-2 .role-icon { background: rgba(255, 179, 71, 0.15); }
 .level-3 .role-icon { background: rgba(222, 90, 108, 0.15); }
+.level-admin .role-icon { background: rgba(139, 92, 246, 0.15); }
+
+.level-admin.role-card:hover, .level-admin.role-card.active {
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+}
 
 .role-info h4 {
   font-size: 0.95rem;

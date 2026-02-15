@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { reportsAPI } from '../services/api'
+import { reportsAPI, usersAPI } from '../services/api'
 import { SOSIcons } from './SOSIcons'
 import { SOSCard, SOSDataCard, SOSStatCard } from './SOSCard'
 import { SOSProgressRing } from './SOSChart'
@@ -58,6 +58,44 @@ function Level1Dashboard() {
 function NewReportForm({ onSuccess }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [selectedVillage, setSelectedVillage] = useState('')
+  const [psychologues, setPsychologues] = useState([])
+  const [loadingPsychos, setLoadingPsychos] = useState(false)
+  const [attachments, setAttachments] = useState([])
+
+  // Fetch psychologues when village changes
+  useEffect(() => {
+    if (selectedVillage) {
+      fetchPsychologues(selectedVillage)
+    } else {
+      setPsychologues([])
+    }
+  }, [selectedVillage])
+
+  const fetchPsychologues = async (village) => {
+    try {
+      setLoadingPsychos(true)
+      const response = await usersAPI.getPsychologuesByVillage(village)
+      setPsychologues(response.data?.psychologues || [])
+    } catch (error) {
+      console.error('Erreur chargement psychologues:', error)
+    } finally {
+      setLoadingPsychos(false)
+    }
+  }
+
+  const handleVillageChange = (e) => {
+    setSelectedVillage(e.target.value)
+  }
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files)
+    if (files.length > 5) {
+      alert('Maximum 5 fichiers autorisés')
+      return
+    }
+    setAttachments(files)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -67,15 +105,41 @@ function NewReportForm({ onSuccess }) {
     try {
       const formData = new FormData(e.target)
       const data = Object.fromEntries(formData)
+      
+      // Add attachments
+      if (attachments.length > 0) {
+        data.attachments = attachments
+      }
+      
       await reportsAPI.create(data)
-      alert('Signalement soumis avec succès !')
+      alert('Signalement soumis avec succès ! Le psychologue du village a été notifié.')
       e.target.reset()
+      setSelectedVillage('')
+      setPsychologues([])
+      setAttachments([])
       onSuccess()
     } catch (err) {
-      setError(err.response?.data?.error || 'Erreur lors de la création')
+      setError(err.response?.data?.message || 'Erreur lors de la création')
     } finally {
       setSubmitting(false)
     }
+  }
+
+  const getPsychologueDisplay = () => {
+    if (!selectedVillage) return null
+    if (loadingPsychos) return <span className="psychologue-loading">Chargement...</span>
+    if (psychologues.length === 0) return <span className="psychologue-none">Aucun psychologue assigné à ce village</span>
+    
+    const psycho = psychologues[0]
+    return (
+      <div className="psychologue-info">
+        <SOSIcons.User size={16} />
+        <span>Assigné à: <strong>{psycho.fullName}</strong></span>
+        {psychologues.length > 1 && (
+          <small> (+{psychologues.length - 1} autre{psychologues.length > 2 ? 's' : ''})</small>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -114,13 +178,28 @@ function NewReportForm({ onSuccess }) {
               <SOSIcons.Village size={16} style={{marginRight: '6px'}} />
               Village
             </label>
-            <select className="form-select" name="village" required>
+            <select className="form-select" name="village" required value={selectedVillage} onChange={handleVillageChange}>
               <option value="">Sélectionner</option>
               <option value="gammarth">Village Gammarth</option>
               <option value="siliana">Village Siliana</option>
               <option value="mahres">Village Mahrès</option>
               <option value="akouda">Village Akouda</option>
             </select>
+            {selectedVillage && (
+              <div className="psychologue-badge">
+                {loadingPsychos ? (
+                  <span className="loading-text">Recherche du psychologue...</span>
+                ) : psychologues.length > 0 ? (
+                  <div className="psychologue-assigned">
+                    <SOSIcons.User size={14} />
+                    <span>Assigné à: <strong>{psychologues[0].fullName}</strong></span>
+                    {psychologues.length > 1 && <small> (+{psychologues.length - 1} autre{psychologues.length > 2 ? 's' : ''})</small>}
+                  </div>
+                ) : (
+                  <span className="no-psychologue">⚠️ Aucun psychologue pour ce village</span>
+                )}
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label className="form-label">
@@ -152,6 +231,30 @@ function NewReportForm({ onSuccess }) {
               Description
             </label>
             <textarea className="form-textarea" name="description" required rows="5"></textarea>
+          </div>
+          <div className="form-group full-width">
+            <label className="form-label">
+              <SOSIcons.Upload size={16} style={{marginRight: '6px'}} />
+              Pièces jointes (Photo, Audio, Vidéo)
+            </label>
+            <input 
+              type="file" 
+              className="form-input-file" 
+              name="attachments" 
+              multiple 
+              accept="image/*,audio/*,video/*"
+              onChange={handleFileChange}
+            />
+            <small className="file-help">Max 5 fichiers (images, audio, vidéo). Taille max: 15MB par fichier</small>
+            {attachments.length > 0 && (
+              <div className="attachments-preview">
+                {attachments.map((file, idx) => (
+                  <span key={idx} className="attachment-tag">
+                    📎 {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="btn-group">
