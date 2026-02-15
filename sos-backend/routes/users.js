@@ -2,8 +2,32 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const { auth, isAdmin } = require('../middleware/auth');
+const { MANAGED_ROLE_VALUES, ROLE_LABELS, normalizeRoleInput } = require('../utils/roles');
 
 const router = express.Router();
+
+// @route   GET /api/users/roles/list
+// @desc    Get list of available roles (Admin only)
+// @access  Private (Admin)
+router.get('/roles/list', auth, isAdmin, async (req, res) => {
+  try {
+    const roles = MANAGED_ROLE_VALUES.map((value) => ({
+      value,
+      label: ROLE_LABELS[value] || value
+    }));
+
+    res.json({
+      status: 'success',
+      data: { roles }
+    });
+  } catch (error) {
+    console.error('Get roles error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Erreur lors de la récupération des rôles'
+    });
+  }
+});
 
 // @route   GET /api/users
 // @desc    Get all users (Admin only)
@@ -14,7 +38,16 @@ router.get('/', auth, isAdmin, async (req, res) => {
     
     // Build filter
     const filter = {};
-    if (role) filter.role = role;
+    if (role) {
+      const normalizedRole = normalizeRoleInput(role);
+      if (!normalizedRole) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Rôle invalide'
+        });
+      }
+      filter.role = normalizedRole;
+    }
     if (isActive !== undefined) filter.isActive = isActive === 'true';
     if (search) {
       filter.$or = [
@@ -67,6 +100,86 @@ router.get('/', auth, isAdmin, async (req, res) => {
     });
   }
 });
+
+// @route   POST /api/users
+// @desc    Create user (Admin only)
+// @access  Private (Admin)
+router.post(
+  '/',
+  auth,
+  isAdmin,
+  [
+    body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
+    body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
+    body('email').isEmail().withMessage('Email invalide'),
+    body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
+    body('role')
+      .customSanitizer(normalizeRoleInput)
+      .custom((value) => MANAGED_ROLE_VALUES.includes(value))
+      .withMessage('Rôle invalide')
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Données invalides',
+          errors: errors.array()
+        });
+      }
+
+      const { firstName, lastName, email, password, role, village, phoneNumber, isActive } = req.body;
+
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Un utilisateur avec cet email existe déjà'
+        });
+      }
+
+      const user = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        village,
+        phoneNumber,
+        isActive: isActive === undefined ? true : isActive
+      });
+
+      await user.save();
+
+      res.status(201).json({
+        status: 'success',
+        message: 'Utilisateur créé avec succès',
+        data: {
+          user: {
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+            roleDisplay: User.getRoleDisplayName(user.role),
+            village: user.village,
+            isActive: user.isActive,
+            phoneNumber: user.phoneNumber,
+            fullName: user.fullName,
+            createdAt: user.createdAt
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Create user error:', error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Erreur lors de la création de l\'utilisateur'
+      });
+    }
+  }
+);
 
 // @route   GET /api/users/:id
 // @desc    Get user by ID (Admin only)
@@ -123,7 +236,11 @@ router.put(
     body('firstName').optional().trim().notEmpty().withMessage('Le prénom ne peut pas être vide'),
     body('lastName').optional().trim().notEmpty().withMessage('Le nom ne peut pas être vide'),
     body('email').optional().isEmail().withMessage('Email invalide'),
-    body('role').optional().isIn(['mere', 'tante', 'educateur', 'psychologue', 'directeur', 'admin']).withMessage('Rôle invalide')
+    body('role')
+      .optional()
+      .customSanitizer(normalizeRoleInput)
+      .custom((value) => MANAGED_ROLE_VALUES.includes(value))
+      .withMessage('Rôle invalide')
   ],
   async (req, res) => {
     try {
@@ -280,32 +397,5 @@ router.post(
     }
   }
 );
-
-// @route   GET /api/users/roles/list
-// @desc    Get list of available roles
-// @access  Private (Admin)
-router.get('/roles/list', auth, isAdmin, async (req, res) => {
-  try {
-    const roles = [
-      { value: 'mere', label: 'Mère SOS' },
-      { value: 'tante', label: 'Tante SOS' },
-      { value: 'educateur', label: 'Éducateur' },
-      { value: 'psychologue', label: 'Psychologue' },
-      { value: 'directeur', label: 'Directeur' },
-      { value: 'admin', label: 'Administrateur' }
-    ];
-
-    res.json({
-      status: 'success',
-      data: { roles }
-    });
-  } catch (error) {
-    console.error('Get roles error:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Erreur lors de la récupération des rôles'
-    });
-  }
-});
 
 module.exports = router;

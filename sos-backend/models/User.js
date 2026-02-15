@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { ROLE_VALUES, ROLE_LABELS } = require('../utils/roles');
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['mere', 'tante', 'educateur', 'psychologue', 'directeur', 'admin'],
+    enum: ROLE_VALUES,
     required: [true, 'Le rôle est obligatoire']
   },
   village: {
@@ -101,15 +102,7 @@ userSchema.methods.toJSON = function() {
 
 // Static method to get role display name
 userSchema.statics.getRoleDisplayName = function(role) {
-  const roleNames = {
-    'mere': 'Mère SOS',
-    'tante': 'Tante SOS',
-    'educateur': 'Éducateur',
-    'psychologue': 'Psychologue',
-    'directeur': 'Directeur',
-    'admin': 'Administrateur'
-  };
-  return roleNames[role] || role;
+  return ROLE_LABELS[role] || role;
 };
 
 // Index for faster queries

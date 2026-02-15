@@ -2,7 +2,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
-const { auth } = require('../middleware/auth');
+const { auth, isAdmin } = require('../middleware/auth');
+const { MANAGED_ROLE_VALUES, normalizeRoleInput } = require('../utils/roles');
 
 const router = express.Router();
 
@@ -21,23 +22,19 @@ const generateToken = (userId) => {
 router.post(
   '/register',
   auth,
+  isAdmin,
   [
     body('firstName').trim().notEmpty().withMessage('Le prénom est obligatoire'),
     body('lastName').trim().notEmpty().withMessage('Le nom est obligatoire'),
     body('email').isEmail().withMessage('Email invalide'),
     body('password').isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères'),
-    body('role').isIn(['mere', 'tante', 'educateur', 'psychologue', 'directeur', 'admin']).withMessage('Rôle invalide')
+    body('role')
+      .customSanitizer(normalizeRoleInput)
+      .custom((value) => MANAGED_ROLE_VALUES.includes(value))
+      .withMessage('Rôle invalide')
   ],
   async (req, res) => {
     try {
-      // Check if user is admin
-      if (req.user.role !== 'admin') {
-        return res.status(403).json({
-          status: 'error',
-          message: 'Accès réservé aux administrateurs'
-        });
-      }
-
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
