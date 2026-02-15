@@ -68,7 +68,7 @@ function Login() {
           <div className="login-logo">
             <SOSLogo size={56} />
           </div>
-          <h1>Hack for Hope</h1>
+          <h1>SOS-معاك</h1>
           <p className="subtitle">
             Plateforme de Protection de l'Enfance
             <br />

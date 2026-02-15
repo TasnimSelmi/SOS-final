@@ -1,33 +1,33 @@
-import React from 'react'
-import { SOSIcons } from '../components/SOSIcons'
-import { SOSCard, SOSDataCard, SOSStatCard } from '../components/SOSCard'
-import { SOSBarChart, SOSProgressRing } from '../components/SOSChart'
-import { SOSDecorations, SOSJShape } from '../components/SOSDecorations'
-import SOSLogo from '../components/SOSLogo'
-import './LandingPage.css'
+import React from "react";
+import { SOSIcons } from "../components/SOSIcons";
+import { SOSCard, SOSDataCard, SOSStatCard } from "../components/SOSCard";
+import { SOSBarChart, SOSProgressRing } from "../components/SOSChart";
+import { SOSDecorations, SOSJShape } from "../components/SOSDecorations";
+import SOSLogo from "../components/SOSLogo";
+import "./LandingPage.css";
 
 function LandingPage({ onEnterApp }) {
   const impactData = [
-    { label: 'Livelihood', value1: 85, value2: 92 },
-    { label: 'Food', value1: 78, value2: 88 },
-    { label: 'Healthcare', value1: 65, value2: 72 },
-    { label: 'Education', value1: 55, value2: 60 },
-    { label: 'Water', value1: 35, value2: 42 },
-    { label: 'Debt', value1: 25, value2: 30 },
-    { label: 'Nutrition', value1: 15, value2: 20 }
-  ]
+    { label: "Livelihood", value1: 85, value2: 92 },
+    { label: "Food", value1: 78, value2: 88 },
+    { label: "Healthcare", value1: 65, value2: 72 },
+    { label: "Education", value1: 55, value2: 60 },
+    { label: "Water", value1: 35, value2: 42 },
+    { label: "Debt", value1: 25, value2: 30 },
+    { label: "Nutrition", value1: 15, value2: 20 },
+  ];
 
   const villages = [
-    { name: 'Gammarth', children: 120, year: 1985 },
-    { name: 'Siliana', children: 85, year: 1992 },
-    { name: 'Mahrès', children: 95, year: 1998 },
-    { name: 'Akouda', children: 110, year: 2005 }
-  ]
+    { name: "Gammarth", children: 120, year: 1985 },
+    { name: "Siliana", children: 85, year: 1992 },
+    { name: "Mahrès", children: 95, year: 1998 },
+    { name: "Akouda", children: 110, year: 2005 },
+  ];
 
   return (
     <div className="landing-page">
       <SOSDecorations showJ={true} showLines={true} showBubble={true} />
-      
+
       {/* HERO SECTION */}
       <section className="landing-hero">
         <div className="landing-hero-content">
@@ -42,26 +42,34 @@ function LandingPage({ onEnterApp }) {
               <span className="love">love</span>
             </div>
           </div>
-          
+
           <h1 className="landing-title">
             SOS Villages d'Enfants <span className="highlight">Tunisie</span>
           </h1>
-          
+
           <p className="landing-subtitle">
-            Œuvrons ensemble pour qu'<span className="highlight">aucun enfant</span> ne grandisse seul
+            Œuvrons ensemble pour qu'
+            <span className="highlight">aucun enfant</span> ne grandisse seul
           </p>
-          
+
           <div className="landing-cta">
             <button className="btn btn-primary btn-large" onClick={onEnterApp}>
               <SOSIcons.Village size={24} />
               Accéder à la Plateforme
             </button>
-            <button className="btn btn-secondary btn-large" onClick={() => document.getElementById('about').scrollIntoView({ behavior: 'smooth' })}>
+            <button
+              className="btn btn-secondary btn-large"
+              onClick={() =>
+                document
+                  .getElementById("about")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
+            >
               En savoir plus
             </button>
           </div>
         </div>
-        
+
         <div className="landing-hero-visual">
           <div className="hero-stats">
             <div className="hero-stat-item">
@@ -79,28 +87,32 @@ function LandingPage({ onEnterApp }) {
             <SOSIcons.Family size={48} color="#00abec" />
             <h2>À Propos de SOS Tunisie</h2>
           </div>
-          
+
           <div className="about-grid">
             <SOSCard title="Notre Mission" variant="info">
               <p className="about-text">
-                L'Association Tunisienne des Villages d'Enfants SOS est une organisation 
-                <strong> non-gouvernementale à caractère humanitaire</strong>, qui prend en charge 
-                des enfants sans soutien familial ou en danger : orphelins, abandonnés, 
-                défavorisés.
+                L'Association Tunisienne des Villages d'Enfants SOS est une
+                organisation
+                <strong> non-gouvernementale à caractère humanitaire</strong>,
+                qui prend en charge des enfants sans soutien familial ou en
+                danger : orphelins, abandonnés, défavorisés.
               </p>
               <p className="about-text">
-                À travers nos <strong>quatre Villages d'Enfants SOS</strong> (Gammarth, Siliana, 
-                Mahrès et Akouda), nous contribuons à créer un espace familial accueillant 
-                dans lequel ces enfants peuvent vivre dans la dignité et se développer 
-                en tant qu'individus à part entière.
+                À travers nos <strong>quatre Villages d'Enfants SOS</strong>{" "}
+                (Gammarth, Siliana, Mahrès et Akouda), nous contribuons à créer
+                un espace familial accueillant dans lequel ces enfants peuvent
+                vivre dans la dignité et se développer en tant qu'individus à
+                part entière.
               </p>
             </SOSCard>
-            
+
             <SOSCard title="Notre Vision" variant="success">
               <p className="about-text">
-                Nous croyons que <strong>chaque enfant mérite une famille</strong>. Notre vision 
-                est de garantir que chaque enfant qui ne peut pas grandir avec ses parents 
-                biologiques reçoive l'amour et le soutien d'une famille SOS.
+                Nous croyons que{" "}
+                <strong>chaque enfant mérite une famille</strong>. Notre vision
+                est de garantir que chaque enfant qui ne peut pas grandir avec
+                ses parents biologiques reçoive l'amour et le soutien d'une
+                famille SOS.
               </p>
               <div className="vision-stats">
                 <div className="vision-stat">
@@ -129,7 +141,7 @@ function LandingPage({ onEnterApp }) {
             <h2>Nos 4 Villages d'Enfants</h2>
             <p>Des foyers d'amour et de protection à travers la Tunisie</p>
           </div>
-          
+
           <div className="villages-grid">
             {villages.map((village, index) => (
               <SOSDataCard
@@ -138,7 +150,7 @@ function LandingPage({ onEnterApp }) {
                 value={village.children}
                 unit="enfants"
                 icon={SOSIcons.Village}
-                variant={index % 2 === 0 ? 'info' : 'success'}
+                variant={index % 2 === 0 ? "info" : "success"}
               />
             ))}
           </div>
@@ -152,7 +164,7 @@ function LandingPage({ onEnterApp }) {
             <h2>Notre Impact</h2>
             <p>Des résultats concrets pour les enfants et les familles</p>
           </div>
-          
+
           <div className="stats-grid">
             <SOSStatCard
               number="410+"
@@ -189,34 +201,45 @@ function LandingPage({ onEnterApp }) {
             <SOSIcons.Plant size={48} color="#00abec" />
             <h2>Nos Programmes</h2>
           </div>
-          
+
           <div className="programs-grid">
             <SOSCard title="Villages d'Enfants" variant="info">
               <div className="program-icon">
                 <SOSIcons.Village size={48} color="#00abec" />
               </div>
-              <p>Un foyer familial aimant pour les enfants sans soutien parental.</p>
+              <p>
+                Un foyer familial aimant pour les enfants sans soutien parental.
+              </p>
             </SOSCard>
-            
+
             <SOSCard title="Jeunes SOS" variant="success">
               <div className="program-icon">
                 <SOSIcons.Family size={48} color="#00abec" />
               </div>
-              <p>Accompagnement des jeunes vers l'autonomie et l'insertion professionnelle.</p>
+              <p>
+                Accompagnement des jeunes vers l'autonomie et l'insertion
+                professionnelle.
+              </p>
             </SOSCard>
-            
+
             <SOSCard title="Renforcement Familial" variant="warning">
               <div className="program-icon">
                 <SOSIcons.Heart size={48} color="#de5a6c" />
               </div>
-              <p>Soutien aux familles vulnérables pour prévenir la séparation des enfants.</p>
+              <p>
+                Soutien aux familles vulnérables pour prévenir la séparation des
+                enfants.
+              </p>
             </SOSCard>
-            
+
             <SOSCard title="SOS Urgences" variant="urgent">
               <div className="program-icon">
                 <SOSIcons.Shield size={48} color="#1c325d" />
               </div>
-              <p>Intervention rapide pour protéger les enfants en situation d'urgence.</p>
+              <p>
+                Intervention rapide pour protéger les enfants en situation
+                d'urgence.
+              </p>
             </SOSCard>
           </div>
         </div>
@@ -229,12 +252,12 @@ function LandingPage({ onEnterApp }) {
             <h2>Objectifs de Développement Durable</h2>
             <p>Notre contribution aux ODD de l'ONU</p>
           </div>
-          
+
           <div className="chart-container">
-            <SOSBarChart 
+            <SOSBarChart
               data={impactData}
               title="Impact par secteur (%)"
-              barColors={['#1c325d', '#00abec']}
+              barColors={["#1c325d", "#00abec"]}
             />
           </div>
         </div>
@@ -246,18 +269,21 @@ function LandingPage({ onEnterApp }) {
           <div className="cta-content">
             <h2>Rejoignez Notre Mission</h2>
             <p>
-              Devenez acteur de la protection de l'enfance en Tunisie. 
-              Ensemble, nous pouvons faire la différence.
+              Devenez acteur de la protection de l'enfance en Tunisie. Ensemble,
+              nous pouvons faire la différence.
             </p>
-            
+
             <div className="cta-buttons">
-              <button className="btn btn-primary btn-large" onClick={onEnterApp}>
+              <button
+                className="btn btn-primary btn-large"
+                onClick={onEnterApp}
+              >
                 <SOSIcons.Village size={24} />
-                Accéder à Hack for Hope
+                Accéder à SOS-معاك
               </button>
-              <a 
-                href="https://www.sosve.tn/faire-un-don-maintenant/" 
-                target="_blank" 
+              <a
+                href="https://www.sosve.tn/faire-un-don-maintenant/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-pink btn-large"
               >
@@ -282,7 +308,7 @@ function LandingPage({ onEnterApp }) {
                 <span className="love">love</span>
               </div>
             </div>
-            
+
             <div className="footer-links">
               <div className="footer-section">
                 <h4>Nos Villages</h4>
@@ -293,7 +319,7 @@ function LandingPage({ onEnterApp }) {
                   <li>Akouda (2005)</li>
                 </ul>
               </div>
-              
+
               <div className="footer-section">
                 <h4>Contact</h4>
                 <ul>
@@ -302,26 +328,32 @@ function LandingPage({ onEnterApp }) {
                   <li>Email: contact@sos-tunisie.org</li>
                 </ul>
               </div>
-              
+
               <div className="footer-section">
                 <h4>Suivez-nous</h4>
                 <div className="social-links">
-                  <a href="#" className="social-link">Facebook</a>
-                  <a href="#" className="social-link">LinkedIn</a>
-                  <a href="#" className="social-link">YouTube</a>
+                  <a href="#" className="social-link">
+                    Facebook
+                  </a>
+                  <a href="#" className="social-link">
+                    LinkedIn
+                  </a>
+                  <a href="#" className="social-link">
+                    YouTube
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div className="footer-bottom">
             <p>© 2026 SOS Villages d'Enfants Tunisie. Tous droits réservés.</p>
-            <p>Hack for Hope - Plateforme de Protection de l'Enfance</p>
+            <p>SOS-معاك - Plateforme de Protection de l'Enfance</p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default LandingPage
+export default LandingPage;

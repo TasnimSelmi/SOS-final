@@ -1,6 +1,6 @@
-import React from 'react'
-import SOSLogo from './SOSLogo'
-import './Header.css'
+import React from "react";
+import SOSLogo from "./SOSLogo";
+import "./Header.css";
 
 function Header({ user, onLogout }) {
   return (
@@ -11,7 +11,7 @@ function Header({ user, onLogout }) {
             <SOSLogo size={44} />
           </div>
           <div className="brand-text">
-            <h1>Hack for Hope</h1>
+            <h1>SOS-معاك</h1>
             <div className="sos-slogan">
               <span className="we-can">WE CAN,</span>
               <span className="we-do">WE DO,</span>
@@ -23,13 +23,21 @@ function Header({ user, onLogout }) {
         <div className="header-right">
           <div className="user-info">
             <h3>{user.name}</h3>
-            <p className="user-role">{user.role === 1 ? 'Niveau 1 - Déclarant' : user.role === 2 ? 'Niveau 2 - Analyse' : 'Niveau 3 - Gouvernance'}</p>
+            <p className="user-role">
+              {user.role === 1
+                ? "Niveau 1 - Déclarant"
+                : user.role === 2
+                  ? "Niveau 2 - Analyse"
+                  : "Niveau 3 - Gouvernance"}
+            </p>
           </div>
-          <button className="logout-btn" onClick={onLogout}>Déconnexion</button>
+          <button className="logout-btn" onClick={onLogout}>
+            Déconnexion
+          </button>
         </div>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;
